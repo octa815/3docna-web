@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3DOCNA — Catálogo 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --neon: #00f5ff;
+    --neon2: #bf00ff;
+    --neon3: #ff006e;
+    --bg: #030508;
+    --bg2: #0a0d14;
+    --bg3: #0f1420;
+    --text: #e8eaf0;
+    --muted: #5a6080;
+    --card: #0d1018;
+    --border: rgba(0,245,255,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.3;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--neon); border-radius: 2px; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(3,5,8,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: 22px;
+    letter-spacing: 4px;
+    color: var(--neon);
+    text-shadow: 0 0 20px rgba(0,245,255,0.6);
+  }
+
+  .logo span { color: var(--neon2); }
+
+  nav ul {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  nav a:hover { color: var(--neon); }
+
+  .nav-cta {
+    background: transparent;
+    border: 1px solid var(--neon);
+    color: var(--neon) !important;
+    padding: 8px 20px;
+    font-size: 11px !important;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .nav-cta:hover {
+    background: var(--neon);
+    color: var(--bg) !important;
+    box-shadow: 0 0 30px rgba(0,245,255,0.4);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,245,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,245,255,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    background: radial-gradient(ellipse, rgba(0,245,255,0.08) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .hero-glow2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(ellipse, rgba(191,0,255,0.06) 0%, transparent 70%);
+    top: 20%; right: 10%;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--border);
+    padding: 6px 16px;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--neon);
+    margin-bottom: 32px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--neon);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--neon);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  h1 {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(48px, 7vw, 96px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.8s ease 0.1s both;
+  }
+
+  h1 .line1 { display: block; color: var(--text); }
+  h1 .line2 { display: block; color: var(--neon); text-shadow: 0 0 40px rgba(0,245,255,0.5); }
+
+  .hero-sub {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 460px;
+    margin-bottom: 48px;
+    font-weight: 300;
+    animation: fadeUp 0.8s ease 0.2s both;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+
+  .btn-primary {
+    background: var(--neon);
+    color: var(--bg);
+    border: none;
+    padding: 14px 32px;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s;
+    box-shadow: 0 0 30px rgba(0,245,255,0.3);
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 0 60px rgba(0,245,255,0.6);
+    transform: translateY(-2px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--muted);
+    padding: 14px 32px;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--neon);
+    color: var(--neon);
+  }
+
+  .hero-stats {
+    position: absolute;
+    right: 48px;
+    bottom: 80px;
+    display: flex;
+    gap: 48px;
+    animation: fadeUp 0.8s ease 0.4s both;
+  }
+
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Orbitron', monospace;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--neon);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section {
+    padding: 100px 48px;
+    position: relative;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 64px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--neon);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .section-title em {
+    font-style: normal;
+    color: var(--neon2);
+    text-shadow: 0 0 20px rgba(191,0,255,0.4);
+  }
+
+  .view-all {
+    color: var(--neon);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    transition: all 0.3s;
+    white-space: nowrap;
+    margin-bottom: 8px;
+  }
+
+  .view-all:hover { border-color: var(--neon); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--neon), transparent);
+    opacity: 0.3;
+    margin: 0 48px;
+  }
+
+  /* ── PRODUCT GRID ── */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2px;
+  }
+
+  .product-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.4s;
+    group: true;
+  }
+
+  .product-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,245,255,0.05) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .product-card:hover::before { opacity: 1; }
+
+  .product-card:hover {
+    border-color: rgba(0,245,255,0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 30px rgba(0,245,255,0.1);
+  }
+
+  .product-img {
+    height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .product-img svg { transition: transform 0.4s; }
+  .product-card:hover .product-img svg { transform: scale(1.08) rotate(3deg); }
+
+  .product-badge {
+    position: absolute;
+    top: 16px; left: 16px;
+    background: var(--neon);
+    color: var(--bg);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 4px 10px;
+    text-transform: uppercase;
+  }
+
+  .product-badge.purple {
+    background: var(--neon2);
+    color: white;
+  }
+
+  .product-badge.pink {
+    background: var(--neon3);
+    color: white;
+  }
+
+  .product-info {
+    padding: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .product-cat {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .product-name {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .product-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+
+  .product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .product-price {
+    font-family: 'Orbitron', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--neon);
+  }
+
+  .product-price span {
+    font-size: 13px;
+    color: var(--muted);
+    font-family: 'Syne', sans-serif;
+    font-weight: 300;
+  }
+
+  .add-btn {
+    width: 36px; height: 36px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--neon);
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+  }
+
+  .add-btn:hover {
+    background: var(--neon);
+    color: var(--bg);
+    border-color: var(--neon);
+  }
+
+  /* ── FEATURED CARD (wide) ── */
+  .product-grid.featured {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .product-grid.featured .card-wide {
+    grid-column: span 2;
+  }
+
+  .card-wide .product-img { height: 340px; }
+
+  /* ── CATEGORY TABS ── */
+  .cat-tabs {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cat-tab {
+    padding: 12px 24px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: var(--muted);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: all 0.3s;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: 'Syne', sans-serif;
+  }
+
+  .cat-tab.active {
+    color: var(--neon);
+    border-bottom-color: var(--neon);
+  }
+
+  .cat-tab:hover { color: var(--text); }
+
+  /* ── CUSTOM SECTION ── */
+  .custom-section {
+    background: var(--bg2);
+    margin: 0 48px;
+    border: 1px solid var(--border);
+    padding: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .custom-section::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 500px; height: 500px;
+    background: radial-gradient(ellipse, rgba(191,0,255,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .custom-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .custom-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  .step {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .step-num {
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--neon2);
+    letter-spacing: 2px;
+    min-width: 32px;
+    margin-top: 2px;
+  }
+
+  .step-text h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .step-text p {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .custom-visual {
+    position: relative;
+  }
+
+  .hex-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+
+  .hex {
+    aspect-ratio: 1;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .hex:hover {
+    border-color: var(--neon2);
+    background: rgba(191,0,255,0.1);
+    box-shadow: 0 0 20px rgba(191,0,255,0.2);
+  }
+
+  .hex.active {
+    border-color: var(--neon2);
+    background: rgba(191,0,255,0.15);
+  }
+
+  .price-tag {
+    display: inline-block;
+    margin-top: 32px;
+    border: 1px solid var(--neon2);
+    padding: 16px 32px;
+    font-family: 'Orbitron', monospace;
+  }
+
+  .price-tag .from { font-size: 11px; letter-spacing: 3px; color: var(--muted); display: block; margin-bottom: 4px; }
+  .price-tag .amount { font-size: 36px; font-weight: 700; color: var(--neon2); }
+  .price-tag .unit { font-size: 13px; color: var(--muted); font-family: 'Syne', sans-serif; }
+
+  /* ── MATERIALS STRIP ── */
+  .materials {
+    background: var(--bg2);
+    padding: 40px 48px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    overflow-x: auto;
+  }
+
+  .mat-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .mat-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    white-space: nowrap;
+  }
+
+  .mat-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+  }
+
+  .mat-name {
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  /* ── CONTACT / CTA ── */
+  .cta-section {
+    padding: 100px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    bottom: -200px; left: 50%;
+    transform: translateX(-50%);
+    width: 800px; height: 400px;
+    background: radial-gradient(ellipse, rgba(0,245,255,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-title {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(32px, 5vw, 64px);
+    font-weight: 900;
+    margin-bottom: 24px;
+    line-height: 1.1;
+  }
+
+  .cta-title em {
+    font-style: normal;
+    color: var(--neon3);
+    text-shadow: 0 0 30px rgba(255,0,110,0.5);
+  }
+
+  .cta-sub {
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 500px;
+    margin: 0 auto 48px;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .contact-options {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .contact-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--border);
+    padding: 14px 24px;
+    font-size: 13px;
+    color: var(--muted);
+    transition: all 0.3s;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .contact-chip:hover {
+    border-color: var(--neon);
+    color: var(--neon);
+    box-shadow: 0 0 20px rgba(0,245,255,0.1);
+  }
+
+  .contact-chip .icon { font-size: 18px; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 40px 48px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-logo {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: 16px;
+    letter-spacing: 4px;
+    color: var(--neon);
+    opacity: 0.6;
+  }
+
+  .footer-text {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  /* ── FLOATING SHAPES ── */
+  .shape {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0.15;
+  }
+
+  /* ── PRODUCT ILLUSTRATIONS (SVG) ── */
+  .img-bg-llave { background: radial-gradient(ellipse at 50% 50%, rgba(0,245,255,0.08) 0%, transparent 70%); }
+  .img-bg-deco { background: radial-gradient(ellipse at 50% 50%, rgba(191,0,255,0.08) 0%, transparent 70%); }
+  .img-bg-fig { background: radial-gradient(ellipse at 50% 50%, rgba(255,0,110,0.08) 0%, transparent 70%); }
+  .img-bg-mix { background: radial-gradient(ellipse at 50% 50%, rgba(0,245,255,0.05) 0%, transparent 70%); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    nav ul { display: none; }
+    .hero { padding: 100px 24px 60px; }
+    .hero-stats { position: static; margin-top: 48px; }
+    .section { padding: 60px 24px; }
+    .custom-section { margin: 0 24px; padding: 40px 24px; }
+    .custom-grid { grid-template-columns: 1fr; gap: 40px; }
+    .product-grid.featured { grid-template-columns: 1fr; }
+    .product-grid.featured .card-wide { grid-column: span 1; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+    .section-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .divider { margin: 0 24px; }
+    .materials { padding: 24px; }
+    .cta-section { padding: 60px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">3DOC<span>NA</span></div>
+  <ul>
+    <li><a href="#catalogo">Catálogo</a></li>
+    <li><a href="#custom">Pedidos</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="#contacto" class="nav-cta">Pedir ahora</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+
+  <div class="hero-content">
+    <div class="hero-tag">Catálogo 2025 · Impresión 3D</div>
+    <h1>
+      <span class="line1">DISEÑO</span>
+      <span class="line2">IMPRESO.</span>
+    </h1>
+    <p class="hero-sub">
+      Creamos objetos únicos con tecnología de impresión 3D. Desde piezas decorativas hasta accesorios personalizados — si lo imaginas, lo imprimimos.
+    </p>
+    <div class="hero-btns">
+      <a href="#catalogo" class="btn-primary">Ver catálogo</a>
+      <a href="#custom" class="btn-outline">Pedido custom</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">50+</div>
+      <div class="stat-label">Productos</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">48h</div>
+      <div class="stat-label">Entrega</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Custom</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MATERIALS STRIP -->
+<div class="materials">
+  <div class="mat-label">Materiales disponibles</div>
+  <div class="mat-item"><div class="mat-dot" style="background:#00f5ff"></div><span class="mat-name">PLA</span></div>
+  <div class="mat-item"><div class="mat-dot" style="background:#bf00ff"></div><span class="mat-name">PETG</span></div>
+  <div class="mat-item"><div class="mat-dot" style="background:#ff006e"></div><span class="mat-name">TPU Flexible</span></div>
+  <div class="mat-item"><div class="mat-dot" style="background:#ffd700"></div><span class="mat-name">PLA Silk</span></div>
+  <div class="mat-item"><div class="mat-dot" style="background:#ff6b35"></div><span class="mat-name">PLA Wood</span></div>
+  <div class="mat-item"><div class="mat-dot" style="background:#c0c0c0"></div><span class="mat-name">PLA Metálico</span></div>
+  <div class="mat-item"><div class="mat-dot" style="background:#00ff88"></div><span class="mat-name">PLA Glow</span></div>
+</div>
+
+<!-- CATALOG SECTION -->
+<section class="section" id="catalogo">
+  <div class="section-header">
+    <div>
+      <div class="section-label">// 01 — Catálogo</div>
+      <h2 class="section-title">Nuestros <em>Productos</em></h2>
+    </div>
+    <a href="#contacto" class="view-all">Solicitar todo el catálogo →</a>
+  </div>
+
+  <!-- TABS -->
+  <div class="cat-tabs">
+    <button class="cat-tab active">Todos</button>
+    <button class="cat-tab">Llaveros</button>
+    <button class="cat-tab">Decoración</button>
+    <button class="cat-tab">Figuras</button>
+    <button class="cat-tab">Accesorios</button>
+  </div>
+
+  <!-- FEATURED GRID -->
+  <div class="product-grid featured">
+
+    <!-- Card Wide: Llaveros pack -->
+    <div class="product-card card-wide">
+      <div class="product-img img-bg-llave">
+        <div class="product-badge">Más vendido</div>
+        <svg width="280" height="200" viewBox="0 0 280 200">
+          <!-- Llavero circular -->
+          <circle cx="80" cy="100" r="40" fill="none" stroke="#00f5ff" stroke-width="2.5" opacity="0.9"/>
+          <circle cx="80" cy="100" r="30" fill="none" stroke="#00f5ff" stroke-width="1" opacity="0.4"/>
+          <circle cx="80" cy="100" r="8" fill="#00f5ff" opacity="0.8"/>
+          <line x1="118" y1="100" x2="150" y2="100" stroke="#00f5ff" stroke-width="2"/>
+          <rect x="150" y="82" width="44" height="36" rx="6" fill="none" stroke="#00f5ff" stroke-width="2"/>
+          <text x="172" y="104" text-anchor="middle" fill="#00f5ff" font-size="11" font-family="monospace">3D</text>
+          <!-- Llavero estrella -->
+          <polygon points="200,70 208,88 228,88 212,100 218,118 200,106 182,118 188,100 172,88 192,88" fill="none" stroke="#bf00ff" stroke-width="2" opacity="0.9"/>
+          <polygon points="200,79 205,90 218,90 208,97 212,108 200,101 188,108 192,97 182,90 195,90" fill="#bf00ff" opacity="0.2"/>
+          <!-- Llavero corazon -->
+          <path d="M248 80 C248 75 243 70 238 75 C233 70 228 75 228 80 C228 90 238 98 238 98 C238 98 248 90 248 80Z" fill="none" stroke="#ff006e" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <div class="product-cat">Llaveros · Accesorios</div>
+        <div class="product-name">Pack Llaveros Personalizados</div>
+        <div class="product-desc">Llaveros impresos en PLA de alta calidad. Disponibles en formas estándar (circular, corazón, estrella) o con diseño personalizado. Múltiples colores y acabados.</div>
+        <div class="product-footer">
+          <div class="product-price">3,50€ <span>/ unidad</span></div>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card: Macetero -->
+    <div class="product-card">
+      <div class="product-img img-bg-deco">
+        <div class="product-badge purple">Nuevo</div>
+        <svg width="160" height="180" viewBox="0 0 160 180">
+          <path d="M45 60 L35 150 L125 150 L115 60 Z" fill="none" stroke="#bf00ff" stroke-width="2"/>
+          <path d="M40 60 L120 60" stroke="#bf00ff" stroke-width="2.5"/>
+          <!-- Pattern geométrico -->
+          <line x1="55" y1="85" x2="75" y2="65" stroke="#bf00ff" stroke-width="1" opacity="0.5"/>
+          <line x1="75" y1="85" x2="95" y2="65" stroke="#bf00ff" stroke-width="1" opacity="0.5"/>
+          <line x1="95" y1="85" x2="115" y2="65" stroke="#bf00ff" stroke-width="1" opacity="0.5"/>
+          <line x1="45" y1="105" x2="115" y2="105" stroke="#bf00ff" stroke-width="1" opacity="0.3"/>
+          <line x1="42" y1="125" x2="118" y2="125" stroke="#bf00ff" stroke-width="1" opacity="0.3"/>
+          <!-- Planta -->
+          <path d="M80 60 Q60 30 75 20 Q80 40 80 40 Q80 40 85 15 Q95 30 80 60Z" fill="none" stroke="#00ff88" stroke-width="1.5" opacity="0.8"/>
+          <path d="M80 50 Q95 25 100 30 Q90 45 80 50Z" fill="none" stroke="#00ff88" stroke-width="1.5" opacity="0.6"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <div class="product-cat">Decoración · Hogar</div>
+        <div class="product-name">Macetero Geométrico</div>
+        <div class="product-desc">Diseño moderno con patrones geométricos. Ideal para suculentas y plantas pequeñas.</div>
+        <div class="product-footer">
+          <div class="product-price">12,00€</div>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SECOND ROW -->
+  <div class="product-grid" style="margin-top: 2px;">
+
+    <!-- Figura dragón -->
+    <div class="product-card">
+      <div class="product-img img-bg-fig">
+        <div class="product-badge pink">Premium</div>
+        <svg width="180" height="200" viewBox="0 0 180 200">
+          <!-- Dragon simplificado -->
+          <ellipse cx="90" cy="120" rx="40" ry="55" fill="none" stroke="#ff006e" stroke-width="1.5"/>
+          <!-- Cabeza -->
+          <circle cx="90" cy="58" r="22" fill="none" stroke="#ff006e" stroke-width="2"/>
+          <!-- Cuernos -->
+          <line x1="82" y1="38" x2="75" y2="20" stroke="#ff006e" stroke-width="2"/>
+          <line x1="98" y1="38" x2="105" y2="20" stroke="#ff006e" stroke-width="2"/>
+          <!-- Alas -->
+          <path d="M50 100 Q20 70 30 110 Q40 130 50 120Z" fill="none" stroke="#ff006e" stroke-width="1.5" opacity="0.7"/>
+          <path d="M130 100 Q160 70 150 110 Q140 130 130 120Z" fill="none" stroke="#ff006e" stroke-width="1.5" opacity="0.7"/>
+          <!-- Cola -->
+          <path d="M90 170 Q110 185 120 175 Q115 165 110 170" fill="none" stroke="#ff006e" stroke-width="1.5"/>
+          <!-- Ojos -->
+          <circle cx="84" cy="55" r="3" fill="#ff006e" opacity="0.8"/>
+          <circle cx="96" cy="55" r="3" fill="#ff006e" opacity="0.8"/>
+          <!-- Escamas detalle -->
+          <path d="M75 95 Q90 85 105 95" stroke="#ff006e" stroke-width="1" fill="none" opacity="0.5"/>
+          <path d="M72 110 Q90 100 108 110" stroke="#ff006e" stroke-width="1" fill="none" opacity="0.5"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <div class="product-cat">Figuras · Colección</div>
+        <div class="product-name">Dragón Articulado</div>
+        <div class="product-desc">Figura articulada impresa en PLA. Todas las piezas se imprimen ensambladas, sin pegamento.</div>
+        <div class="product-footer">
+          <div class="product-price">22,00€</div>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Organizador escritorio -->
+    <div class="product-card">
+      <div class="product-img img-bg-llave">
+        <svg width="200" height="190" viewBox="0 0 200 190">
+          <!-- Organizador modular -->
+          <rect x="30" y="80" width="45" height="90" rx="3" fill="none" stroke="#00f5ff" stroke-width="2"/>
+          <rect x="78" y="60" width="35" height="110" rx="3" fill="none" stroke="#00f5ff" stroke-width="2"/>
+          <rect x="116" y="70" width="55" height="100" rx="3" fill="none" stroke="#00f5ff" stroke-width="2"/>
+          <!-- Base -->
+          <line x1="25" y1="170" x2="175" y2="170" stroke="#00f5ff" stroke-width="2.5"/>
+          <!-- Items dentro -->
+          <rect x="38" y="130" width="8" height="35" rx="1" fill="#00f5ff" opacity="0.4"/>
+          <rect x="50" y="120" width="8" height="45" rx="1" fill="#00f5ff" opacity="0.4"/>
+          <rect x="62" y="140" width="8" height="25" rx="1" fill="#00f5ff" opacity="0.4"/>
+          <!-- Círculo deco -->
+          <circle cx="95" cy="100" r="10" fill="none" stroke="#00f5ff" stroke-width="1.5" opacity="0.6"/>
+          <!-- Grid top -->
+          <line x1="30" y1="95" x2="75" y2="95" stroke="#00f5ff" stroke-width="1" opacity="0.3"/>
+          <line x1="78" y1="78" x2="113" y2="78" stroke="#00f5ff" stroke-width="1" opacity="0.3"/>
+          <line x1="116" y1="88" x2="171" y2="88" stroke="#00f5ff" stroke-width="1" opacity="0.3"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <div class="product-cat">Accesorios · Escritorio</div>
+        <div class="product-name">Organizador Modular</div>
+        <div class="product-desc">Sistema modular de organización para escritorio. Configurable según tus necesidades.</div>
+        <div class="product-footer">
+          <div class="product-price">18,00€</div>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Figura robot -->
+    <div class="product-card">
+      <div class="product-img img-bg-deco">
+        <svg width="180" height="200" viewBox="0 0 180 200">
+          <!-- Robot -->
+          <!-- Cabeza -->
+          <rect x="60" y="30" width="60" height="50" rx="8" fill="none" stroke="#bf00ff" stroke-width="2"/>
+          <!-- Antena -->
+          <line x1="90" y1="30" x2="90" y2="15" stroke="#bf00ff" stroke-width="2"/>
+          <circle cx="90" cy="12" r="5" fill="#bf00ff" opacity="0.7"/>
+          <!-- Ojos -->
+          <rect x="68" y="45" width="16" height="10" rx="2" fill="none" stroke="#bf00ff" stroke-width="1.5"/>
+          <rect x="96" y="45" width="16" height="10" rx="2" fill="none" stroke="#bf00ff" stroke-width="1.5"/>
+          <rect x="71" y="47" width="10" height="6" rx="1" fill="#bf00ff" opacity="0.5"/>
+          <rect x="99" y="47" width="10" height="6" rx="1" fill="#bf00ff" opacity="0.5"/>
+          <!-- Boca -->
+          <path d="M75 65 L85 70 L95 65 L105 70" stroke="#bf00ff" stroke-width="1.5" fill="none"/>
+          <!-- Cuerpo -->
+          <rect x="55" y="85" width="70" height="65" rx="4" fill="none" stroke="#bf00ff" stroke-width="2"/>
+          <!-- Panel pecho -->
+          <rect x="68" y="95" width="44" height="30" rx="2" fill="none" stroke="#bf00ff" stroke-width="1" opacity="0.5"/>
+          <circle cx="80" cy="110" r="6" fill="none" stroke="#bf00ff" stroke-width="1.5" opacity="0.8"/>
+          <circle cx="100" cy="110" r="6" fill="none" stroke="#bf00ff" stroke-width="1.5" opacity="0.8"/>
+          <circle cx="80" cy="110" r="3" fill="#bf00ff" opacity="0.6"/>
+          <circle cx="100" cy="110" r="3" fill="#bf00ff" opacity="0.6"/>
+          <!-- Brazos -->
+          <rect x="30" y="88" width="22" height="50" rx="8" fill="none" stroke="#bf00ff" stroke-width="1.5"/>
+          <rect x="128" y="88" width="22" height="50" rx="8" fill="none" stroke="#bf00ff" stroke-width="1.5"/>
+          <!-- Piernas -->
+          <rect x="63" y="153" width="22" height="35" rx="4" fill="none" stroke="#bf00ff" stroke-width="1.5"/>
+          <rect x="95" y="153" width="22" height="35" rx="4" fill="none" stroke="#bf00ff" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <div class="product-cat">Figuras · Decoración</div>
+        <div class="product-name">Robot Retro Figura</div>
+        <div class="product-desc">Figura decorativa estilo retro-futurista. Impresa en PLA metálico, 15cm de altura.</div>
+        <div class="product-footer">
+          <div class="product-price">16,00€</div>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Soporte teléfono -->
+    <div class="product-card">
+      <div class="product-img img-bg-fig" style="background: radial-gradient(ellipse at 50% 50%, rgba(0,245,255,0.06) 0%, transparent 70%)">
+        <svg width="180" height="190" viewBox="0 0 180 190">
+          <!-- Soporte teléfono -->
+          <!-- Base -->
+          <ellipse cx="90" cy="165" rx="50" ry="10" fill="none" stroke="#00f5ff" stroke-width="2"/>
+          <!-- Pilar -->
+          <path d="M90 155 L90 95" stroke="#00f5ff" stroke-width="3"/>
+          <!-- Brazo soporte -->
+          <path d="M90 95 Q65 75 55 80" stroke="#00f5ff" stroke-width="2.5" fill="none"/>
+          <path d="M90 95 Q115 75 125 80" stroke="#00f5ff" stroke-width="2.5" fill="none"/>
+          <!-- Teléfono -->
+          <rect x="58" y="25" width="64" height="110" rx="8" fill="none" stroke="#00f5ff" stroke-width="2"/>
+          <rect x="64" y="35" width="52" height="85" rx="2" fill="none" stroke="#00f5ff" stroke-width="1" opacity="0.4"/>
+          <!-- Pantalla contenido -->
+          <line x1="70" y1="52" x2="110" y2="52" stroke="#00f5ff" stroke-width="1" opacity="0.3"/>
+          <line x1="70" y1="62" x2="100" y2="62" stroke="#00f5ff" stroke-width="1" opacity="0.3"/>
+          <rect x="70" y="72" width="40" height="22" rx="2" fill="none" stroke="#00f5ff" stroke-width="1" opacity="0.3"/>
+          <circle cx="90" cy="128" r="5" fill="none" stroke="#00f5ff" stroke-width="1.5"/>
+          <!-- LED glow en base -->
+          <ellipse cx="90" cy="165" rx="30" ry="4" fill="#00f5ff" opacity="0.08"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <div class="product-cat">Accesorios · Tech</div>
+        <div class="product-name">Soporte Smartphone</div>
+        <div class="product-desc">Soporte ajustable para escritorio. Compatible con todos los modelos. Ángulo regulable.</div>
+        <div class="product-footer">
+          <div class="product-price">8,00€</div>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- THIRD ROW -->
+  <div class="product-grid" style="margin-top: 2px;">
+
+    <!-- Lampara -->
+    <div class="product-card">
+      <div class="product-img img-bg-deco">
+        <svg width="160" height="200" viewBox="0 0 160 200">
+          <!-- Lámpara -->
+          <path d="M80 30 L35 110 L125 110 Z" fill="none" stroke="#bf00ff" stroke-width="2"/>
+          <!-- Patrones en la pantalla -->
+          <line x1="55" y1="85" x2="80" y2="45" stroke="#bf00ff" stroke-width="1" opacity="0.3"/>
+          <line x1="80" y1="45" x2="105" y2="85" stroke="#bf00ff" stroke-width="1" opacity="0.3"/>
+          <line x1="50" y1="95" x2="110" y2="95" stroke="#bf00ff" stroke-width="1" opacity="0.3"/>
+          <line x1="45" y1="105" x2="115" y2="105" stroke="#bf00ff" stroke-width="1" opacity="0.3"/>
+          <!-- Pie -->
+          <line x1="80" y1="110" x2="80" y2="165" stroke="#bf00ff" stroke-width="3"/>
+          <ellipse cx="80" cy="168" rx="30" ry="8" fill="none" stroke="#bf00ff" stroke-width="2"/>
+          <!-- Glow interior -->
+          <ellipse cx="80" cy="90" rx="25" ry="20" fill="#bf00ff" opacity="0.05"/>
+          <!-- Bombilla -->
+          <circle cx="80" cy="38" r="8" fill="none" stroke="#bf00ff" stroke-width="1.5" opacity="0.7"/>
+          <circle cx="80" cy="38" r="4" fill="#bf00ff" opacity="0.5"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <div class="product-cat">Decoración · Iluminación</div>
+        <div class="product-name">Lámpara Impresa</div>
+        <div class="product-desc">Pantalla geométrica para lámpara de escritorio. Proyecta patrones de luz únicos. Sin bombilla incluida.</div>
+        <div class="product-footer">
+          <div class="product-price">25,00€</div>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Joyero -->
+    <div class="product-card">
+      <div class="product-img img-bg-llave">
+        <svg width="200" height="190" viewBox="0 0 200 190">
+          <!-- Caja joyero -->
+          <!-- Tapa (abierta) -->
+          <path d="M40 80 L40 40 L160 40 L160 80" fill="none" stroke="#00f5ff" stroke-width="2"/>
+          <!-- Bisagra -->
+          <line x1="40" y1="80" x2="160" y2="80" stroke="#00f5ff" stroke-width="2.5"/>
+          <!-- Cuerpo -->
+          <rect x="40" y="80" width="120" height="80" rx="2" fill="none" stroke="#00f5ff" stroke-width="2"/>
+          <!-- Interior tapa -->
+          <path d="M48 78 L48 46 L152 46 L152 78" fill="none" stroke="#00f5ff" stroke-width="1" opacity="0.3"/>
+          <!-- Compartimentos -->
+          <line x1="100" y1="80" x2="100" y2="160" stroke="#00f5ff" stroke-width="1" opacity="0.4"/>
+          <line x1="40" y1="120" x2="100" y2="120" stroke="#00f5ff" stroke-width="1" opacity="0.4"/>
+          <!-- Joya decorativa tapa -->
+          <polygon points="100,48 106,58 116,58 108,64 111,74 100,67 89,74 92,64 84,58 94,58" fill="none" stroke="#ffd700" stroke-width="1.5" opacity="0.8"/>
+          <!-- Items joyero -->
+          <circle cx="70" cy="100" r="8" fill="none" stroke="#bf00ff" stroke-width="1.5" opacity="0.6"/>
+          <path d="M58 140 Q70 130 82 140" stroke="#00f5ff" stroke-width="1.5" fill="none" opacity="0.6"/>
+          <circle cx="130" cy="110" r="5" fill="none" stroke="#ff006e" stroke-width="1.5" opacity="0.6"/>
+          <circle cx="145" cy="130" r="4" fill="none" stroke="#ff006e" stroke-width="1.5" opacity="0.6"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <div class="product-cat">Accesorios · Hogar</div>
+        <div class="product-name">Joyero Modular</div>
+        <div class="product-desc">Caja organizadora para joyería con compartimentos interiores. Cierre magnético. PLA silk gold.</div>
+        <div class="product-footer">
+          <div class="product-price">14,00€</div>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mini bust / figura personalizada -->
+    <div class="product-card">
+      <div class="product-img img-bg-fig">
+        <div class="product-badge pink">Custom</div>
+        <svg width="170" height="200" viewBox="0 0 170 200">
+          <!-- Busto personalizado -->
+          <!-- Peana -->
+          <rect x="45" y="165" width="80" height="20" rx="3" fill="none" stroke="#ff006e" stroke-width="2"/>
+          <rect x="55" y="150" width="60" height="18" rx="2" fill="none" stroke="#ff006e" stroke-width="1.5"/>
+          <!-- Torso -->
+          <path d="M55 150 Q40 130 50 105 L85 95 L120 105 Q130 130 115 150Z" fill="none" stroke="#ff006e" stroke-width="1.5"/>
+          <!-- Cuello -->
+          <rect x="75" y="78" width="20" height="20" rx="2" fill="none" stroke="#ff006e" stroke-width="1.5"/>
+          <!-- Cabeza -->
+          <ellipse cx="85" cy="60" rx="28" ry="32" fill="none" stroke="#ff006e" stroke-width="2"/>
+          <!-- Rasgos faciales -->
+          <line x1="75" y1="55" x2="82" y2="55" stroke="#ff006e" stroke-width="2" opacity="0.7"/>
+          <line x1="88" y1="55" x2="95" y2="55" stroke="#ff006e" stroke-width="2" opacity="0.7"/>
+          <path d="M78 70 Q85 75 92 70" stroke="#ff006e" stroke-width="1.5" fill="none"/>
+          <!-- Pelo -->
+          <path d="M58 45 Q60 28 85 28 Q110 28 112 45" stroke="#ff006e" stroke-width="2" fill="none"/>
+          <path d="M58 45 Q52 50 57 58" stroke="#ff006e" stroke-width="1.5" fill="none"/>
+          <path d="M112 45 Q118 50 113 58" stroke="#ff006e" stroke-width="1.5" fill="none"/>
+          <!-- Detalles ropa -->
+          <line x1="85" y1="105" x2="85" y2="148" stroke="#ff006e" stroke-width="1" opacity="0.3"/>
+          <path d="M68 118 Q85 112 102 118" stroke="#ff006e" stroke-width="1" fill="none" opacity="0.3"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <div class="product-cat">Figuras · Personalizado</div>
+        <div class="product-name">Busto Personalizado</div>
+        <div class="product-desc">Miniatura o busto a partir de foto. Ideal para regalo. Altura 10–15cm. Acabado lija disponible.</div>
+        <div class="product-footer">
+          <div class="product-price">35,00€</div>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PEDIDOS PERSONALIZADOS -->
+<section class="section" id="custom">
+  <div class="custom-section">
+    <div class="custom-grid">
+
+      <div>
+        <div class="section-label">// 02 — Pedidos Especiales</div>
+        <h2 class="section-title">¿Tienes algo<br>en <em>mente</em>?</h2>
+
+        <p style="font-size:15px; color: var(--muted); line-height:1.8; margin-top: 20px; font-weight: 300; max-width: 400px;">
+          Imprimimos cualquier diseño que nos envíes. Sube tu archivo STL o compártenos tu idea — nosotros lo hacemos realidad.
+        </p>
+
+        <div class="custom-steps">
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-text">
+              <h4>Comparte tu idea</h4>
+              <p>Envíanos un archivo STL, imagen de referencia o simplemente descríbenos qué quieres.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-text">
+              <h4>Presupuesto en 24h</h4>
+              <p>Te enviamos precio, material recomendado y tiempo estimado de impresión.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-text">
+              <h4>Producción y envío</h4>
+              <p>Confirmado el pedido, imprimimos y enviamos en 24–48 horas.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="price-tag">
+          <span class="from">Pedidos custom desde</span>
+          <span class="amount">10<span class="unit">€</span></span>
+        </div>
+      </div>
+
+      <div class="custom-visual">
+        <p style="font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--muted); margin-bottom:16px;">Ejemplos de materiales</p>
+        <div class="hex-grid">
+          <div class="hex active">🔵</div>
+          <div class="hex">🟣</div>
+          <div class="hex">🟡</div>
+          <div class="hex">⚪</div>
+          <div class="hex">🟠</div>
+          <div class="hex">🔴</div>
+          <div class="hex">🟢</div>
+          <div class="hex">⚫</div>
+          <div class="hex">✨</div>
+          <div class="hex">🌿</div>
+          <div class="hex">🪵</div>
+          <div class="hex">🔮</div>
+        </div>
+
+        <div style="margin-top: 32px; padding: 20px; border: 1px solid var(--border); background: var(--bg);">
+          <p style="font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--muted); margin-bottom:16px;">Formatos aceptados</p>
+          <div style="display:flex; flex-wrap:wrap; gap:8px;">
+            <span style="border:1px solid var(--border); padding:6px 14px; font-size:11px; color:var(--neon); letter-spacing:2px;">.STL</span>
+            <span style="border:1px solid var(--border); padding:6px 14px; font-size:11px; color:var(--neon); letter-spacing:2px;">.OBJ</span>
+            <span style="border:1px solid var(--border); padding:6px 14px; font-size:11px; color:var(--neon); letter-spacing:2px;">.3MF</span>
+            <span style="border:1px solid var(--border); padding:6px 14px; font-size:11px; color:var(--muted); letter-spacing:2px;">FOTO REF.</span>
+            <span style="border:1px solid var(--border); padding:6px 14px; font-size:11px; color:var(--muted); letter-spacing:2px;">DESCRIPCIÓN</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-section" id="contacto">
+  <div class="section-label">// 03 — Contacto</div>
+  <h2 class="cta-title">¿Listo para<br><em>imprimir</em>?</h2>
+  <p class="cta-sub">Escríbenos por el canal que prefieras. Respondemos en menos de 24 horas con presupuesto incluido.</p>
+
+  <div class="contact-options">
+    <a href="https://wa.me/34600000000" class="contact-chip">
+      <span class="icon">💬</span> WhatsApp
+    </a>
+    <a href="mailto:3docna@gmail.com" class="contact-chip">
+      <span class="icon">✉️</span> 3docna@gmail.com
+    </a>
+    <a href="https://instagram.com/3docna" class="contact-chip">
+      <span class="icon">📸</span> @3docna
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">3DOCNA</div>
+  <div class="footer-text">Catálogo 2025 · Impresión 3D personalizada · España</div>
+  <div class="footer-text" style="color: rgba(90,96,128,0.5)">Precios sin IVA. Sujetos a cambios.</div>
+</footer>
+
+<script>
+  // Tab filtering
+  const tabs = document.querySelectorAll('.cat-tab');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
+  // Hex grid interaction
+  const hexes = document.querySelectorAll('.hex');
+  hexes.forEach(hex => {
+    hex.addEventListener('click', () => {
+      hexes.forEach(h => h.classList.remove('active'));
+      hex.classList.add('active');
+    });
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.product-card, .step, .stat').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+
+  // Add to cart animation
+  document.querySelectorAll('.add-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      this.textContent = '✓';
+      this.style.background = 'var(--neon)';
+      this.style.color = 'var(--bg)';
+      setTimeout(() => {
+        this.textContent = '+';
+        this.style.background = '';
+        this.style.color = '';
+      }, 1500);
+    });
+  });
+</script>
+
+</body>
+</html>
