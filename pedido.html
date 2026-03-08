@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="3DOCNA — Solicita tu presupuesto de impresión 3D personalizada. Pedidos custom, figuras, llaveros y más.">
+  <meta name="theme-color" content="#030508">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Pedido — 3DOCNA Impresión 3D</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/accessibility.css">
+</head>
+<body>
+
+<!-- SKIP TO CONTENT -->
+<a href="#main" class="skip-link">Saltar al contenido</a>
+
+<!-- NAV -->
+<nav aria-label="Navegación principal">
+  <a href="index.html" class="logo" aria-label="3DOCNA Inicio">3D<span class="logo-oc">OC</span><span>NA</span></a>
+
+  <ul class="nav-links">
+    <li><a href="index.html" data-i18n="nav.inicio">Inicio</a></li>
+    <li><a href="catalogo.html" data-i18n="nav.catalogo">Catálogo</a></li>
+    <li><a href="pedido.html" aria-current="page" data-i18n="nav.pedido">Pedido</a></li>
+    <li><a href="contacto.html" data-i18n="nav.contacto">Contacto</a></li>
+  </ul>
+
+  <div class="nav-right">
+    <a href="pedido.html" class="nav-cta" data-i18n="nav.cta">Pedir ahora</a>
+    <button class="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Menú móvil">
+  <a href="index.html">Inicio</a>
+  <a href="catalogo.html">Catálogo</a>
+  <a href="pedido.html">Pedido</a>
+  <a href="contacto.html">Contacto</a>
+</div>
+
+<main id="main">
+
+<!-- CUSTOM ORDERS SECTION -->
+<section class="section" style="padding-top: 140px;" aria-labelledby="custom-title">
+  <div class="custom-section">
+    <div class="custom-grid">
+
+      <div>
+        <div class="section-label">// 02 — Pedidos Especiales</div>
+        <h1 class="section-title" id="custom-title" data-i18n="custom.title">¿Tienes algo en <em>mente</em>?</h1>
+
+        <p style="font-size:15px; color: var(--muted); line-height:1.8; margin-top: 20px; font-weight: 300; max-width: 400px;" data-i18n="custom.desc">
+          Imprimimos cualquier diseño que nos envíes. Sube tu archivo STL o compártenos tu idea — nosotros lo hacemos realidad.
+        </p>
+
+        <div class="custom-steps">
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-text">
+              <h4 data-i18n="step1.title">Comparte tu idea</h4>
+              <p data-i18n="step1.desc">Envíanos un archivo STL, imagen de referencia o simplemente descríbenos qué quieres.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-text">
+              <h4 data-i18n="step2.title">Presupuesto en 24h</h4>
+              <p data-i18n="step2.desc">Te enviamos precio, material recomendado y tiempo estimado de impresión.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-text">
+              <h4 data-i18n="step3.title">Producción y envío</h4>
+              <p data-i18n="step3.desc">Confirmado el pedido, imprimimos y enviamos en 24–48 horas.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="price-tag">
+          <span class="from" data-i18n="custom.from">Pedidos custom desde</span>
+          <span class="amount">10<span class="unit">€</span></span>
+        </div>
+      </div>
+
+      <div class="custom-visual">
+        <p style="font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--muted); margin-bottom:16px;" data-i18n="custom.materials">Ejemplos de materiales</p>
+        <div class="hex-grid">
+          <div class="hex active" aria-label="Azul PLA">🔵</div>
+          <div class="hex" aria-label="Púrpura PETG">🟣</div>
+          <div class="hex" aria-label="Amarillo PLA Silk">🟡</div>
+          <div class="hex" aria-label="Blanco PLA">⚪</div>
+          <div class="hex" aria-label="Naranja PLA">🟠</div>
+          <div class="hex" aria-label="Rojo PLA">🔴</div>
+          <div class="hex" aria-label="Verde PLA Glow">🟢</div>
+          <div class="hex" aria-label="Negro PLA">⚫</div>
+          <div class="hex" aria-label="PLA Silk metalizado">✨</div>
+          <div class="hex" aria-label="PLA Wood">🌿</div>
+          <div class="hex" aria-label="PLA madera">🪵</div>
+          <div class="hex" aria-label="PLA transparente">🔮</div>
+        </div>
+
+        <div style="margin-top: 32px; padding: 20px; border: 1px solid var(--border); background: var(--bg);">
+          <p style="font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--muted); margin-bottom:16px;" data-i18n="custom.formats">Formatos aceptados</p>
+          <div style="display:flex; flex-wrap:wrap; gap:8px;">
+            <span class="format-tag">.STL</span>
+            <span class="format-tag">.OBJ</span>
+            <span class="format-tag">.3MF</span>
+            <span class="format-tag" style="color:var(--muted)">FOTO REF.</span>
+            <span class="format-tag" style="color:var(--muted)">DESCRIPCIÓN</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider" aria-hidden="true"></div>
+
+<!-- ORDER FORM -->
+<section class="form-section" aria-labelledby="form-title">
+  <div class="form-wrapper">
+    <div style="text-align:center; margin-bottom: 8px;">
+      <div class="section-label" style="display:block;">// 03 — Pedido Online</div>
+      <h2 class="section-title" id="form-title" style="margin-top:12px;" data-i18n="form.title">Solicita tu <em>presupuesto</em></h2>
+      <p style="color:var(--muted); font-size:15px; margin-top:16px; font-weight:300; line-height:1.7;" data-i18n="form.sub">
+        Rellena el formulario y te respondemos en menos de 24h con precio y plazo de entrega.
+      </p>
+    </div>
+
+    <form id="orderForm" action="#" method="POST" novalidate>
+      <div class="form-grid">
+
+        <div class="form-group">
+          <label for="nombre" data-i18n="form.nombre">Nombre *</label>
+          <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required autocomplete="name">
+        </div>
+
+        <div class="form-group">
+          <label for="email" data-i18n="form.email">Email *</label>
+          <input type="email" id="email" name="email" placeholder="tu@email.com" required autocomplete="email">
+        </div>
+
+        <div class="form-group">
+          <label for="telefono" data-i18n="form.telefono">Teléfono</label>
+          <input type="tel" id="telefono" name="telefono" placeholder="+34 600 000 000" autocomplete="tel">
+        </div>
+
+        <div class="form-group">
+          <label for="tipo" data-i18n="form.tipo">Tipo de producto *</label>
+          <select id="tipo" name="tipo" required>
+            <option value="" disabled selected>Selecciona...</option>
+            <option value="llavero">Llavero / Accesorio</option>
+            <option value="decoracion">Decoración del hogar</option>
+            <option value="figura">Figura / Miniatura</option>
+            <option value="funcional">Pieza funcional</option>
+            <option value="personalizado">Diseño personalizado</option>
+            <option value="otro">Otro</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="material" data-i18n="form.material">Material preferido</label>
+          <select id="material" name="material">
+            <option value="" disabled selected>Selecciona...</option>
+            <option value="pla">PLA (estándar)</option>
+            <option value="pla-silk">PLA Silk (brillo metálico)</option>
+            <option value="pla-wood">PLA Wood (aspecto madera)</option>
+            <option value="pla-glow">PLA Glow (brilla en oscuridad)</option>
+            <option value="petg">PETG (resistente)</option>
+            <option value="tpu">TPU (flexible)</option>
+            <option value="no-se">No lo sé, recomiéndame</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="color" data-i18n="form.color">Color deseado</label>
+          <input type="text" id="color" name="color" placeholder="Ej: negro, azul eléctrico...">
+        </div>
+
+        <div class="form-group">
+          <label for="cantidad" data-i18n="form.cantidad">Cantidad</label>
+          <input type="number" id="cantidad" name="cantidad" placeholder="1" min="1">
+        </div>
+
+        <div class="form-group full">
+          <label for="descripcion" data-i18n="form.desc">Descripción del pedido *</label>
+          <textarea id="descripcion" name="descripcion" placeholder="Describe qué necesitas. Si tienes un archivo STL o imagen de referencia, indícalo aquí y te decimos cómo enviárnoslo." required></textarea>
+        </div>
+
+        <div class="form-group full">
+          <button type="submit" class="form-submit" data-i18n="form.submit">Enviar solicitud →</button>
+          <p class="form-note" data-i18n="form.note">📨 Recibirás respuesta en menos de 24h · Sin compromiso</p>
+        </div>
+
+      </div>
+    </form>
+
+    <div class="form-success" id="formSuccess">
+      <div class="success-icon">✅</div>
+      <h3 data-i18n="form.success.title">¡Solicitud enviada!</h3>
+      <p data-i18n="form.success.desc">Te responderemos en menos de 24 horas con tu presupuesto personalizado.</p>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider" aria-hidden="true"></div>
+
+<!-- CTA CONTACT -->
+<section class="cta-section" aria-labelledby="cta-title">
+  <div class="section-label">// Contacto</div>
+  <h2 class="cta-title" id="cta-title" data-i18n="cta.title.alt">¿Prefieres hablar<br><em>directamente</em>?</h2>
+  <p class="cta-sub" data-i18n="cta.sub">Escríbenos por el canal que prefieras. Respondemos en menos de 24 horas con presupuesto incluido.</p>
+  <div class="contact-options">
+    <a href="https://wa.me/34694455979?text=Hola!%20Me%20interesa%20hacer%20un%20pedido%20de%20impresión%203D" class="contact-chip" target="_blank" rel="noopener noreferrer">
+      <span class="icon" aria-hidden="true">💬</span> WhatsApp
+    </a>
+    <a href="mailto:contacto@3docna.es" class="contact-chip">
+      <span class="icon" aria-hidden="true">✉️</span> contacto@3docna.es
+    </a>
+    <a href="https://instagram.com/3docna" class="contact-chip" target="_blank" rel="noopener noreferrer">
+      <span class="icon" aria-hidden="true">📸</span> @3docna
+    </a>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">3D<span class="footer-oc">OC</span><span class="footer-na">NA</span></div>
+  <ul class="footer-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="catalogo.html">Catálogo</a></li>
+    <li><a href="pedido.html">Pedido</a></li>
+    <li><a href="contacto.html">Contacto</a></li>
+  </ul>
+  <div class="footer-text" data-i18n="footer.info">Catálogo 2025 · Impresión 3D personalizada · España</div>
+  <div class="footer-text" style="opacity: 0.5;" data-i18n="footer.legal">Precios sin IVA. Sujetos a cambios.</div>
+</footer>
+
+<!-- WHATSAPP FLOATING BUTTON -->
+<a href="https://wa.me/34694455979?text=Hola!%20Me%20interesa%20hacer%20un%20pedido%20de%20impresión%203D"
+   target="_blank"
+   rel="noopener noreferrer"
+   class="whatsapp-float"
+   aria-label="Contactar por WhatsApp">
+  <span class="whatsapp-label" data-i18n="wa.label">¿Hablamos? 💬</span>
+  <div class="whatsapp-bubble" aria-hidden="true">💬</div>
+</a>
+
+<!-- ACCESSIBILITY TOGGLE -->
+<button class="accessibility-toggle" aria-label="Opciones de accesibilidad" aria-expanded="false" aria-controls="a11yPanel">⚙️</button>
+
+<!-- ACCESSIBILITY PANEL -->
+<aside class="accessibility-panel" id="a11yPanel" aria-label="Panel de accesibilidad">
+  <h3 data-i18n="a11y.title">Accesibilidad</h3>
+  <div class="a11y-group">
+    <label data-i18n="a11y.lang">Idioma</label>
+    <div class="a11y-options">
+      <button class="a11y-btn active" data-lang="es">ES</button>
+      <button class="a11y-btn" data-lang="en">EN</button>
+    </div>
+  </div>
+  <div class="a11y-group">
+    <label data-i18n="a11y.contrast">Contraste</label>
+    <div class="a11y-options">
+      <button class="a11y-btn active" data-contrast-mode="default">Normal</button>
+      <button class="a11y-btn" data-contrast-mode="high">Alto</button>
+      <button class="a11y-btn" data-contrast-mode="light">Claro</button>
+    </div>
+  </div>
+  <div class="a11y-group">
+    <label data-i18n="a11y.fontsize">Tamaño texto</label>
+    <div class="a11y-options">
+      <button class="a11y-btn" data-fontsize-btn="small">A-</button>
+      <button class="a11y-btn active" data-fontsize-btn="normal">A</button>
+      <button class="a11y-btn" data-fontsize-btn="large">A+</button>
+      <button class="a11y-btn" data-fontsize-btn="xlarge">A++</button>
+    </div>
+  </div>
+  <div class="a11y-group">
+    <label data-i18n="a11y.motion">Animaciones</label>
+    <div class="a11y-options">
+      <button class="a11y-btn active" data-motion-btn="normal" data-i18n="a11y.motion.on">Sí</button>
+      <button class="a11y-btn" data-motion-btn="reduced" data-i18n="a11y.motion.off">No</button>
+    </div>
+  </div>
+</aside>
+
+<!-- SCRIPTS -->
+<script src="js/navigation.js"></script>
+<script src="js/main.js"></script>
+<script src="js/accessibility.js"></script>
+
+</body>
+</html>

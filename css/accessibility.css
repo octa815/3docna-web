@@ -1,0 +1,156 @@
+/* ═══════════════════════════════════════════════
+   3DOCNA — Accessibility Styles
+   High contrast, font scaling, focus outlines
+   ═══════════════════════════════════════════════ */
+
+/* ── ACCESSIBILITY TOGGLE BUTTON ── */
+.accessibility-toggle {
+  position: fixed;
+  bottom: 32px;
+  left: 32px;
+  z-index: 1000;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  color: var(--text);
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.accessibility-toggle:hover,
+.accessibility-toggle:focus-visible {
+  border-color: var(--neon);
+  box-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
+}
+
+/* ── ACCESSIBILITY PANEL ── */
+.accessibility-panel {
+  position: fixed;
+  bottom: 90px;
+  left: 32px;
+  z-index: 999;
+  width: 280px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 24px;
+  display: none;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+.accessibility-panel.open {
+  display: flex;
+}
+
+.accessibility-panel h3 {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: var(--neon);
+  text-transform: uppercase;
+}
+
+.a11y-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.a11y-group label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.a11y-options {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.a11y-btn {
+  padding: 8px 14px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: all 0.2s;
+}
+
+.a11y-btn:hover,
+.a11y-btn:focus-visible {
+  border-color: var(--neon);
+  color: var(--neon);
+}
+
+.a11y-btn.active {
+  background: var(--neon);
+  color: var(--bg);
+  border-color: var(--neon);
+}
+
+/* ── FOCUS VISIBLE (keyboard navigation) ── */
+:focus-visible {
+  outline: 2px solid var(--neon);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ── FONT SIZE SCALING ── */
+[data-fontsize="small"] {
+  font-size: 14px;
+}
+
+[data-fontsize="normal"] {
+  font-size: 16px;
+}
+
+[data-fontsize="large"] {
+  font-size: 18px;
+}
+
+[data-fontsize="xlarge"] {
+  font-size: 20px;
+}
+
+/* ── REDUCED MOTION ── */
+[data-motion="reduced"] *,
+[data-motion="reduced"] *::before,
+[data-motion="reduced"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+/* ── RESPONSIVE PANEL ── */
+@media (max-width: 480px) {
+  .accessibility-toggle {
+    bottom: 16px;
+    left: 16px;
+    width: 42px;
+    height: 42px;
+    font-size: 18px;
+  }
+
+  .accessibility-panel {
+    bottom: 68px;
+    left: 16px;
+    right: 16px;
+    width: auto;
+  }
+}
