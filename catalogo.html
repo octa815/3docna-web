@@ -74,15 +74,55 @@
 
     <!-- Card Wide: Llaveros pack -->
     <article class="product-card card-wide" data-category="llaveros">
-      <div class="product-img img-bg-llave">
+      <div class="product-img-carousel">
+        <div class="carousel-track">
+          <div class="carousel-slide img-bg-llave">
+            <svg width="280" height="200" viewBox="0 0 280 200" aria-hidden="true">
+              <circle cx="80" cy="100" r="40" fill="none" stroke="#00f5ff" stroke-width="2.5" opacity="0.9"/>
+              <circle cx="80" cy="100" r="8" fill="#00f5ff" opacity="0.8"/>
+              <rect x="150" y="82" width="44" height="36" rx="6" fill="none" stroke="#00f5ff" stroke-width="2"/>
+              <text x="172" y="104" text-anchor="middle" fill="#00f5ff" font-size="11" font-family="monospace">3D</text>
+              <polygon points="200,70 208,88 228,88 212,100 218,118 200,106 182,118 188,100 172,88 192,88" fill="none" stroke="#bf00ff" stroke-width="2" opacity="0.9"/>
+            </svg>
+          </div>
+          <div class="carousel-slide img-bg-deco">
+            <svg width="200" height="200" viewBox="0 0 200 200" aria-hidden="true">
+              <circle cx="100" cy="92" r="58" fill="none" stroke="#00f5ff" stroke-width="3"/>
+              <circle cx="100" cy="92" r="42" fill="none" stroke="#00f5ff" stroke-width="1" opacity="0.25"/>
+              <circle cx="100" cy="92" r="12" fill="#00f5ff" opacity="0.12"/>
+              <circle cx="100" cy="92" r="4" fill="#00f5ff" opacity="0.85"/>
+              <circle cx="100" cy="92" r="26" fill="none" stroke="#00f5ff" stroke-width="1" stroke-dasharray="3,4" opacity="0.4"/>
+              <line x1="100" y1="34" x2="100" y2="20" stroke="#00f5ff" stroke-width="2.5"/>
+              <ellipse cx="100" cy="16" rx="9" ry="6" fill="none" stroke="#00f5ff" stroke-width="2"/>
+              <text x="100" y="172" text-anchor="middle" fill="#00f5ff" font-size="9" font-family="monospace" letter-spacing="2" opacity="0.8">PERSONALIZADO</text>
+            </svg>
+          </div>
+          <div class="carousel-slide img-bg-fig">
+            <svg width="260" height="180" viewBox="0 0 260 180" aria-hidden="true">
+              <circle cx="35" cy="82" r="24" fill="none" stroke="#00f5ff" stroke-width="2"/>
+              <circle cx="35" cy="82" r="5" fill="#00f5ff" opacity="0.7"/>
+              <circle cx="93" cy="82" r="24" fill="none" stroke="#bf00ff" stroke-width="2"/>
+              <circle cx="93" cy="82" r="5" fill="#bf00ff" opacity="0.7"/>
+              <circle cx="151" cy="82" r="24" fill="none" stroke="#ff006e" stroke-width="2"/>
+              <circle cx="151" cy="82" r="5" fill="#ff006e" opacity="0.7"/>
+              <circle cx="209" cy="82" r="24" fill="none" stroke="#ffd700" stroke-width="2"/>
+              <circle cx="209" cy="82" r="5" fill="#ffd700" opacity="0.7"/>
+              <text x="35" y="120" text-anchor="middle" fill="#00f5ff" font-size="8" font-family="monospace">PLA</text>
+              <text x="93" y="120" text-anchor="middle" fill="#bf00ff" font-size="8" font-family="monospace">SILK</text>
+              <text x="151" y="120" text-anchor="middle" fill="#ff006e" font-size="8" font-family="monospace">GLOW</text>
+              <text x="209" y="120" text-anchor="middle" fill="#ffd700" font-size="8" font-family="monospace">GOLD</text>
+              <text x="130" y="155" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="9" font-family="monospace" letter-spacing="2">+20 COLORES</text>
+            </svg>
+          </div>
+        </div>
         <div class="product-badge">Más vendido</div>
-        <svg width="280" height="200" viewBox="0 0 280 200" aria-hidden="true">
-          <circle cx="80" cy="100" r="40" fill="none" stroke="#00f5ff" stroke-width="2.5" opacity="0.9"/>
-          <circle cx="80" cy="100" r="8" fill="#00f5ff" opacity="0.8"/>
-          <rect x="150" y="82" width="44" height="36" rx="6" fill="none" stroke="#00f5ff" stroke-width="2"/>
-          <text x="172" y="104" text-anchor="middle" fill="#00f5ff" font-size="11" font-family="monospace">3D</text>
-          <polygon points="200,70 208,88 228,88 212,100 218,118 200,106 182,118 188,100 172,88 192,88" fill="none" stroke="#bf00ff" stroke-width="2" opacity="0.9"/>
-        </svg>
+        <div class="carousel-dots">
+          <button class="dot active" aria-label="Imagen 1"></button>
+          <button class="dot" aria-label="Imagen 2"></button>
+          <button class="dot" aria-label="Imagen 3"></button>
+        </div>
+        <button class="carousel-arrow prev" aria-label="Imagen anterior">&#8249;</button>
+        <button class="carousel-arrow next" aria-label="Imagen siguiente">&#8250;</button>
       </div>
       <div class="product-info">
         <div class="product-cat">Llaveros · Accesorios</div>
@@ -97,13 +137,35 @@
 
     <!-- Card: Macetero -->
     <article class="product-card" data-category="decoracion">
-      <div class="product-img img-bg-deco">
+      <div class="product-img-carousel">
+        <div class="carousel-track">
+          <div class="carousel-slide img-bg-deco">
+            <svg width="160" height="180" viewBox="0 0 160 180" aria-hidden="true">
+              <path d="M45 60 L35 150 L125 150 L115 60 Z" fill="none" stroke="#bf00ff" stroke-width="2"/>
+              <path d="M40 60 L120 60" stroke="#bf00ff" stroke-width="2.5"/>
+              <path d="M80 60 Q60 30 75 20 Q80 40 80 40 Q80 40 85 15 Q95 30 80 60Z" fill="none" stroke="#00ff88" stroke-width="1.5" opacity="0.8"/>
+            </svg>
+          </div>
+          <div class="carousel-slide img-bg-llave">
+            <svg width="160" height="180" viewBox="0 0 160 180" aria-hidden="true">
+              <polygon points="80,18 132,50 122,144 80,162 38,144 28,50" fill="none" stroke="#bf00ff" stroke-width="2"/>
+              <line x1="80" y1="18" x2="80" y2="162" stroke="#bf00ff" stroke-width="1" opacity="0.3"/>
+              <line x1="28" y1="50" x2="132" y2="50" stroke="#bf00ff" stroke-width="1" opacity="0.3"/>
+              <line x1="38" y1="144" x2="122" y2="144" stroke="#bf00ff" stroke-width="1" opacity="0.3"/>
+              <line x1="28" y1="50" x2="122" y2="144" stroke="#bf00ff" stroke-width="1" opacity="0.2"/>
+              <line x1="132" y1="50" x2="38" y2="144" stroke="#bf00ff" stroke-width="1" opacity="0.2"/>
+              <circle cx="80" cy="156" r="6" fill="none" stroke="#00ff88" stroke-width="1.5" opacity="0.7"/>
+              <text x="80" y="175" text-anchor="middle" fill="#bf00ff" font-size="8" font-family="monospace" letter-spacing="1" opacity="0.7">DISEÑO GEOMÉTRICO</text>
+            </svg>
+          </div>
+        </div>
         <div class="product-badge purple">Nuevo</div>
-        <svg width="160" height="180" viewBox="0 0 160 180" aria-hidden="true">
-          <path d="M45 60 L35 150 L125 150 L115 60 Z" fill="none" stroke="#bf00ff" stroke-width="2"/>
-          <path d="M40 60 L120 60" stroke="#bf00ff" stroke-width="2.5"/>
-          <path d="M80 60 Q60 30 75 20 Q80 40 80 40 Q80 40 85 15 Q95 30 80 60Z" fill="none" stroke="#00ff88" stroke-width="1.5" opacity="0.8"/>
-        </svg>
+        <div class="carousel-dots">
+          <button class="dot active" aria-label="Imagen 1"></button>
+          <button class="dot" aria-label="Imagen 2"></button>
+        </div>
+        <button class="carousel-arrow prev" aria-label="Imagen anterior">&#8249;</button>
+        <button class="carousel-arrow next" aria-label="Imagen siguiente">&#8250;</button>
       </div>
       <div class="product-info">
         <div class="product-cat">Decoración · Hogar</div>
@@ -123,18 +185,44 @@
 
     <!-- Figura dragón -->
     <article class="product-card" data-category="figuras">
-      <div class="product-img img-bg-fig">
+      <div class="product-img-carousel">
+        <div class="carousel-track">
+          <div class="carousel-slide img-bg-fig">
+            <svg width="180" height="200" viewBox="0 0 180 200" aria-hidden="true">
+              <ellipse cx="90" cy="120" rx="40" ry="55" fill="none" stroke="#ff006e" stroke-width="1.5"/>
+              <circle cx="90" cy="58" r="22" fill="none" stroke="#ff006e" stroke-width="2"/>
+              <line x1="82" y1="38" x2="75" y2="20" stroke="#ff006e" stroke-width="2"/>
+              <line x1="98" y1="38" x2="105" y2="20" stroke="#ff006e" stroke-width="2"/>
+              <path d="M50 100 Q20 70 30 110 Q40 130 50 120Z" fill="none" stroke="#ff006e" stroke-width="1.5" opacity="0.7"/>
+              <path d="M130 100 Q160 70 150 110 Q140 130 130 120Z" fill="none" stroke="#ff006e" stroke-width="1.5" opacity="0.7"/>
+              <circle cx="84" cy="55" r="3" fill="#ff006e" opacity="0.8"/>
+              <circle cx="96" cy="55" r="3" fill="#ff006e" opacity="0.8"/>
+            </svg>
+          </div>
+          <div class="carousel-slide img-bg-llave">
+            <svg width="160" height="180" viewBox="0 0 160 180" aria-hidden="true">
+              <ellipse cx="80" cy="95" rx="62" ry="68" fill="none" stroke="#ff006e" stroke-width="2.5"/>
+              <circle cx="55" cy="80" r="14" fill="none" stroke="#ff006e" stroke-width="2"/>
+              <circle cx="55" cy="80" r="5" fill="#ff006e" opacity="0.6"/>
+              <circle cx="105" cy="80" r="14" fill="none" stroke="#ff006e" stroke-width="2"/>
+              <circle cx="105" cy="80" r="5" fill="#ff006e" opacity="0.6"/>
+              <path d="M62 113 Q80 124 98 113" stroke="#ff006e" stroke-width="2" fill="none"/>
+              <circle cx="70" cy="107" r="3" fill="none" stroke="#ff006e" stroke-width="1.5"/>
+              <circle cx="90" cy="107" r="3" fill="none" stroke="#ff006e" stroke-width="1.5"/>
+              <line x1="55" y1="35" x2="42" y2="15" stroke="#ff006e" stroke-width="2.5"/>
+              <line x1="105" y1="35" x2="118" y2="15" stroke="#ff006e" stroke-width="2.5"/>
+              <path d="M48 50 Q80 38 112 50" stroke="#ff006e" stroke-width="1" fill="none" opacity="0.5"/>
+              <text x="80" y="172" text-anchor="middle" fill="#ff006e" font-size="8" font-family="monospace" letter-spacing="1" opacity="0.7">DETALLE CABEZA</text>
+            </svg>
+          </div>
+        </div>
         <div class="product-badge pink">Premium</div>
-        <svg width="180" height="200" viewBox="0 0 180 200" aria-hidden="true">
-          <ellipse cx="90" cy="120" rx="40" ry="55" fill="none" stroke="#ff006e" stroke-width="1.5"/>
-          <circle cx="90" cy="58" r="22" fill="none" stroke="#ff006e" stroke-width="2"/>
-          <line x1="82" y1="38" x2="75" y2="20" stroke="#ff006e" stroke-width="2"/>
-          <line x1="98" y1="38" x2="105" y2="20" stroke="#ff006e" stroke-width="2"/>
-          <path d="M50 100 Q20 70 30 110 Q40 130 50 120Z" fill="none" stroke="#ff006e" stroke-width="1.5" opacity="0.7"/>
-          <path d="M130 100 Q160 70 150 110 Q140 130 130 120Z" fill="none" stroke="#ff006e" stroke-width="1.5" opacity="0.7"/>
-          <circle cx="84" cy="55" r="3" fill="#ff006e" opacity="0.8"/>
-          <circle cx="96" cy="55" r="3" fill="#ff006e" opacity="0.8"/>
-        </svg>
+        <div class="carousel-dots">
+          <button class="dot active" aria-label="Imagen 1"></button>
+          <button class="dot" aria-label="Imagen 2"></button>
+        </div>
+        <button class="carousel-arrow prev" aria-label="Imagen anterior">&#8249;</button>
+        <button class="carousel-arrow next" aria-label="Imagen siguiente">&#8250;</button>
       </div>
       <div class="product-info">
         <div class="product-cat">Figuras · Colección</div>
@@ -149,13 +237,38 @@
 
     <!-- Organizador escritorio -->
     <article class="product-card" data-category="accesorios">
-      <div class="product-img img-bg-llave">
-        <svg width="200" height="190" viewBox="0 0 200 190" aria-hidden="true">
-          <rect x="30" y="80" width="45" height="90" rx="3" fill="none" stroke="#00f5ff" stroke-width="2"/>
-          <rect x="78" y="60" width="35" height="110" rx="3" fill="none" stroke="#00f5ff" stroke-width="2"/>
-          <rect x="116" y="70" width="55" height="100" rx="3" fill="none" stroke="#00f5ff" stroke-width="2"/>
-          <line x1="25" y1="170" x2="175" y2="170" stroke="#00f5ff" stroke-width="2.5"/>
-        </svg>
+      <div class="product-img-carousel">
+        <div class="carousel-track">
+          <div class="carousel-slide img-bg-llave">
+            <svg width="200" height="190" viewBox="0 0 200 190" aria-hidden="true">
+              <rect x="30" y="80" width="45" height="90" rx="3" fill="none" stroke="#00f5ff" stroke-width="2"/>
+              <rect x="78" y="60" width="35" height="110" rx="3" fill="none" stroke="#00f5ff" stroke-width="2"/>
+              <rect x="116" y="70" width="55" height="100" rx="3" fill="none" stroke="#00f5ff" stroke-width="2"/>
+              <line x1="25" y1="170" x2="175" y2="170" stroke="#00f5ff" stroke-width="2.5"/>
+            </svg>
+          </div>
+          <div class="carousel-slide img-bg-deco">
+            <svg width="180" height="180" viewBox="0 0 180 180" aria-hidden="true">
+              <rect x="55" y="35" width="70" height="100" rx="3" fill="none" stroke="#00f5ff" stroke-width="2.5"/>
+              <line x1="55" y1="75" x2="125" y2="75" stroke="#00f5ff" stroke-width="1" opacity="0.4"/>
+              <line x1="55" y1="105" x2="125" y2="105" stroke="#00f5ff" stroke-width="1" opacity="0.4"/>
+              <line x1="90" y1="35" x2="90" y2="135" stroke="#00f5ff" stroke-width="1" opacity="0.4"/>
+              <rect x="68" y="135" width="12" height="10" rx="2" fill="none" stroke="#00f5ff" stroke-width="1.5"/>
+              <rect x="100" y="135" width="12" height="10" rx="2" fill="none" stroke="#00f5ff" stroke-width="1.5"/>
+              <rect x="68" y="25" width="12" height="10" rx="2" fill="none" stroke="#00f5ff" stroke-width="1.5"/>
+              <rect x="100" y="25" width="12" height="10" rx="2" fill="none" stroke="#00f5ff" stroke-width="1.5"/>
+              <path d="M128 85 L148 85" stroke="#00f5ff" stroke-width="1.5" opacity="0.6"/>
+              <path d="M144 80 L150 85 L144 90" fill="none" stroke="#00f5ff" stroke-width="1.5" opacity="0.6"/>
+              <text x="90" y="162" text-anchor="middle" fill="#00f5ff" font-size="8" font-family="monospace" letter-spacing="2" opacity="0.7">MODULAR</text>
+            </svg>
+          </div>
+        </div>
+        <div class="carousel-dots">
+          <button class="dot active" aria-label="Imagen 1"></button>
+          <button class="dot" aria-label="Imagen 2"></button>
+        </div>
+        <button class="carousel-arrow prev" aria-label="Imagen anterior">&#8249;</button>
+        <button class="carousel-arrow next" aria-label="Imagen siguiente">&#8250;</button>
       </div>
       <div class="product-info">
         <div class="product-cat">Accesorios · Escritorio</div>
@@ -170,19 +283,45 @@
 
     <!-- Robot -->
     <article class="product-card" data-category="figuras">
-      <div class="product-img img-bg-deco">
-        <svg width="180" height="200" viewBox="0 0 180 200" aria-hidden="true">
-          <rect x="60" y="30" width="60" height="50" rx="8" fill="none" stroke="#bf00ff" stroke-width="2"/>
-          <line x1="90" y1="30" x2="90" y2="15" stroke="#bf00ff" stroke-width="2"/>
-          <circle cx="90" cy="12" r="5" fill="#bf00ff" opacity="0.7"/>
-          <rect x="68" y="45" width="16" height="10" rx="2" fill="none" stroke="#bf00ff" stroke-width="1.5"/>
-          <rect x="96" y="45" width="16" height="10" rx="2" fill="none" stroke="#bf00ff" stroke-width="1.5"/>
-          <rect x="55" y="85" width="70" height="65" rx="4" fill="none" stroke="#bf00ff" stroke-width="2"/>
-          <rect x="30" y="88" width="22" height="50" rx="8" fill="none" stroke="#bf00ff" stroke-width="1.5"/>
-          <rect x="128" y="88" width="22" height="50" rx="8" fill="none" stroke="#bf00ff" stroke-width="1.5"/>
-          <rect x="63" y="153" width="22" height="35" rx="4" fill="none" stroke="#bf00ff" stroke-width="1.5"/>
-          <rect x="95" y="153" width="22" height="35" rx="4" fill="none" stroke="#bf00ff" stroke-width="1.5"/>
-        </svg>
+      <div class="product-img-carousel">
+        <div class="carousel-track">
+          <div class="carousel-slide img-bg-deco">
+            <svg width="180" height="200" viewBox="0 0 180 200" aria-hidden="true">
+              <rect x="60" y="30" width="60" height="50" rx="8" fill="none" stroke="#bf00ff" stroke-width="2"/>
+              <line x1="90" y1="30" x2="90" y2="15" stroke="#bf00ff" stroke-width="2"/>
+              <circle cx="90" cy="12" r="5" fill="#bf00ff" opacity="0.7"/>
+              <rect x="68" y="45" width="16" height="10" rx="2" fill="none" stroke="#bf00ff" stroke-width="1.5"/>
+              <rect x="96" y="45" width="16" height="10" rx="2" fill="none" stroke="#bf00ff" stroke-width="1.5"/>
+              <rect x="55" y="85" width="70" height="65" rx="4" fill="none" stroke="#bf00ff" stroke-width="2"/>
+              <rect x="30" y="88" width="22" height="50" rx="8" fill="none" stroke="#bf00ff" stroke-width="1.5"/>
+              <rect x="128" y="88" width="22" height="50" rx="8" fill="none" stroke="#bf00ff" stroke-width="1.5"/>
+              <rect x="63" y="153" width="22" height="35" rx="4" fill="none" stroke="#bf00ff" stroke-width="1.5"/>
+              <rect x="95" y="153" width="22" height="35" rx="4" fill="none" stroke="#bf00ff" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="carousel-slide img-bg-fig">
+            <svg width="160" height="180" viewBox="0 0 160 180" aria-hidden="true">
+              <rect x="25" y="28" width="110" height="100" rx="12" fill="none" stroke="#bf00ff" stroke-width="2.5"/>
+              <rect x="35" y="50" width="36" height="22" rx="4" fill="none" stroke="#bf00ff" stroke-width="2"/>
+              <rect x="41" y="55" width="24" height="12" rx="2" fill="#bf00ff" opacity="0.25"/>
+              <rect x="46" y="58" width="12" height="6" rx="1" fill="#bf00ff" opacity="0.8"/>
+              <rect x="89" y="50" width="36" height="22" rx="4" fill="none" stroke="#bf00ff" stroke-width="2"/>
+              <rect x="95" y="55" width="24" height="12" rx="2" fill="#bf00ff" opacity="0.25"/>
+              <rect x="100" y="58" width="12" height="6" rx="1" fill="#bf00ff" opacity="0.8"/>
+              <rect x="38" y="88" width="84" height="20" rx="3" fill="none" stroke="#bf00ff" stroke-width="1.5"/>
+              <path d="M44 98 L55 103 L68 93 L80 103 L93 93 L106 103 L116 98" stroke="#bf00ff" stroke-width="1.5" fill="none" opacity="0.8"/>
+              <line x1="80" y1="28" x2="80" y2="12" stroke="#bf00ff" stroke-width="2"/>
+              <circle cx="80" cy="9" r="5" fill="#bf00ff" opacity="0.7"/>
+              <text x="80" y="150" text-anchor="middle" fill="#bf00ff" font-size="8" font-family="monospace" letter-spacing="1" opacity="0.7">RETRO-FUTURISTA</text>
+            </svg>
+          </div>
+        </div>
+        <div class="carousel-dots">
+          <button class="dot active" aria-label="Imagen 1"></button>
+          <button class="dot" aria-label="Imagen 2"></button>
+        </div>
+        <button class="carousel-arrow prev" aria-label="Imagen anterior">&#8249;</button>
+        <button class="carousel-arrow next" aria-label="Imagen siguiente">&#8250;</button>
       </div>
       <div class="product-info">
         <div class="product-cat">Figuras · Decoración</div>
@@ -197,13 +336,34 @@
 
     <!-- Soporte teléfono -->
     <article class="product-card" data-category="accesorios">
-      <div class="product-img img-bg-fig">
-        <svg width="180" height="190" viewBox="0 0 180 190" aria-hidden="true">
-          <ellipse cx="90" cy="165" rx="50" ry="10" fill="none" stroke="#00f5ff" stroke-width="2"/>
-          <path d="M90 155 L90 95" stroke="#00f5ff" stroke-width="3"/>
-          <rect x="58" y="25" width="64" height="110" rx="8" fill="none" stroke="#00f5ff" stroke-width="2"/>
-          <circle cx="90" cy="128" r="5" fill="none" stroke="#00f5ff" stroke-width="1.5"/>
-        </svg>
+      <div class="product-img-carousel">
+        <div class="carousel-track">
+          <div class="carousel-slide img-bg-fig">
+            <svg width="180" height="190" viewBox="0 0 180 190" aria-hidden="true">
+              <ellipse cx="90" cy="165" rx="50" ry="10" fill="none" stroke="#00f5ff" stroke-width="2"/>
+              <path d="M90 155 L90 95" stroke="#00f5ff" stroke-width="3"/>
+              <rect x="58" y="25" width="64" height="110" rx="8" fill="none" stroke="#00f5ff" stroke-width="2"/>
+              <circle cx="90" cy="128" r="5" fill="none" stroke="#00f5ff" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="carousel-slide img-bg-deco">
+            <svg width="180" height="190" viewBox="0 0 180 190" aria-hidden="true">
+              <ellipse cx="90" cy="168" rx="55" ry="9" fill="none" stroke="#00f5ff" stroke-width="2"/>
+              <path d="M90 160 L90 108 L72 52" stroke="#00f5ff" stroke-width="3" fill="none"/>
+              <rect x="36" y="20" width="56" height="88" rx="7" fill="none" stroke="#00f5ff" stroke-width="2" transform="rotate(-18 64 64)"/>
+              <rect x="44" y="30" width="42" height="66" rx="2" fill="none" stroke="#00f5ff" stroke-width="1" opacity="0.3" transform="rotate(-18 65 63)"/>
+              <path d="M90 108 A38 38 0 0 1 116 83" stroke="#00f5ff" stroke-width="1" fill="none" stroke-dasharray="3,3" opacity="0.5"/>
+              <text x="120" y="79" fill="#00f5ff" font-size="9" font-family="monospace" opacity="0.7">30&#176;</text>
+              <text x="90" y="183" text-anchor="middle" fill="#00f5ff" font-size="8" font-family="monospace" letter-spacing="1" opacity="0.7">ÁNGULO AJUSTABLE</text>
+            </svg>
+          </div>
+        </div>
+        <div class="carousel-dots">
+          <button class="dot active" aria-label="Imagen 1"></button>
+          <button class="dot" aria-label="Imagen 2"></button>
+        </div>
+        <button class="carousel-arrow prev" aria-label="Imagen anterior">&#8249;</button>
+        <button class="carousel-arrow next" aria-label="Imagen siguiente">&#8250;</button>
       </div>
       <div class="product-info">
         <div class="product-cat">Accesorios · Tech</div>
@@ -223,14 +383,40 @@
 
     <!-- Lámpara -->
     <article class="product-card" data-category="decoracion">
-      <div class="product-img img-bg-deco">
-        <svg width="160" height="200" viewBox="0 0 160 200" aria-hidden="true">
-          <path d="M80 30 L35 110 L125 110 Z" fill="none" stroke="#bf00ff" stroke-width="2"/>
-          <line x1="80" y1="110" x2="80" y2="165" stroke="#bf00ff" stroke-width="3"/>
-          <ellipse cx="80" cy="168" rx="30" ry="8" fill="none" stroke="#bf00ff" stroke-width="2"/>
-          <circle cx="80" cy="38" r="8" fill="none" stroke="#bf00ff" stroke-width="1.5" opacity="0.7"/>
-          <circle cx="80" cy="38" r="4" fill="#bf00ff" opacity="0.5"/>
-        </svg>
+      <div class="product-img-carousel">
+        <div class="carousel-track">
+          <div class="carousel-slide img-bg-deco">
+            <svg width="160" height="200" viewBox="0 0 160 200" aria-hidden="true">
+              <path d="M80 30 L35 110 L125 110 Z" fill="none" stroke="#bf00ff" stroke-width="2"/>
+              <line x1="80" y1="110" x2="80" y2="165" stroke="#bf00ff" stroke-width="3"/>
+              <ellipse cx="80" cy="168" rx="30" ry="8" fill="none" stroke="#bf00ff" stroke-width="2"/>
+              <circle cx="80" cy="38" r="8" fill="none" stroke="#bf00ff" stroke-width="1.5" opacity="0.7"/>
+              <circle cx="80" cy="38" r="4" fill="#bf00ff" opacity="0.5"/>
+            </svg>
+          </div>
+          <div class="carousel-slide img-bg-llave">
+            <svg width="160" height="200" viewBox="0 0 160 200" aria-hidden="true">
+              <path d="M80 30 L35 110 L125 110 Z" fill="none" stroke="#bf00ff" stroke-width="2"/>
+              <path d="M80 30 L35 110 L125 110 Z" fill="#bf00ff" opacity="0.06"/>
+              <line x1="80" y1="110" x2="80" y2="165" stroke="#bf00ff" stroke-width="3"/>
+              <ellipse cx="80" cy="168" rx="30" ry="8" fill="none" stroke="#bf00ff" stroke-width="2"/>
+              <line x1="35" y1="110" x2="12" y2="145" stroke="#bf00ff" stroke-width="1.5" opacity="0.45"/>
+              <line x1="125" y1="110" x2="148" y2="145" stroke="#bf00ff" stroke-width="1.5" opacity="0.45"/>
+              <line x1="55" y1="110" x2="44" y2="150" stroke="#bf00ff" stroke-width="1" opacity="0.3"/>
+              <line x1="105" y1="110" x2="116" y2="150" stroke="#bf00ff" stroke-width="1" opacity="0.3"/>
+              <ellipse cx="80" cy="175" rx="55" ry="8" fill="#bf00ff" opacity="0.07"/>
+              <circle cx="80" cy="38" r="10" fill="#bf00ff" opacity="0.2"/>
+              <circle cx="80" cy="38" r="4" fill="#bf00ff" opacity="0.7"/>
+              <text x="80" y="193" text-anchor="middle" fill="#bf00ff" font-size="8" font-family="monospace" letter-spacing="1" opacity="0.7">PROYECCIÓN DE LUZ</text>
+            </svg>
+          </div>
+        </div>
+        <div class="carousel-dots">
+          <button class="dot active" aria-label="Imagen 1"></button>
+          <button class="dot" aria-label="Imagen 2"></button>
+        </div>
+        <button class="carousel-arrow prev" aria-label="Imagen anterior">&#8249;</button>
+        <button class="carousel-arrow next" aria-label="Imagen siguiente">&#8250;</button>
       </div>
       <div class="product-info">
         <div class="product-cat">Decoración · Iluminación</div>
@@ -245,15 +431,39 @@
 
     <!-- Joyero -->
     <article class="product-card" data-category="accesorios">
-      <div class="product-img img-bg-llave">
-        <svg width="200" height="190" viewBox="0 0 200 190" aria-hidden="true">
-          <path d="M40 80 L40 40 L160 40 L160 80" fill="none" stroke="#00f5ff" stroke-width="2"/>
-          <line x1="40" y1="80" x2="160" y2="80" stroke="#00f5ff" stroke-width="2.5"/>
-          <rect x="40" y="80" width="120" height="80" rx="2" fill="none" stroke="#00f5ff" stroke-width="2"/>
-          <line x1="100" y1="80" x2="100" y2="160" stroke="#00f5ff" stroke-width="1" opacity="0.4"/>
-          <line x1="40" y1="120" x2="100" y2="120" stroke="#00f5ff" stroke-width="1" opacity="0.4"/>
-          <polygon points="100,48 106,58 116,58 108,64 111,74 100,67 89,74 92,64 84,58 94,58" fill="none" stroke="#ffd700" stroke-width="1.5" opacity="0.8"/>
-        </svg>
+      <div class="product-img-carousel">
+        <div class="carousel-track">
+          <div class="carousel-slide img-bg-llave">
+            <svg width="200" height="190" viewBox="0 0 200 190" aria-hidden="true">
+              <path d="M40 80 L40 40 L160 40 L160 80" fill="none" stroke="#00f5ff" stroke-width="2"/>
+              <line x1="40" y1="80" x2="160" y2="80" stroke="#00f5ff" stroke-width="2.5"/>
+              <rect x="40" y="80" width="120" height="80" rx="2" fill="none" stroke="#00f5ff" stroke-width="2"/>
+              <line x1="100" y1="80" x2="100" y2="160" stroke="#00f5ff" stroke-width="1" opacity="0.4"/>
+              <line x1="40" y1="120" x2="100" y2="120" stroke="#00f5ff" stroke-width="1" opacity="0.4"/>
+              <polygon points="100,48 106,58 116,58 108,64 111,74 100,67 89,74 92,64 84,58 94,58" fill="none" stroke="#ffd700" stroke-width="1.5" opacity="0.8"/>
+            </svg>
+          </div>
+          <div class="carousel-slide img-bg-deco">
+            <svg width="200" height="190" viewBox="0 0 200 190" aria-hidden="true">
+              <rect x="38" y="58" width="124" height="108" rx="4" fill="none" stroke="#00f5ff" stroke-width="2.5"/>
+              <line x1="38" y1="76" x2="162" y2="76" stroke="#00f5ff" stroke-width="1.5" opacity="0.6"/>
+              <rect x="46" y="65" width="108" height="8" rx="2" fill="none" stroke="#00f5ff" stroke-width="1" opacity="0.3"/>
+              <rect x="90" y="70" width="20" height="18" rx="3" fill="none" stroke="#ffd700" stroke-width="2"/>
+              <rect x="94" y="74" width="12" height="10" rx="2" fill="#ffd700" opacity="0.3"/>
+              <polygon points="100,88 108,108 128,108 112,120 118,142 100,128 82,142 88,120 72,108 92,108" fill="none" stroke="#ffd700" stroke-width="1.5" opacity="0.7"/>
+              <circle cx="100" cy="117" r="8" fill="none" stroke="#ffd700" stroke-width="1.5" opacity="0.8"/>
+              <circle cx="46" cy="66" r="4" fill="none" stroke="#00f5ff" stroke-width="1" opacity="0.5"/>
+              <circle cx="154" cy="66" r="4" fill="none" stroke="#00f5ff" stroke-width="1" opacity="0.5"/>
+              <text x="100" y="180" text-anchor="middle" fill="#ffd700" font-size="8" font-family="monospace" letter-spacing="1" opacity="0.7">PLA SILK GOLD</text>
+            </svg>
+          </div>
+        </div>
+        <div class="carousel-dots">
+          <button class="dot active" aria-label="Imagen 1"></button>
+          <button class="dot" aria-label="Imagen 2"></button>
+        </div>
+        <button class="carousel-arrow prev" aria-label="Imagen anterior">&#8249;</button>
+        <button class="carousel-arrow next" aria-label="Imagen siguiente">&#8250;</button>
       </div>
       <div class="product-info">
         <div class="product-cat">Accesorios · Hogar</div>
@@ -268,18 +478,45 @@
 
     <!-- Busto Personalizado -->
     <article class="product-card" data-category="figuras">
-      <div class="product-img img-bg-fig">
+      <div class="product-img-carousel">
+        <div class="carousel-track">
+          <div class="carousel-slide img-bg-fig">
+            <svg width="170" height="200" viewBox="0 0 170 200" aria-hidden="true">
+              <rect x="45" y="165" width="80" height="20" rx="3" fill="none" stroke="#ff006e" stroke-width="2"/>
+              <rect x="55" y="150" width="60" height="18" rx="2" fill="none" stroke="#ff006e" stroke-width="1.5"/>
+              <path d="M55 150 Q40 130 50 105 L85 95 L120 105 Q130 130 115 150Z" fill="none" stroke="#ff006e" stroke-width="1.5"/>
+              <rect x="75" y="78" width="20" height="20" rx="2" fill="none" stroke="#ff006e" stroke-width="1.5"/>
+              <ellipse cx="85" cy="60" rx="28" ry="32" fill="none" stroke="#ff006e" stroke-width="2"/>
+              <line x1="75" y1="55" x2="82" y2="55" stroke="#ff006e" stroke-width="2" opacity="0.7"/>
+              <line x1="88" y1="55" x2="95" y2="55" stroke="#ff006e" stroke-width="2" opacity="0.7"/>
+              <path d="M78 70 Q85 75 92 70" stroke="#ff006e" stroke-width="1.5" fill="none"/>
+            </svg>
+          </div>
+          <div class="carousel-slide img-bg-llave">
+            <svg width="160" height="200" viewBox="0 0 160 200" aria-hidden="true">
+              <rect x="45" y="168" width="70" height="18" rx="3" fill="none" stroke="#ff006e" stroke-width="2"/>
+              <rect x="52" y="154" width="56" height="16" rx="2" fill="none" stroke="#ff006e" stroke-width="1.5"/>
+              <path d="M50 154 Q42 130 52 106 Q65 90 78 88 L100 90 Q112 103 108 130 Q114 150 108 154Z" fill="none" stroke="#ff006e" stroke-width="1.5"/>
+              <rect x="68" y="130" width="18" height="26" rx="2" fill="none" stroke="#ff006e" stroke-width="1.5"/>
+              <ellipse cx="78" cy="68" rx="22" ry="28" fill="none" stroke="#ff006e" stroke-width="2"/>
+              <path d="M100 65 Q108 72 104 80" stroke="#ff006e" stroke-width="1.5" fill="none"/>
+              <path d="M82 95 Q96 95 102 86" stroke="#ff006e" stroke-width="1.5" fill="none"/>
+              <circle cx="92" cy="60" r="4" fill="none" stroke="#ff006e" stroke-width="1.5"/>
+              <path d="M56 42 Q78 32 100 42" stroke="#ff006e" stroke-width="2" fill="none"/>
+              <line x1="125" y1="42" x2="125" y2="168" stroke="#ff006e" stroke-width="1" opacity="0.35"/>
+              <line x1="122" y1="42" x2="128" y2="42" stroke="#ff006e" stroke-width="1" opacity="0.35"/>
+              <line x1="122" y1="168" x2="128" y2="168" stroke="#ff006e" stroke-width="1" opacity="0.35"/>
+              <text x="138" y="108" text-anchor="middle" fill="#ff006e" font-size="8" font-family="monospace" transform="rotate(90 138 108)" opacity="0.6">15cm</text>
+            </svg>
+          </div>
+        </div>
         <div class="product-badge pink">Custom</div>
-        <svg width="170" height="200" viewBox="0 0 170 200" aria-hidden="true">
-          <rect x="45" y="165" width="80" height="20" rx="3" fill="none" stroke="#ff006e" stroke-width="2"/>
-          <rect x="55" y="150" width="60" height="18" rx="2" fill="none" stroke="#ff006e" stroke-width="1.5"/>
-          <path d="M55 150 Q40 130 50 105 L85 95 L120 105 Q130 130 115 150Z" fill="none" stroke="#ff006e" stroke-width="1.5"/>
-          <rect x="75" y="78" width="20" height="20" rx="2" fill="none" stroke="#ff006e" stroke-width="1.5"/>
-          <ellipse cx="85" cy="60" rx="28" ry="32" fill="none" stroke="#ff006e" stroke-width="2"/>
-          <line x1="75" y1="55" x2="82" y2="55" stroke="#ff006e" stroke-width="2" opacity="0.7"/>
-          <line x1="88" y1="55" x2="95" y2="55" stroke="#ff006e" stroke-width="2" opacity="0.7"/>
-          <path d="M78 70 Q85 75 92 70" stroke="#ff006e" stroke-width="1.5" fill="none"/>
-        </svg>
+        <div class="carousel-dots">
+          <button class="dot active" aria-label="Imagen 1"></button>
+          <button class="dot" aria-label="Imagen 2"></button>
+        </div>
+        <button class="carousel-arrow prev" aria-label="Imagen anterior">&#8249;</button>
+        <button class="carousel-arrow next" aria-label="Imagen siguiente">&#8250;</button>
       </div>
       <div class="product-info">
         <div class="product-cat">Figuras · Personalizado</div>

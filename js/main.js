@@ -114,6 +114,45 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // ── PRODUCT IMAGE CAROUSEL ──
+  document.querySelectorAll(".product-img-carousel").forEach(function(carousel) {
+    var track = carousel.querySelector(".carousel-track");
+    var slides = carousel.querySelectorAll(".carousel-slide");
+    var dots = carousel.querySelectorAll(".dot");
+    var prevBtn = carousel.querySelector(".carousel-arrow.prev");
+    var nextBtn = carousel.querySelector(".carousel-arrow.next");
+    var current = 0;
+    var timer = null;
+
+    function goTo(n) {
+      current = ((n % slides.length) + slides.length) % slides.length;
+      track.style.transform = "translateX(-" + (current * 100) + "%)";
+      dots.forEach(function(d, i) { d.classList.toggle("active", i === current); });
+    }
+
+    dots.forEach(function(dot, i) {
+      dot.addEventListener("click", function() { goTo(i); });
+    });
+    if (prevBtn) prevBtn.addEventListener("click", function() { goTo(current - 1); });
+    if (nextBtn) nextBtn.addEventListener("click", function() { goTo(current + 1); });
+
+    function startAuto() { timer = setInterval(function() { goTo(current + 1); }, 3200); }
+    function stopAuto() { clearInterval(timer); }
+
+    startAuto();
+    carousel.addEventListener("mouseenter", stopAuto);
+    carousel.addEventListener("mouseleave", startAuto);
+
+    var touchStartX = 0;
+    carousel.addEventListener("touchstart", function(e) {
+      touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+    carousel.addEventListener("touchend", function(e) {
+      var diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
+    }, { passive: true });
+  });
+
   // ── SMOOTH SCROLL FOR ANCHOR LINKS ──
   document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
     anchor.addEventListener("click", function (e) {
