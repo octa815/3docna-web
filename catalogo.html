@@ -33,12 +33,32 @@
   </ul>
 
   <div class="nav-right">
+    <button class="cart-toggle" aria-label="Abrir cesta" aria-expanded="false" aria-controls="cartDrawer">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      <span class="cart-count" aria-live="polite">0</span>
+    </button>
     <a href="pedido.html" class="nav-cta" data-i18n="nav.cta">Pedir ahora</a>
     <button class="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="cart-drawer" id="cartDrawer" aria-label="Cesta de productos">
+  <div class="cart-header">
+    <h3>Tu cesta</h3>
+    <button class="cart-close" aria-label="Cerrar cesta">&times;</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <p class="cart-empty">Tu cesta está vacía</p>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none;">
+    <div class="cart-total">Total estimado: <strong id="cartTotal">0,00€</strong></div>
+    <a href="pedido.html" class="cart-checkout">Solicitar presupuesto →</a>
+  </div>
+</aside>
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Menú móvil">
@@ -73,7 +93,7 @@
   <div class="product-grid featured">
 
     <!-- Card Wide: Llaveros pack -->
-    <article class="product-card card-wide" data-category="llaveros">
+    <article class="product-card card-wide" data-category="llaveros" data-name="Pack Llaveros Personalizados" data-price="3.50">
       <div class="product-img-carousel">
         <div class="carousel-track">
           <div class="carousel-slide img-bg-llave">
@@ -136,7 +156,7 @@
     </article>
 
     <!-- Card: Macetero -->
-    <article class="product-card" data-category="decoracion">
+    <article class="product-card" data-category="decoracion" data-name="Macetero Geométrico" data-price="12.00">
       <div class="product-img-carousel">
         <div class="carousel-track">
           <div class="carousel-slide img-bg-deco">
@@ -184,7 +204,7 @@
   <div class="product-grid" style="margin-top: 2px;">
 
     <!-- Figura dragón -->
-    <article class="product-card" data-category="figuras">
+    <article class="product-card" data-category="figuras" data-name="Dragón Articulado" data-price="22.00">
       <div class="product-img-carousel">
         <div class="carousel-track">
           <div class="carousel-slide img-bg-fig">
@@ -236,7 +256,7 @@
     </article>
 
     <!-- Organizador escritorio -->
-    <article class="product-card" data-category="accesorios">
+    <article class="product-card" data-category="accesorios" data-name="Organizador Modular" data-price="18.00">
       <div class="product-img-carousel">
         <div class="carousel-track">
           <div class="carousel-slide img-bg-llave">
@@ -335,7 +355,7 @@
     </article>
 
     <!-- Soporte teléfono -->
-    <article class="product-card" data-category="accesorios">
+    <article class="product-card" data-category="accesorios" data-name="Soporte Smartphone" data-price="8.00">
       <div class="product-img-carousel">
         <div class="carousel-track">
           <div class="carousel-slide img-bg-fig">
@@ -382,7 +402,7 @@
   <div class="product-grid" style="margin-top: 2px;">
 
     <!-- Lámpara -->
-    <article class="product-card" data-category="decoracion">
+    <article class="product-card" data-category="decoracion" data-name="Lámpara Impresa" data-price="25.00">
       <div class="product-img-carousel">
         <div class="carousel-track">
           <div class="carousel-slide img-bg-deco">
@@ -430,7 +450,7 @@
     </article>
 
     <!-- Joyero -->
-    <article class="product-card" data-category="accesorios">
+    <article class="product-card" data-category="accesorios" data-name="Joyero Modular" data-price="14.00">
       <div class="product-img-carousel">
         <div class="carousel-track">
           <div class="carousel-slide img-bg-llave">
@@ -477,7 +497,7 @@
     </article>
 
     <!-- Busto Personalizado -->
-    <article class="product-card" data-category="figuras">
+    <article class="product-card" data-category="figuras" data-name="Busto Personalizado" data-price="35.00">
       <div class="product-img-carousel">
         <div class="carousel-track">
           <div class="carousel-slide img-bg-fig">

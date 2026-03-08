@@ -315,6 +315,11 @@
     display: flex;
   }
 
+  .cart-drawer {
+    width: 100%;
+    max-width: 100vw;
+  }
+
   .section-header {
     flex-direction: column;
     align-items: flex-start;
