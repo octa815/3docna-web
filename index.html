@@ -763,6 +763,183 @@
   .img-bg-fig { background: radial-gradient(ellipse at 50% 50%, rgba(255,0,110,0.08) 0%, transparent 70%); }
   .img-bg-mix { background: radial-gradient(ellipse at 50% 50%, rgba(0,245,255,0.05) 0%, transparent 70%); }
 
+  /* ── WHATSAPP FLOATING BUTTON ── */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .whatsapp-bubble {
+    background: #25D366;
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.5);
+    transition: all 0.3s;
+    animation: waBounce 2s infinite;
+  }
+
+  .whatsapp-float:hover .whatsapp-bubble {
+    transform: scale(1.1);
+    box-shadow: 0 8px 30px rgba(37,211,102,0.7);
+  }
+
+  .whatsapp-label {
+    background: var(--bg2);
+    border: 1px solid rgba(37,211,102,0.3);
+    color: #25D366;
+    padding: 8px 16px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(10px);
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+
+  .whatsapp-float:hover .whatsapp-label {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  @keyframes waBounce {
+    0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.5); }
+    50% { box-shadow: 0 4px 40px rgba(37,211,102,0.8); }
+  }
+
+  /* ── ORDER FORM ── */
+  .form-section {
+    padding: 100px 48px;
+    background: var(--bg2);
+  }
+
+  .form-wrapper {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 48px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-group.full { grid-column: span 2; }
+
+  .form-group label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 14px 16px;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .form-group select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2300f5ff' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+    cursor: pointer;
+  }
+
+  .form-group select option {
+    background: var(--bg);
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--neon);
+    box-shadow: 0 0 0 1px var(--neon);
+  }
+
+  .form-group textarea { resize: vertical; min-height: 120px; }
+
+  .form-submit {
+    width: 100%;
+    margin-top: 8px;
+    background: var(--neon);
+    color: var(--bg);
+    border: none;
+    padding: 18px;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 0 30px rgba(0,245,255,0.2);
+  }
+
+  .form-submit:hover {
+    box-shadow: 0 0 50px rgba(0,245,255,0.5);
+    transform: translateY(-2px);
+  }
+
+  .form-note {
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 16px;
+    letter-spacing: 1px;
+  }
+
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 48px;
+    border: 1px solid rgba(0,245,255,0.3);
+  }
+
+  .form-success .success-icon { font-size: 48px; margin-bottom: 16px; }
+  .form-success h3 {
+    font-family: 'Orbitron', monospace;
+    font-size: 20px;
+    color: var(--neon);
+    margin-bottom: 8px;
+  }
+  .form-success p { color: var(--muted); font-size: 14px; }
+
+  @media (max-width: 900px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .form-group.full { grid-column: span 1; }
+    .form-section { padding: 60px 24px; }
+    .whatsapp-float { bottom: 20px; right: 20px; }
+  }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
     nav { padding: 16px 24px; }
@@ -789,7 +966,7 @@
   <div class="logo">3DOC<span>NA</span></div>
   <ul>
     <li><a href="#catalogo">Catálogo</a></li>
-    <li><a href="#custom">Pedidos</a></li>
+    <li><a href="#pedido">Pedido</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
   <a href="#contacto" class="nav-cta">Pedir ahora</a>
@@ -1273,6 +1450,99 @@
   </div>
 </section>
 
+<!-- FORMULARIO DE PEDIDO -->
+<section class="form-section" id="pedido">
+  <div class="form-wrapper">
+    <div style="text-align:center; margin-bottom: 8px;">
+      <div class="section-label" style="display:block;">// 03 — Pedido Online</div>
+      <h2 class="section-title" style="margin-top:12px;">Solicita tu <em>presupuesto</em></h2>
+      <p style="color:var(--muted); font-size:15px; margin-top:16px; font-weight:300; line-height:1.7;">
+        Rellena el formulario y te respondemos en menos de 24h con precio y plazo de entrega.
+      </p>
+    </div>
+
+    <form name="pedido-3docna" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="orderForm">
+      <input type="hidden" name="form-name" value="pedido-3docna">
+      <p style="display:none"><input name="bot-field"></p>
+
+      <div class="form-grid">
+
+        <div class="form-group">
+          <label for="nombre">Nombre *</label>
+          <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="telefono">Teléfono</label>
+          <input type="tel" id="telefono" name="telefono" placeholder="+34 600 000 000">
+        </div>
+
+        <div class="form-group">
+          <label for="tipo">Tipo de producto *</label>
+          <select id="tipo" name="tipo" required>
+            <option value="" disabled selected>Selecciona...</option>
+            <option value="llavero">Llavero / Accesorio</option>
+            <option value="decoracion">Decoración del hogar</option>
+            <option value="figura">Figura / Miniatura</option>
+            <option value="funcional">Pieza funcional</option>
+            <option value="personalizado">Diseño personalizado</option>
+            <option value="otro">Otro</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="material">Material preferido</label>
+          <select id="material" name="material">
+            <option value="" disabled selected>Selecciona...</option>
+            <option value="pla">PLA (estándar)</option>
+            <option value="pla-silk">PLA Silk (brillo metálico)</option>
+            <option value="pla-wood">PLA Wood (aspecto madera)</option>
+            <option value="pla-glow">PLA Glow (brilla en oscuridad)</option>
+            <option value="petg">PETG (resistente)</option>
+            <option value="tpu">TPU (flexible)</option>
+            <option value="no-se">No lo sé, recomiéndame</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="color">Color deseado</label>
+          <input type="text" id="color" name="color" placeholder="Ej: negro, azul eléctrico...">
+        </div>
+
+        <div class="form-group">
+          <label for="cantidad">Cantidad</label>
+          <input type="number" id="cantidad" name="cantidad" placeholder="1" min="1">
+        </div>
+
+        <div class="form-group full">
+          <label for="descripcion">Descripción del pedido *</label>
+          <textarea id="descripcion" name="descripcion" placeholder="Describe qué necesitas. Si tienes un archivo STL o imagen de referencia, indícalo aquí y te decimos cómo enviárnoslo." required></textarea>
+        </div>
+
+        <div class="form-group full">
+          <button type="submit" class="form-submit">Enviar solicitud →</button>
+          <p class="form-note">📨 Recibirás respuesta en menos de 24h · Sin compromiso</p>
+        </div>
+
+      </div>
+    </form>
+
+    <div class="form-success" id="formSuccess">
+      <div class="success-icon">✅</div>
+      <h3>¡Solicitud enviada!</h3>
+      <p>Te responderemos en menos de 24 horas con tu presupuesto personalizado.</p>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <!-- CTA FINAL -->
 <section class="cta-section" id="contacto">
   <div class="section-label">// 03 — Contacto</div>
@@ -1280,11 +1550,11 @@
   <p class="cta-sub">Escríbenos por el canal que prefieras. Respondemos en menos de 24 horas con presupuesto incluido.</p>
 
   <div class="contact-options">
-    <a href="https://wa.me/694455979" class="contact-chip">
+    <a href="https://wa.me/34600000000" class="contact-chip">
       <span class="icon">💬</span> WhatsApp
     </a>
-    <a href="mailto:3docna@gmail.com" class="contact-chip">
-      <span class="icon">✉️</span> 3docna@gmail.com
+    <a href="/cdn-cgi/l/email-protection#c8fbaca7aba6a988afa5a9a1a4e6aba7a5" class="contact-chip">
+      <span class="icon">✉️</span> <span class="__cf_email__" data-cfemail="d2e1b6bdb1bcb392b5bfb3bbbefcb1bdbf">[email&#160;protected]</span>
     </a>
     <a href="https://instagram.com/3docna" class="contact-chip">
       <span class="icon">📸</span> @3docna
@@ -1299,7 +1569,7 @@
   <div class="footer-text" style="color: rgba(90,96,128,0.5)">Precios sin IVA. Sujetos a cambios.</div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Tab filtering
   const tabs = document.querySelectorAll('.cat-tab');
   tabs.forEach(tab => {
@@ -1339,7 +1609,7 @@
   document.querySelectorAll('.add-btn').forEach(btn => {
     btn.addEventListener('click', function() {
       this.textContent = '✓';
-      this.style.background = 'var(--neon)';
+      this.style.background= 'var(--neon)';
       this.style.color = 'var(--bg)';
       setTimeout(() => {
         this.textContent = '+';
@@ -1348,7 +1618,33 @@
       }, 1500);
     });
   });
+
+  // Netlify Form success handling
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('success') === 'true') {
+    document.getElementById('orderForm').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+    document.getElementById('pedido').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Form submit feedback
+  const form = document.getElementById('orderForm');
+  if (form) {
+    form.addEventListener('submit', () => {
+      const btn = form.querySelector('.form-submit');
+      btn.textContent = 'Enviando... ⏳';
+      btn.style.opacity = '0.7';
+    });
+  }
 </script>
+<!-- WHATSAPP FLOATING BUTTON -->
+<a href="https://wa.me/34TUNUMERO?text=Hola!%20He%20visto%20vuestro%20catálogo%20y%20me%20interesa%20hacer%20un%20pedido%20🖨️" 
+   target="_blank" 
+   class="whatsapp-float"
+   title="Escríbenos por WhatsApp">
+  <span class="whatsapp-label">¿Hablamos? 💬</span>
+  <div class="whatsapp-bubble">💬</div>
+</a>
 
 </body>
 </html>
