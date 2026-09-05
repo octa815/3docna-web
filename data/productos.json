@@ -1,0 +1,152 @@
+{
+  "_ayuda": "Este archivo es el catálogo. Para añadir o cambiar un producto NO hay que tocar el HTML: edita este JSON, sube las fotos a /img y haz push. Instrucciones completas en img/README.md",
+
+  "categorias": [
+    { "id": "todos",         "label": "Todos" },
+    { "id": "halloween",     "label": "Halloween" },
+    { "id": "negocios",      "label": "Para negocios" },
+    { "id": "personalizado", "label": "Personalizado" },
+    { "id": "funcional",     "label": "Piezas funcionales" }
+  ],
+
+  "productos": [
+    {
+      "id": "farol-nombre",
+      "nombre": "Farol calado con tu nombre",
+      "categoria": "halloween",
+      "catLabel": "Halloween · Personalizado",
+      "precio": 20.00,
+      "precioTexto": "desde 20,00€",
+      "desc": "El nombre de tu bar o el apellido de tu familia calado en la pared del farol. Con una vela LED dentro, el texto se proyecta en la pared. Dos tallas: escaparate (22 cm) y casa (12 cm). Se guarda y se saca cada año.",
+      "badge": "Halloween",
+      "wide": true,
+      "destacado": true,
+      "icono": "farol",
+      "imgs": []
+    },
+    {
+      "id": "pack-escaparate-halloween",
+      "nombre": "Pack escaparate Halloween",
+      "categoria": "halloween",
+      "catLabel": "Halloween · Negocios",
+      "precio": 70.00,
+      "desc": "Farol grande con el nombre del negocio + 12 colgantes modulares + un frontal de temporada para tu soporte. Montado y entregado en Elda antes del 31 de octubre.",
+      "badge": "Para escaparate",
+      "badgeColor": "purple",
+      "destacado": true,
+      "icono": "escaparate",
+      "imgs": []
+    },
+    {
+      "id": "cuenco-caramelos",
+      "nombre": "Cuenco de caramelos con nombre",
+      "categoria": "halloween",
+      "catLabel": "Halloween · Hogar",
+      "precio": 22.00,
+      "desc": "Con el apellido de la familia o el nombre del niño en relieve. Se reutiliza todos los años y no acaba en un cajón.",
+      "destacado": true,
+      "icono": "cuenco",
+      "imgs": []
+    },
+    {
+      "id": "pack-colgantes",
+      "nombre": "Pack 12 colgantes articulados",
+      "categoria": "halloween",
+      "catLabel": "Halloween · Decoración",
+      "precio": 15.00,
+      "desc": "Murciélagos y arañas articulados para colgar del escaparate o del techo de casa. Doce piezas, montadas y listas para colgar.",
+      "icono": "colgantes",
+      "imgs": []
+    },
+
+    {
+      "id": "soporte-carta-qr",
+      "nombre": "Soporte de carta con QR y tu logo",
+      "categoria": "negocios",
+      "catLabel": "Hostelería · Negocios",
+      "precio": 12.00,
+      "unidad": "/ unidad",
+      "desc": "Se acabó el QR pegado con celo. Soporte estable con el nombre del bar en relieve y el código bien visible. Pedido mínimo por lote de mesas.",
+      "badge": "Más pedido",
+      "wide": true,
+      "destacado": true,
+      "icono": "carta",
+      "imgs": []
+    },
+    {
+      "id": "base-frontal",
+      "nombre": "Base + frontal de temporada",
+      "categoria": "negocios",
+      "catLabel": "Negocios · Recurrente",
+      "precio": 25.00,
+      "precioTexto": "25,00€ base · 10,00€ frontal",
+      "desc": "Compras la base una vez y cambias solo el frontal en cada campaña: Halloween, Navidad, rebajas, San Valentín, fiestas. Un soporte para todo el año en lugar de decoración de usar y tirar.",
+      "badge": "Nuevo",
+      "badgeColor": "purple",
+      "destacado": true,
+      "icono": "base",
+      "imgs": []
+    },
+    {
+      "id": "expositor-escaparate",
+      "nombre": "Expositor de escaparate a medida",
+      "categoria": "negocios",
+      "catLabel": "Comercio · Escaparate",
+      "precio": 25.00,
+      "precioTexto": "desde 25,00€",
+      "desc": "Peanas y alzas para producto, atriles con el logo de la tienda, indicadores de talla y precio, portafolletos. Diseñados a la medida de tu escaparate, no comprados por catálogo.",
+      "icono": "expositor",
+      "imgs": []
+    },
+
+    {
+      "id": "litofania",
+      "nombre": "Litofanía-retrato con marco",
+      "categoria": "personalizado",
+      "catLabel": "Personalizado · Regalo",
+      "precio": 24.00,
+      "desc": "Tu foto convertida en relieve: a contraluz aparece la imagen completa. Lámpara, portafotos o adorno. Nos mandas la foto por WhatsApp y listo.",
+      "badge": "Regalo",
+      "destacado": true,
+      "icono": "litofania",
+      "imgs": []
+    },
+    {
+      "id": "organizador-medidas",
+      "nombre": "Organizador con tus medidas",
+      "categoria": "personalizado",
+      "catLabel": "Personalizado · Orden",
+      "precio": 45.00,
+      "precioTexto": "desde 45,00€",
+      "desc": "Nos dices el ancho y el alto de tu cajón, tu mesa o tu maletín de herramientas y lo generamos exacto. Nada de aproximar con cajas estándar.",
+      "icono": "organizador",
+      "imgs": []
+    },
+    {
+      "id": "accesorio-moto",
+      "nombre": "Accesorio para tu moto",
+      "categoria": "funcional",
+      "catLabel": "Funcional · Moto",
+      "precio": 39.00,
+      "precioTexto": "desde 39,00€",
+      "desc": "Soportes de móvil y cámara, guías de cable, tapas y alzas de pantalla diseñados para tu modelo concreto, no universales. Impresos en PETG, resistentes al sol y a la vibración.",
+      "badge": "A medida",
+      "badgeColor": "purple",
+      "destacado": true,
+      "icono": "moto",
+      "imgs": []
+    },
+    {
+      "id": "pieza-repuesto",
+      "nombre": "Pieza de repuesto o utillaje",
+      "categoria": "funcional",
+      "catLabel": "Funcional · Taller e industria",
+      "precio": null,
+      "precioTexto": "Presupuesto sin compromiso",
+      "desc": "¿Se te ha roto una pieza que ya no fabrica nadie? Mándanos una foto con una regla al lado y te decimos si podemos reproducirla. Guías, topes, tapas, plantillas de corte, portamuestras.",
+      "wide": true,
+      "icono": "pieza",
+      "imgs": []
+    }
+  ]
+}

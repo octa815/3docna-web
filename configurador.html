@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="3DOCNA — Catálogo completo de productos de impresión 3D. Llaveros, figuras, decoración y accesorios personalizados.">
+  <meta name="description" content="Configura tu farol 3D con el nombre de tu bar o de tu familia: elige texto y tamaño y calcula el precio al momento.">
   <meta name="theme-color" content="#030508">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>Catálogo — 3DOCNA Impresión 3D</title>
+  <title>Configurador de faroles — 3DOCNA</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@300;400;600&display=swap" rel="stylesheet">
@@ -27,7 +27,7 @@
 
   <ul class="nav-links">
     <li><a href="index.html" data-i18n="nav.inicio">Inicio</a></li>
-    <li><a href="catalogo.html" aria-current="page" data-i18n="nav.catalogo">Catálogo</a></li>
+    <li><a href="catalogo.html" data-i18n="nav.catalogo">Catálogo</a></li>
     <li><a href="pedido.html" data-i18n="nav.pedido">Pedido</a></li>
     <li><a href="contacto.html" data-i18n="nav.contacto">Contacto</a></li>
   </ul>
@@ -70,47 +70,76 @@
 
 <main id="main">
 
-<!-- PAGE HEADER -->
-<section class="section" style="padding-top: 140px;" aria-labelledby="catalog-title">
+<!-- CONFIGURADOR DEL FAROL -->
+<section class="section" style="padding-top:140px;" aria-labelledby="cfg-title">
   <div class="section-header">
     <div>
-      <div class="section-label">// 01 — Catálogo</div>
-      <h1 class="section-title" id="catalog-title"><span data-i18n="cat.title.pre">Nuestros </span><em data-i18n="cat.title.em">Productos</em></h1>
+      <div class="section-label">// Configurador</div>
+      <h1 class="section-title" id="cfg-title">Tu farol, con <em>tu nombre</em></h1>
     </div>
-    <a href="pedido.html" class="view-all" data-i18n="cat.viewall.order">Hacer un pedido →</a>
   </div>
 
-  <!-- TABS -->
-  <div class="cat-tabs" role="tablist" aria-label="Filtrar por categoría" data-catalog-tabs>
-    <button class="cat-tab active" data-filter="todos" role="tab" aria-selected="true">Todos</button>
+  <p class="b2b-lead">
+    Escribe el nombre que quieres calado en el farol, elige el tamaño y te decimos el precio al momento.
+    Con una vela LED dentro, el nombre se proyecta en la pared.
+  </p>
+
+  <div class="cfg-wrap">
+    <form class="cfg-form" id="cfgForm" novalidate>
+      <div class="form-group">
+        <label for="cfgNombre">¿Qué pone el farol? *</label>
+        <input type="text" id="cfgNombre" maxlength="16" placeholder="BAR MANOLO" autocomplete="off" required>
+        <p class="cfg-hint">Máximo 16 caracteres. Cuanto más corto, más limpio queda el calado.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="cfgTamano">Tamaño *</label>
+        <select id="cfgTamano">
+          <option value="casa">Casa — 12 cm de alto (20,00€)</option>
+          <option value="escaparate">Escaparate — 22 cm de alto (45,00€)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="cfgCantidad">Unidades</label>
+        <input type="number" id="cfgCantidad" min="1" max="50" value="1" inputmode="numeric">
+      </div>
+
+      <div class="form-group">
+        <label class="cfg-check">
+          <input type="checkbox" id="cfgVela">
+          <span>Añadir vela LED (+3,00€ por unidad)</span>
+        </label>
+      </div>
+    </form>
+
+    <aside class="cfg-preview" aria-live="polite">
+      <div class="cfg-visual">
+        <svg viewBox="0 0 200 220" width="100%" height="220" role="img" aria-label="Vista previa del farol">
+          <path d="M78 44h44M88 44v-10h24v10" fill="none" stroke="var(--neon)" stroke-width="3"/>
+          <path d="M70 52h60l10 90a13 13 0 0 1-13 14H73a13 13 0 0 1-13-14z" fill="none" stroke="var(--neon)" stroke-width="3"/>
+          <rect x="76" y="70" width="48" height="66" rx="4" fill="var(--neon)" opacity="0.08"/>
+          <text id="cfgSvgText" x="100" y="112" text-anchor="middle" fill="var(--neon)"
+                font-size="15" font-family="monospace" letter-spacing="1">TU NOMBRE</text>
+          <ellipse cx="100" cy="186" rx="56" ry="9" fill="var(--neon)" opacity="0.10"/>
+        </svg>
+      </div>
+
+      <div class="cfg-total">
+        <div class="cfg-total-row"><span>Precio unidad</span><strong id="cfgUnit">20,00€</strong></div>
+        <div class="cfg-total-row"><span>Unidades</span><strong id="cfgQty">1</strong></div>
+        <div class="cfg-total-row cfg-total-big"><span>Total</span><strong id="cfgTotal">20,00€</strong></div>
+      </div>
+
+      <a id="cfgWa" class="btn-primary cfg-cta"
+         href="https://wa.me/34694455979" target="_blank" rel="noopener noreferrer">
+        Pedirlo por WhatsApp
+      </a>
+      <p class="cfg-hint" style="text-align:center;">
+        Te confirmamos el diseño antes de imprimir. Pedidos hasta el 24 de octubre para entregar en Halloween.
+      </p>
+    </aside>
   </div>
-
-  <!-- FEATURED GRID -->
-  <div class="product-grid featured" id="productGrid" data-catalog="todos">
-    <p style="grid-column:1/-1;color:var(--muted);padding:40px 0;text-align:center;">Cargando catálogo…</p>
-  </div>
-
-  <noscript>
-    <p style="color:var(--muted);text-align:center;padding:24px 0;">Activa JavaScript para ver el catálogo, o escríbenos por <a href="https://wa.me/34694455979" style="color:var(--neon)">WhatsApp</a>.</p>
-  </noscript>
-
-  <div style="text-align:center; margin-top:48px;">
-    <a href="pedido.html" class="btn-primary" data-i18n="cat.order">Solicitar presupuesto</a>
-  </div>
-</section>
-
-<div class="divider" aria-hidden="true"></div>
-
-<!-- MATERIALS INFO -->
-<section class="materials" aria-label="Materiales disponibles">
-  <div class="mat-label" data-i18n="mat.label">Materiales disponibles</div>
-  <div class="mat-item"><div class="mat-dot" style="background:#00f5ff"></div><span class="mat-name">PLA</span></div>
-  <div class="mat-item"><div class="mat-dot" style="background:#bf00ff"></div><span class="mat-name">PETG</span></div>
-  <div class="mat-item"><div class="mat-dot" style="background:#ff006e"></div><span class="mat-name">TPU Flexible</span></div>
-  <div class="mat-item"><div class="mat-dot" style="background:#ffd700"></div><span class="mat-name">PLA Silk</span></div>
-  <div class="mat-item"><div class="mat-dot" style="background:#ff6b35"></div><span class="mat-name">PLA Wood</span></div>
-  <div class="mat-item"><div class="mat-dot" style="background:#c0c0c0"></div><span class="mat-name">PLA Metálico</span></div>
-  <div class="mat-item"><div class="mat-dot" style="background:#00ff88"></div><span class="mat-name">PLA Glow</span></div>
 </section>
 
 </main>
@@ -129,7 +158,7 @@
 </footer>
 
 <!-- WHATSAPP FLOATING BUTTON -->
-<a href="https://wa.me/34694455979?text=Hola!%20He%20visto%20vuestro%20catálogo%20y%20me%20interesa%20hacer%20un%20pedido"
+<a href="https://wa.me/34694455979?text=Hola!%20Me%20interesa%20hacer%20un%20pedido%20de%20impresión%203D"
    target="_blank"
    rel="noopener noreferrer"
    class="whatsapp-float"
@@ -180,7 +209,7 @@
 <!-- SCRIPTS -->
 <script src="js/navigation.js"></script>
 <script src="js/main.js"></script>
-<script src="js/catalog.js"></script>
+<script src="js/configurador.js"></script>
 <script src="js/accessibility.js"></script>
 
 </body>

@@ -1617,3 +1617,134 @@ footer {
 .text-center { text-align: center; }
 .mt-0 { margin-top: 0; }
 .mb-0 { margin-bottom: 0; }
+
+/* ── SECCIÓN B2B (negocios locales) ── */
+.b2b-lead {
+  max-width: 62ch;
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.75;
+  margin-top: 8px;
+}
+
+.b2b-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 28px 40px;
+  margin-top: 40px;
+}
+
+.b2b-grid .step-text p { font-size: 14px; }
+
+/* ── FRANJA DE CAMPAÑA (Halloween / temporada) ── */
+.halloween-strip .hw-inner {
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--neon2);
+  background: linear-gradient(120deg, rgba(191, 0, 255, 0.06), transparent 60%);
+  padding: 36px 32px;
+}
+
+.hw-sub {
+  max-width: 60ch;
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.75;
+  margin-top: 16px;
+}
+
+.hw-deadline {
+  margin-top: 18px;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.hw-deadline strong { color: var(--neon2); }
+
+@media (max-width: 600px) {
+  .halloween-strip .hw-inner { padding: 26px 20px; }
+}
+
+/* ── CONFIGURADOR DEL FAROL ── */
+.cfg-wrap {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 40px;
+  margin-top: 40px;
+  align-items: start;
+}
+
+.cfg-form { display: flex; flex-direction: column; gap: 22px; }
+
+.cfg-hint {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 300;
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
+.cfg-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.cfg-check input { width: 18px; height: 18px; accent-color: var(--neon); }
+
+.cfg-preview {
+  border: 1px solid var(--border);
+  background: var(--card);
+  padding: 26px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cfg-visual {
+  background: radial-gradient(ellipse at 50% 45%, rgba(0, 245, 255, 0.10) 0%, transparent 70%);
+  display: grid;
+  place-items: center;
+  padding: 10px 0;
+}
+
+.cfg-total { display: flex; flex-direction: column; gap: 10px; }
+
+.cfg-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 13px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.cfg-total-row strong { color: var(--text); font-size: 15px; }
+
+.cfg-total-big {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  margin-top: 4px;
+}
+
+.cfg-total-big strong { color: var(--neon); font-size: 24px; font-family: var(--font-heading); }
+
+.cfg-cta { text-align: center; }
+
+@media (max-width: 820px) {
+  .cfg-wrap { grid-template-columns: 1fr; gap: 28px; }
+}
+
+/* el checkbox del configurador no debe heredar el estilo de label en mayúsculas */
+.cfg-form label.cfg-check {
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 14px;
+  color: var(--text);
+  font-weight: 400;
+}

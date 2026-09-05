@@ -8,12 +8,9 @@
 document.addEventListener("DOMContentLoaded", function () {
 
   // ── SCROLL REVEAL (IntersectionObserver) ──
-  const revealElements = document.querySelectorAll(
-    ".product-card, .step, .stat, .contact-chip"
-  );
-
-  if (revealElements.length > 0) {
-    const revealObserver = new IntersectionObserver(
+  var revealObserver = null;
+  if ("IntersectionObserver" in window) {
+    revealObserver = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
@@ -25,8 +22,15 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       { threshold: 0.1 }
     );
+  }
 
-    revealElements.forEach(function (el) {
+  function initReveal(scope) {
+    var root = scope || document;
+    var els = root.querySelectorAll(".product-card, .step, .stat, .contact-chip");
+    els.forEach(function (el) {
+      if (el.dataset.revealInit) return;
+      el.dataset.revealInit = "1";
+      if (!revealObserver) return;
       el.style.opacity = "0";
       el.style.transform = "translateY(20px)";
       el.style.transition = "opacity 0.6s ease, transform 0.6s ease";
@@ -34,25 +38,26 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // ── CATEGORY TAB FILTERING ──
-  const tabs = document.querySelectorAll(".cat-tab");
-  const productCards = document.querySelectorAll("[data-category]");
+  // ── CATEGORY TAB FILTERING (delegado: funciona con tarjetas dinámicas) ──
+  document.addEventListener("click", function (e) {
+    var tab = e.target.closest && e.target.closest(".cat-tab");
+    if (!tab) return;
 
-  tabs.forEach(function (tab) {
-    tab.addEventListener("click", function () {
-      tabs.forEach(function (t) { t.classList.remove("active"); });
-      tab.classList.add("active");
+    var group = tab.parentElement;
+    group.querySelectorAll(".cat-tab").forEach(function (t) {
+      t.classList.remove("active");
+      t.setAttribute("aria-selected", "false");
+    });
+    tab.classList.add("active");
+    tab.setAttribute("aria-selected", "true");
 
-      var category = tab.getAttribute("data-filter");
-
-      productCards.forEach(function (card) {
-        if (!category || category === "todos") {
-          card.style.display = "";
-        } else {
-          var cardCat = card.getAttribute("data-category");
-          card.style.display = cardCat === category ? "" : "none";
-        }
-      });
+    var category = tab.getAttribute("data-filter");
+    document.querySelectorAll("[data-category]").forEach(function (card) {
+      if (!category || category === "todos") {
+        card.style.display = "";
+      } else {
+        card.style.display = card.getAttribute("data-category") === category ? "" : "none";
+      }
     });
   });
 
@@ -159,36 +164,35 @@ document.addEventListener("DOMContentLoaded", function () {
     return div.innerHTML;
   }
 
-  // Add to cart from + button
-  document.querySelectorAll(".add-btn").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      var card = this.closest(".product-card");
-      if (!card) return;
-      var name = card.getAttribute("data-name");
-      var price = parseFloat(card.getAttribute("data-price"));
-      if (!name || isNaN(price)) return;
+  // Add to cart (delegado: funciona con tarjetas dinámicas)
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest && e.target.closest("button.add-btn");
+    if (!btn) return;
 
-      var cart = getCart();
-      var found = false;
-      for (var i = 0; i < cart.length; i++) {
-        if (cart[i].name === name) { cart[i].qty++; found = true; break; }
-      }
-      if (!found) cart.push({ name: name, price: price, qty: 1 });
-      saveCart(cart);
-      updateCartBadge();
-      renderCartDrawer();
+    var card = btn.closest(".product-card");
+    if (!card) return;
+    var name = card.getAttribute("data-name");
+    var price = parseFloat(card.getAttribute("data-price"));
+    if (!name || isNaN(price)) return;
 
-      // Visual feedback on button
-      var self = this;
-      self.textContent = "\u2713";
-      self.style.background = "var(--neon)";
-      self.style.color = "var(--bg)";
-      setTimeout(function () {
-        self.textContent = "+";
-        self.style.background = "";
-        self.style.color = "";
-      }, 1200);
-    });
+    var cart = getCart();
+    var found = false;
+    for (var i = 0; i < cart.length; i++) {
+      if (cart[i].name === name) { cart[i].qty++; found = true; break; }
+    }
+    if (!found) cart.push({ name: name, price: price, qty: 1 });
+    saveCart(cart);
+    updateCartBadge();
+    renderCartDrawer();
+
+    btn.textContent = "\u2713";
+    btn.style.background = "var(--neon)";
+    btn.style.color = "var(--bg)";
+    setTimeout(function () {
+      btn.textContent = "+";
+      btn.style.background = "";
+      btn.style.color = "";
+    }, 1200);
   });
 
   // Cart drawer open/close
@@ -295,43 +299,63 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // ── PRODUCT IMAGE CAROUSEL ──
-  document.querySelectorAll(".product-img-carousel").forEach(function(carousel) {
-    var track = carousel.querySelector(".carousel-track");
-    var slides = carousel.querySelectorAll(".carousel-slide");
-    var dots = carousel.querySelectorAll(".dot");
-    var prevBtn = carousel.querySelector(".carousel-arrow.prev");
-    var nextBtn = carousel.querySelector(".carousel-arrow.next");
-    var current = 0;
-    var timer = null;
+  function initCarousels(scope) {
+    var root = scope || document;
+    root.querySelectorAll(".product-img-carousel").forEach(function (carousel) {
+      if (carousel.dataset.carouselInit) return;
+      carousel.dataset.carouselInit = "1";
 
-    function goTo(n) {
-      current = ((n % slides.length) + slides.length) % slides.length;
-      track.style.transform = "translateX(-" + (current * 100) + "%)";
-      dots.forEach(function(d, i) { d.classList.toggle("active", i === current); });
-    }
+      var track = carousel.querySelector(".carousel-track");
+      var slides = carousel.querySelectorAll(".carousel-slide");
+      var dots = carousel.querySelectorAll(".dot");
+      var prevBtn = carousel.querySelector(".carousel-arrow.prev");
+      var nextBtn = carousel.querySelector(".carousel-arrow.next");
+      var current = 0;
+      var timer = null;
+      if (!track || slides.length < 2) return;
 
-    dots.forEach(function(dot, i) {
-      dot.addEventListener("click", function() { goTo(i); });
+      function goTo(n) {
+        current = ((n % slides.length) + slides.length) % slides.length;
+        track.style.transform = "translateX(-" + (current * 100) + "%)";
+        dots.forEach(function (d, i) { d.classList.toggle("active", i === current); });
+      }
+
+      dots.forEach(function (dot, i) {
+        dot.addEventListener("click", function () { goTo(i); });
+      });
+      if (prevBtn) prevBtn.addEventListener("click", function () { goTo(current - 1); });
+      if (nextBtn) nextBtn.addEventListener("click", function () { goTo(current + 1); });
+
+      function startAuto() {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        timer = setInterval(function () { goTo(current + 1); }, 3200);
+      }
+      function stopAuto() { clearInterval(timer); }
+
+      startAuto();
+      carousel.addEventListener("mouseenter", stopAuto);
+      carousel.addEventListener("mouseleave", startAuto);
+
+      var touchStartX = 0;
+      carousel.addEventListener("touchstart", function (e) {
+        touchStartX = e.touches[0].clientX;
+      }, { passive: true });
+      carousel.addEventListener("touchend", function (e) {
+        var diff = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
+      }, { passive: true });
     });
-    if (prevBtn) prevBtn.addEventListener("click", function() { goTo(current - 1); });
-    if (nextBtn) nextBtn.addEventListener("click", function() { goTo(current + 1); });
+  }
 
-    function startAuto() { timer = setInterval(function() { goTo(current + 1); }, 3200); }
-    function stopAuto() { clearInterval(timer); }
+  // Punto de entrada que usa js/catalog.js tras pintar las tarjetas
+  window.DOCNA = window.DOCNA || {};
+  window.DOCNA.initProductUI = function (scope) {
+    initCarousels(scope);
+    initReveal(scope);
+  };
 
-    startAuto();
-    carousel.addEventListener("mouseenter", stopAuto);
-    carousel.addEventListener("mouseleave", startAuto);
-
-    var touchStartX = 0;
-    carousel.addEventListener("touchstart", function(e) {
-      touchStartX = e.touches[0].clientX;
-    }, { passive: true });
-    carousel.addEventListener("touchend", function(e) {
-      var diff = touchStartX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
-    }, { passive: true });
-  });
+  initCarousels(document);
+  initReveal(document);
 
   // ── SMOOTH SCROLL FOR ANCHOR LINKS ──
   document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {

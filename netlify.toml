@@ -23,3 +23,7 @@
   from = "/contacto"
   to = "/contacto.html"
   status = 200
+[[redirects]]
+  from = "/configurador"
+  to = "/configurador.html"
+  status = 200
