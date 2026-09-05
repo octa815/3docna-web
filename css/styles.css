@@ -3,48 +3,96 @@
    ═══════════════════════════════════════════════ */
 
 /* ── CSS CUSTOM PROPERTIES ── */
+/* ── PALETA ──────────────────────────────────────
+   Los tres colores son las tres partes del nombre:
+     3D  -> verde     (--brand-3d / --ok)
+     OC  -> naranja   (--brand-oc / --accent)   Octavio
+     NA  -> rosa      (--brand-na / --accent2)  Natalia
+   El naranja hace de acento de trabajo (botones,
+   enlaces, precios); el rosa marca temporada y
+   novedad; el verde confirma. Así los tres conviven
+   sin pelearse por la misma función.
+
+   Nombres semánticos: --accent, --ink, --paper…
+   Los antiguos (--neon, --bg, --text) se conservan
+   como alias para el resto de la hoja.
+   ─────────────────────────────────────────────── */
 :root {
-  --neon: #00f5ff;
-  --neon2: #bf00ff;
-  --neon3: #00e676;
-  --green: #00e676;
-  --bg: #030508;
-  --bg2: #0a0d14;
-  --bg3: #0f1420;
-  --text: #e8eaf0;
-  --muted: #5a6080;
-  --card: #0d1018;
-  --border: rgba(0, 245, 255, 0.15);
-  --font-heading: 'Orbitron', monospace;
-  --font-body: 'Syne', sans-serif;
+  --brand-3d: #52C98A;
+  --brand-oc: #FF8C42;
+  --brand-na: #FF6FA5;
+
+  --accent:      var(--brand-oc);
+  --accent-rgb:  255, 140, 66;
+  --accent2:     var(--brand-na);
+  --accent2-rgb: 255, 111, 165;
+  --ok:          var(--brand-3d);
+  --ok-rgb:      82, 201, 138;
+
+  /* Fondo cálido, no negro puro: el naranja respira mejor */
+  --paper:   #141210;
+  --paper2:  #1B1815;
+  --paper3:  #231F1B;
+  --surface: #1A1714;
+  --ink:     #F1ECE5;
+  --ink-mid: #A39B91;
+  --rule:    #332D27;
+
+  /* Alias heredados */
+  --neon:   var(--accent);
+  --neon2:  var(--accent2);
+  --neon3:  var(--ok);
+  --green:  var(--ok);
+  --bg:     var(--paper);
+  --bg2:    var(--paper2);
+  --bg3:    var(--paper3);
+  --card:   var(--surface);
+  --text:   var(--ink);
+  --muted:  var(--ink-mid);
+  --border: var(--rule);
+
+  --font-heading: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif;
+  --font-body: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
   --nav-height: 72px;
 }
 
-/* ── HIGH CONTRAST MODE ── */
-[data-contrast="high"] {
-  --bg: #000000;
-  --bg2: #111111;
-  --bg3: #1a1a1a;
-  --text: #ffffff;
-  --muted: #cccccc;
-  --card: #111111;
-  --border: rgba(255, 255, 255, 0.4);
-  --neon: #00ffff;
-  --neon2: #ff66ff;
-  --green: #33ff99;
+/* ── MODO CLARO ── (los tres colores se oscurecen para
+      mantener el contraste sobre papel) */
+[data-contrast="light"] {
+  --brand-3d: #1F7A4D;
+  --brand-oc: #B5560F;
+  --brand-na: #BC2F6E;
+
+  --accent-rgb:  181, 86, 15;
+  --accent2-rgb: 188, 47, 110;
+  --ok-rgb:      31, 122, 77;
+
+  --paper:   #F6F4F1;
+  --paper2:  #EEEBE6;
+  --paper3:  #E4E0D9;
+  --surface: #FFFFFF;
+  --ink:     #1B1815;
+  --ink-mid: #6B645C;
+  --rule:    #DAD5CC;
 }
 
-[data-contrast="light"] {
-  --bg: #f5f5f7;
-  --bg2: #e8e8ec;
-  --bg3: #dcdce2;
-  --text: #1a1a2e;
-  --muted: #555570;
-  --card: #ffffff;
-  --border: rgba(0, 100, 120, 0.2);
-  --neon: #0088aa;
-  --neon2: #8800aa;
-  --green: #008844;
+/* ── MODO ALTO CONTRASTE ── */
+[data-contrast="high"] {
+  --brand-3d: #7DEBB0;
+  --brand-oc: #FFA968;
+  --brand-na: #FF93BE;
+
+  --accent-rgb:  255, 169, 104;
+  --accent2-rgb: 255, 147, 190;
+  --ok-rgb:      125, 235, 176;
+
+  --paper:   #000000;
+  --paper2:  #101010;
+  --paper3:  #1A1A1A;
+  --surface: #0B0B0B;
+  --ink:     #FFFFFF;
+  --ink-mid: #D8D8D8;
+  --rule:    #6E6E6E;
 }
 
 /* ── RESET & BASE ── */
@@ -142,7 +190,7 @@ nav {
   justify-content: space-between;
   padding: 0 48px;
   height: var(--nav-height);
-  background: rgba(3, 5, 8, 0.85);
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
 }
@@ -151,25 +199,34 @@ nav {
   background: rgba(245, 245, 247, 0.9);
 }
 
+/* 3D de impresión 3D · OC de Octavio · NA de Natalia */
 .logo {
   font-family: var(--font-heading);
-  font-weight: 900;
+  font-weight: 800;
   font-size: 22px;
-  letter-spacing: 4px;
-  color: var(--neon);
-  text-shadow: 0 0 20px rgba(0, 245, 255, 0.6);
+  letter-spacing: 3px;
+  color: var(--brand-3d);
   text-decoration: none;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
 }
 
-.logo span {
-  color: var(--neon2);
+.logo-img {
+  width: 30px;
+  height: auto;
+  display: block;
+  flex-shrink: 0;
 }
 
-.logo .logo-oc {
-  color: var(--green);
-  text-shadow: 0 0 20px rgba(0, 230, 118, 0.6);
+.logo-word { display: inline-block; }
+
+@media (max-width: 480px) {
+  .logo-img { width: 24px; }
 }
+
+.logo .logo-oc { color: var(--brand-oc); }
+.logo .logo-na { color: var(--brand-na); }
 
 .nav-links {
   display: flex;
@@ -216,7 +273,7 @@ nav {
 .nav-cta:focus-visible {
   background: var(--neon);
   color: var(--bg);
-  box-shadow: 0 0 30px rgba(0, 245, 255, 0.4);
+  box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.4);
 }
 
 /* ── HAMBURGER MENU ── */
@@ -301,8 +358,8 @@ nav {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(0, 245, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 245, 255, 0.04) 1px, transparent 1px);
+    linear-gradient(rgba(var(--accent-rgb), 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--accent-rgb), 0.07) 1px, transparent 1px);
   background-size: 60px 60px;
   mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
 }
@@ -311,7 +368,7 @@ nav {
   position: absolute;
   width: 700px;
   height: 700px;
-  background: radial-gradient(ellipse, rgba(0, 245, 255, 0.08) 0%, transparent 70%);
+  background: radial-gradient(ellipse, rgba(var(--accent-rgb), 0.05) 0%, transparent 70%);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -322,7 +379,7 @@ nav {
   position: absolute;
   width: 400px;
   height: 400px;
-  background: radial-gradient(ellipse, rgba(0, 230, 118, 0.07) 0%, transparent 70%);
+  background: radial-gradient(ellipse, rgba(var(--accent2-rgb), 0.05) 0%, transparent 70%);
   top: 20%;
   right: 10%;
   pointer-events: none;
@@ -374,7 +431,7 @@ h1 {
 }
 
 h1 .line1 { display: block; color: var(--text); }
-h1 .line2 { display: block; color: var(--neon); text-shadow: 0 0 40px rgba(0, 245, 255, 0.5); }
+h1 .line2 { display: block; color: var(--accent); }
 
 .hero-sub {
   font-size: 16px;
@@ -407,12 +464,12 @@ h1 .line2 { display: block; color: var(--neon); text-shadow: 0 0 40px rgba(0, 24
   text-decoration: none;
   display: inline-block;
   transition: all 0.3s;
-  box-shadow: 0 0 30px rgba(0, 245, 255, 0.3);
+  box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.3);
 }
 
 .btn-primary:hover,
 .btn-primary:focus-visible {
-  box-shadow: 0 0 60px rgba(0, 245, 255, 0.6);
+  box-shadow: 0 0 60px rgba(var(--accent-rgb), 0.6);
   transform: translateY(-2px);
 }
 
@@ -488,7 +545,8 @@ h1 .line2 { display: block; color: var(--neon); text-shadow: 0 0 40px rgba(0, 24
 
 .section-label {
   font-size: 11px;
-  letter-spacing: 4px;
+  font-weight: 600;
+  letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--neon);
   margin-bottom: 12px;
@@ -503,9 +561,12 @@ h1 .line2 { display: block; color: var(--neon); text-shadow: 0 0 40px rgba(0, 24
 
 .section-title em {
   font-style: normal;
-  color: var(--neon2);
-  text-shadow: 0 0 20px rgba(191, 0, 255, 0.4);
+  color: var(--accent);
 }
+
+/* En "casualidad: OC y NA" cada sigla lleva su propio color */
+#somos-title em:first-of-type { color: var(--brand-oc); }
+#somos-title em:last-of-type  { color: var(--brand-na); }
 
 .view-all {
   color: var(--neon);
@@ -553,7 +614,7 @@ h1 .line2 { display: block; color: var(--neon); text-shadow: 0 0 40px rgba(0, 24
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(0, 245, 255, 0.05) 0%, transparent 60%);
+  background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.05) 0%, transparent 60%);
   opacity: 0;
   transition: opacity 0.4s;
 }
@@ -562,9 +623,9 @@ h1 .line2 { display: block; color: var(--neon); text-shadow: 0 0 40px rgba(0, 24
 
 .product-card:hover,
 .product-card:focus-within {
-  border-color: rgba(0, 245, 255, 0.4);
+  border-color: rgba(var(--accent-rgb), 0.4);
   transform: translateY(-4px);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 245, 255, 0.1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 30px rgba(var(--accent-rgb), 0.1);
 }
 
 .product-img {
@@ -636,8 +697,8 @@ h1 .line2 { display: block; color: var(--neon); text-shadow: 0 0 40px rgba(0, 24
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.18);
-  border: 1px solid rgba(255,255,255,0.12);
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  border: 1px solid var(--rule);
   cursor: pointer;
   padding: 0;
   transition: background 0.2s, transform 0.2s;
@@ -653,7 +714,7 @@ h1 .line2 { display: block; color: var(--neon); text-shadow: 0 0 40px rgba(0, 24
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(3,5,8,0.65);
+  background: color-mix(in srgb, var(--ink) 55%, transparent);
   border: 1px solid var(--border);
   color: var(--text);
   width: 30px;
@@ -672,7 +733,7 @@ h1 .line2 { display: block; color: var(--neon); text-shadow: 0 0 40px rgba(0, 24
   padding: 0;
 }
 
-.carousel-arrow:hover { background: rgba(0, 245, 255, 0.15); }
+.carousel-arrow:hover { background: rgba(var(--accent-rgb), 0.15); }
 .product-card:hover .carousel-arrow { opacity: 1; }
 .carousel-arrow.prev { left: 8px; }
 .carousel-arrow.next { right: 8px; }
@@ -829,7 +890,7 @@ h1 .line2 { display: block; color: var(--neon); text-shadow: 0 0 40px rgba(0, 24
   right: -200px;
   width: 500px;
   height: 500px;
-  background: radial-gradient(ellipse, rgba(0, 230, 118, 0.08) 0%, transparent 70%);
+  background: radial-gradient(ellipse, rgba(var(--ok-rgb), 0.08) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -900,13 +961,13 @@ h1 .line2 { display: block; color: var(--neon); text-shadow: 0 0 40px rgba(0, 24
 
 .hex:hover {
   border-color: var(--green);
-  background: rgba(0, 230, 118, 0.08);
-  box-shadow: 0 0 20px rgba(0, 230, 118, 0.2);
+  background: rgba(var(--ok-rgb), 0.08);
+  box-shadow: 0 0 20px rgba(var(--ok-rgb), 0.2);
 }
 
 .hex.active {
   border-color: var(--green);
-  background: rgba(0, 230, 118, 0.12);
+  background: rgba(var(--ok-rgb), 0.12);
 }
 
 .price-tag {
@@ -993,7 +1054,7 @@ h1 .line2 { display: block; color: var(--neon); text-shadow: 0 0 40px rgba(0, 24
   transform: translateX(-50%);
   width: 800px;
   height: 400px;
-  background: radial-gradient(ellipse, rgba(0, 230, 118, 0.06) 0%, transparent 70%);
+  background: radial-gradient(ellipse, rgba(var(--ok-rgb), 0.06) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -1008,7 +1069,7 @@ h1 .line2 { display: block; color: var(--neon); text-shadow: 0 0 40px rgba(0, 24
 .cta-title em {
   font-style: normal;
   color: var(--green);
-  text-shadow: 0 0 30px rgba(0, 230, 118, 0.5);
+  text-shadow: 0 0 30px rgba(var(--ok-rgb), 0.5);
 }
 
 .cta-sub {
@@ -1044,7 +1105,7 @@ h1 .line2 { display: block; color: var(--neon); text-shadow: 0 0 40px rgba(0, 24
 .contact-chip:focus-visible {
   border-color: var(--neon);
   color: var(--neon);
-  box-shadow: 0 0 20px rgba(0, 245, 255, 0.1);
+  box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.1);
 }
 
 .contact-chip .icon { font-size: 18px; }
@@ -1136,12 +1197,12 @@ h1 .line2 { display: block; color: var(--neon); text-shadow: 0 0 40px rgba(0, 24
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 0 0 30px rgba(0, 230, 118, 0.2);
+  box-shadow: 0 0 30px rgba(var(--ok-rgb), 0.2);
 }
 
 .form-submit:hover,
 .form-submit:focus-visible {
-  box-shadow: 0 0 50px rgba(0, 230, 118, 0.5);
+  box-shadow: 0 0 50px rgba(var(--ok-rgb), 0.5);
   transform: translateY(-2px);
 }
 
@@ -1157,7 +1218,7 @@ h1 .line2 { display: block; color: var(--neon); text-shadow: 0 0 40px rgba(0, 24
   display: none;
   text-align: center;
   padding: 48px;
-  border: 1px solid rgba(0, 245, 255, 0.3);
+  border: 1px solid rgba(var(--accent-rgb), 0.3);
 }
 
 .form-success .success-icon { font-size: 48px; margin-bottom: 16px; }
@@ -1409,7 +1470,7 @@ h1 .line2 { display: block; color: var(--neon); text-shadow: 0 0 40px rgba(0, 24
 }
 
 .cart-checkout:hover {
-  box-shadow: 0 0 30px rgba(0, 245, 255, 0.4);
+  box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.4);
 }
 
 /* ── CART SUMMARY ON PEDIDO PAGE ── */
@@ -1434,7 +1495,7 @@ h1 .line2 { display: block; color: var(--neon); text-shadow: 0 0 40px rgba(0, 24
   padding: 8px 0;
   font-size: 13px;
   color: var(--text);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid var(--rule);
 }
 
 .cart-summary-item span:last-child {
@@ -1577,10 +1638,10 @@ footer {
 }
 
 /* ── IMAGE BACKGROUNDS ── */
-.img-bg-llave { background: radial-gradient(ellipse at 50% 50%, rgba(0, 245, 255, 0.08) 0%, transparent 70%); }
-.img-bg-deco { background: radial-gradient(ellipse at 50% 50%, rgba(191, 0, 255, 0.08) 0%, transparent 70%); }
-.img-bg-fig { background: radial-gradient(ellipse at 50% 50%, rgba(0, 230, 118, 0.08) 0%, transparent 70%); }
-.img-bg-mix { background: radial-gradient(ellipse at 50% 50%, rgba(0, 245, 255, 0.05) 0%, transparent 70%); }
+.img-bg-llave { background: radial-gradient(ellipse at 50% 50%, rgba(var(--accent-rgb), 0.08) 0%, transparent 70%); }
+.img-bg-deco { background: radial-gradient(ellipse at 50% 50%, rgba(var(--accent2-rgb), 0.08) 0%, transparent 70%); }
+.img-bg-fig { background: radial-gradient(ellipse at 50% 50%, rgba(var(--ok-rgb), 0.08) 0%, transparent 70%); }
+.img-bg-mix { background: radial-gradient(ellipse at 50% 50%, rgba(var(--accent-rgb), 0.05) 0%, transparent 70%); }
 
 /* ── FORMAT TAGS ── */
 .format-tags {
@@ -1641,7 +1702,7 @@ footer {
 .halloween-strip .hw-inner {
   border: 1px solid var(--border);
   border-left: 3px solid var(--neon2);
-  background: linear-gradient(120deg, rgba(191, 0, 255, 0.06), transparent 60%);
+  background: linear-gradient(120deg, rgba(var(--accent2-rgb), 0.06), transparent 60%);
   padding: 36px 32px;
 }
 
@@ -1707,7 +1768,7 @@ footer {
 }
 
 .cfg-visual {
-  background: radial-gradient(ellipse at 50% 45%, rgba(0, 245, 255, 0.10) 0%, transparent 70%);
+  background: radial-gradient(ellipse at 50% 45%, rgba(var(--accent-rgb), 0.10) 0%, transparent 70%);
   display: grid;
   place-items: center;
   padding: 10px 0;
@@ -1747,4 +1808,52 @@ footer {
   font-size: 14px;
   color: var(--text);
   font-weight: 400;
+}
+
+/* ── QUIÉNES SOMOS ── */
+.somos-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 48px;
+  margin-top: 36px;
+  align-items: start;
+}
+
+.somos-texto p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--ink-mid);
+  max-width: 56ch;
+}
+
+.somos-texto p + p { margin-top: 18px; }
+.somos-texto strong { color: var(--accent); font-weight: 700; }
+.somos-texto strong.c-3d { color: var(--brand-3d); }
+.somos-texto strong.c-oc { color: var(--brand-oc); }
+.somos-texto strong.c-na { color: var(--brand-na); }
+
+.somos-hechos {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  border-left: 2px solid var(--rule);
+  padding-left: 26px;
+}
+
+.hecho { display: flex; gap: 18px; align-items: flex-start; }
+
+.hecho-num {
+  font-family: var(--font-heading);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent2);
+  letter-spacing: 1px;
+  min-width: 24px;
+  margin-top: 3px;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 860px) {
+  .somos-grid { grid-template-columns: 1fr; gap: 32px; }
+  .somos-hechos { padding-left: 20px; }
 }

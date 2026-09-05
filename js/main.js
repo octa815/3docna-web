@@ -24,6 +24,17 @@ document.addEventListener("DOMContentLoaded", function () {
     );
   }
 
+  // Red de seguridad: si el observador no llega a dispararse (impresión,
+  // capturas, navegadores raros), a los 2,5 s se muestra todo igualmente.
+  function forzarVisible() {
+    document.querySelectorAll("[data-reveal-init]").forEach(function (el) {
+      if (getComputedStyle(el).opacity !== "1") {
+        el.style.opacity = "1";
+        el.style.transform = "translateY(0)";
+      }
+    });
+  }
+
   function initReveal(scope) {
     var root = scope || document;
     var els = root.querySelectorAll(".product-card, .step, .stat, .contact-chip");
@@ -36,6 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
       el.style.transition = "opacity 0.6s ease, transform 0.6s ease";
       revealObserver.observe(el);
     });
+    setTimeout(forzarVisible, 6000);
   }
 
   // ── CATEGORY TAB FILTERING (delegado: funciona con tarjetas dinámicas) ──
