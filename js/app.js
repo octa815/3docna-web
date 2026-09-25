@@ -18,7 +18,11 @@ export const WA = "https://wa.me/34694455979?text=";
 
 const { gsap, ScrollTrigger } = window;
 export const hasGsap = Boolean(gsap && ScrollTrigger);
-if (hasGsap) gsap.registerPlugin(ScrollTrigger);
+if (hasGsap) {
+  gsap.registerPlugin(ScrollTrigger);
+  // En móvil la barra de direcciones cambia la altura al hacer scroll: no recalcular por eso (evita saltos)
+  ScrollTrigger.config({ ignoreMobileResize: true });
+}
 
 /* =====================================================================
    Ajustes: tema, tamaño de texto, animaciones
@@ -217,14 +221,26 @@ renderCart();
 /* =====================================================================
    WhatsApp flotante: oculto en portada y en zonas de contacto
    ===================================================================== */
+// También se aparta mientras bajas leyendo, para no tapar botones, y vuelve al subir
 const wa = $(".wa-float");
-if (wa && "IntersectionObserver" in window) {
+if (wa) {
   const seen = new Set();
-  const io = new IntersectionObserver((es) => {
-    es.forEach((e) => (e.isIntersecting ? seen.add(e.target) : seen.delete(e.target)));
-    wa.classList.toggle("is-hidden", seen.size > 0);
-  }, { threshold: 0.1 });
-  $$("[data-hide-wa]").forEach((el) => io.observe(el));
+  let goingDown = false, lastY = scrollY;
+  const paint = () => wa.classList.toggle("is-hidden", seen.size > 0 || goingDown);
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver((es) => {
+      es.forEach((e) => (e.isIntersecting ? seen.add(e.target) : seen.delete(e.target)));
+      paint();
+    }, { threshold: 0.05 });
+    $$("[data-hide-wa]").forEach((el) => io.observe(el));
+  }
+  addEventListener("scroll", () => {
+    const y = scrollY;
+    if (Math.abs(y - lastY) < 8) return;
+    const down = y > lastY && y > 200;
+    lastY = y;
+    if (down !== goingDown) { goingDown = down; paint(); }
+  }, { passive: true });
 }
 
 /* =====================================================================
@@ -302,15 +318,18 @@ export function initReveals() {
       onComplete: () => gsap.set(el, { clearProps: "clipPath" }),
     });
   });
+  // Separadores: el avance se suaviza (scrub 0.6) para que un scroll brusco no dé tirones
   $$(".bead").forEach((bead, i) => {
     const line = $(".bead-line", bead);
-    ScrollTrigger.create({
-      trigger: bead, start: "top 88%", end: "top 30%", scrub: true,
-      onUpdate: (self) => {
-        gsap.set(line, { scaleX: self.progress });
-        beadHooks.forEach((h) => h(bead, self.progress, self.isActive, i));
+    const st = { p: 0 };
+    gsap.to(st, {
+      p: 1, ease: "none",
+      scrollTrigger: { trigger: bead, start: "top 88%", end: "top 30%", scrub: 0.6 },
+      onUpdate: () => {
+        line.style.transform = `scaleX(${st.p})`;
+        const active = st.p > 0.002 && st.p < 0.998;
+        beadHooks.forEach((h) => h(bead, st.p, active, i));
       },
-      onToggle: (self) => beadHooks.forEach((h) => h(bead, self.progress, self.isActive, i)),
     });
   });
   const mark = $(".ftr-mark span");

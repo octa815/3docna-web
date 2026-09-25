@@ -129,7 +129,7 @@ def header(current):
 
 def footer():
     links = "\n".join(f'        <a href="{href}">{label}</a>' for _, href, label in NAV)
-    return f"""<footer class="ftr">
+    return f"""<footer class="ftr" data-hide-wa>
   <div class="wrap">
     <p class="ftr-mark" aria-hidden="true"><span>3D<span class="oc">OC</span><span class="na">NA</span></span></p>
     <div class="ftr-row">

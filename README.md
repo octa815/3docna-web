@@ -4,7 +4,7 @@ Web de 3DOCNA (Octavio y Natalia). Sitio estático: HTML, CSS y JavaScript, publ
 
 ## Qué tiene
 
-- Portada donde la mascota se imprime en 3D capa a capa con el scroll (Three.js). Al terminar, la pantalla se lamina en capas que se deslizan.
+- Portada donde la mascota, un casco de moto, se imprime en 3D capa a capa con el scroll (Three.js). Al terminar, la pantalla se lamina en capas que se deslizan.
 - Una boquilla 3D dibuja una línea de filamento entre secciones.
 - Catálogo que se genera desde `data/productos.json`, con filtros, carrusel de fotos y cesta.
 - Configurador del farol con precio en vivo, cesta y WhatsApp.

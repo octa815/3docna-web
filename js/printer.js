@@ -4,21 +4,28 @@ import * as THREE from "three";
 import { RoomEnvironment } from "../vendor/RoomEnvironment.js";
 
 export const LAYERS = 96;          // capas de la pieza (lo que enseña el contador)
-const H = 3.2;                      // alto de la mascota, en unidades del modelo
-const R = 1.25;                     // radio máximo
+const H = 3.0;                      // alto del casco (la mascota de 3DOCNA es un casco de moto)
+const R = 1.3;                      // radio máximo
 const TOTAL_H = H + 0.9;            // alto total aproximado con cama y cabezal
 
-// Perfil de huevo con base plana (para que se sostenga en la cama)
-const radiusAt = (t) => R * Math.sqrt(Math.max(0, 1 - ((t - 0.47) / 0.53) ** 2));
+// Perfil de casco integral: boca del cuello abierta abajo, lo más ancho a media altura y cúpula redonda arriba
+const WIDE = 0.45;
+const radiusAt = (t) => t <= WIDE
+  ? R * (0.74 + 0.26 * Math.sin((Math.PI / 2) * (t / WIDE)))
+  : R * Math.sqrt(Math.max(0, 1 - ((t - WIDE) / (1 - WIDE)) ** 2));
+const VISOR = [0.34, 0.62];          // la visera va entre estas alturas, como en el logo
 
 export function createPrinter(canvas) {
+  // En móvil la pantalla ya es muy densa: menos píxeles y sin antialias = mucho menos trabajo por fotograma
+  const coarse = matchMedia("(pointer: coarse)").matches;
+  const dpr = Math.min(window.devicePixelRatio || 1, coarse ? 1.25 : 1.75);
   let renderer;
   try {
-    renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: "high-performance" });
+    renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: !coarse, powerPreference: "high-performance" });
   } catch {
     return null;
   }
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+  renderer.setPixelRatio(dpr);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.0;
@@ -40,30 +47,36 @@ export function createPrinter(canvas) {
   scene.add(key, warm);
 
   /* ---------- Materiales ---------- */
+  // En móvil, material estándar: mismo aspecto a esta escala y un sombreado mucho más barato
+  const M = (opts) => {
+    if (!coarse) return new THREE.MeshPhysicalMaterial(opts);
+    const { clearcoat, clearcoatRoughness, sheen, sheenColor, ...rest } = opts;
+    return new THREE.MeshStandardMaterial(rest);
+  };
   const clip = new THREE.Plane(new THREE.Vector3(0, -1, 0), 0); // deja ver solo lo que está por debajo de la capa actual
-  const pla = new THREE.MeshPhysicalMaterial({
+  const pla = M({
     vertexColors: true, roughness: 0.42, metalness: 0, clearcoat: 0.55, clearcoatRoughness: 0.35,
     sheen: 0.4, sheenColor: new THREE.Color(0xffe0ec), side: THREE.DoubleSide, clippingPlanes: [clip],
   });
-  const plaSolid = (hex) => new THREE.MeshPhysicalMaterial({ color: hex, roughness: 0.4, clearcoat: 0.5, clearcoatRoughness: 0.3, clippingPlanes: [clip] });
-  const black = new THREE.MeshPhysicalMaterial({ color: 0x1a1518, roughness: 0.35, clearcoat: 0.8, clippingPlanes: [clip] });
+  const plaSolid = (hex) => M({ color: hex, roughness: 0.4, clearcoat: 0.5, clearcoatRoughness: 0.3, clippingPlanes: [clip] });
+  const black = M({ color: 0x1a1518, roughness: 0.35, clearcoat: 0.8, clippingPlanes: [clip] });
   const hot = new THREE.MeshBasicMaterial({ color: 0xff8a4c, transparent: true, opacity: 0.9, toneMapped: false });
-  const shell = new THREE.MeshPhysicalMaterial({ color: 0xf1eeea, roughness: 0.38, clearcoat: 0.6, clearcoatRoughness: 0.25 });
-  const darkPart = new THREE.MeshPhysicalMaterial({ color: 0x2a2a2e, roughness: 0.5, metalness: 0.2 });
-  const brass = new THREE.MeshPhysicalMaterial({ color: 0xd9a441, metalness: 1, roughness: 0.22 });
-  const pinkMat = new THREE.MeshPhysicalMaterial({ color: 0xf07bb0, roughness: 0.35, clearcoat: 0.6 });
+  const shell = M({ color: 0xf1eeea, roughness: 0.38, clearcoat: 0.6, clearcoatRoughness: 0.25 });
+  const darkPart = M({ color: 0x2a2a2e, roughness: 0.5, metalness: 0.2 });
+  const brass = M({ color: 0xd9a441, metalness: 1, roughness: 0.22 });
+  const pinkMat = M({ color: 0xf07bb0, roughness: 0.35, clearcoat: 0.6 });
 
-  /* ---------- Pieza: la mascota ---------- */
+  /* ---------- Pieza: la mascota (casco de moto) ---------- */
   const piece = new THREE.Group();
   {
     const pts = [];
-    const N = LAYERS * 6;
+    const N = LAYERS * (coarse ? 4 : 6);
     for (let i = 0; i <= N; i++) {
       const t = i / N;
       const layerBump = 0.014 * (1 - Math.abs(Math.cos(Math.PI * t * LAYERS))); // líneas de capa
       pts.push(new THREE.Vector2(radiusAt(t) + (radiusAt(t) > 0.05 ? layerBump : 0), t * H));
     }
-    const geo = new THREE.LatheGeometry(pts, 140);
+    const geo = new THREE.LatheGeometry(pts, coarse ? 96 : 140);
     // Color jaspeado rosa y melocotón, como el logo
     const pos = geo.attributes.position;
     const col = new Float32Array(pos.count * 3);
@@ -79,24 +92,48 @@ export function createPrinter(canvas) {
     geo.setAttribute("color", new THREE.BufferAttribute(col, 3));
     piece.add(new THREE.Mesh(geo, pla));
 
-    const base = new THREE.Mesh(new THREE.CircleGeometry(radiusAt(0) + 0.01, 64), plaSolid(0xf6a9c8));
-    base.rotation.x = -Math.PI / 2;
-    base.position.y = 0.002;
-    piece.add(base);
+    // Visera: franja oscura y brillante en la parte delantera, con «ON» como en el logo
+    const visorTex = (() => {
+      const cv = document.createElement("canvas");
+      cv.width = 1024; cv.height = 256;
+      const x = cv.getContext("2d");
+      const g = x.createLinearGradient(0, 0, 0, 256);
+      g.addColorStop(0, "#3a2a33"); g.addColorStop(0.45, "#1c1418"); g.addColorStop(1, "#2a1d24");
+      x.fillStyle = g; x.fillRect(0, 0, 1024, 256);
+      const shine = x.createLinearGradient(0, 0, 1024, 0);
+      shine.addColorStop(0.15, "rgba(255,255,255,0)"); shine.addColorStop(0.3, "rgba(255,220,235,0.22)"); shine.addColorStop(0.42, "rgba(255,255,255,0)");
+      x.fillStyle = shine; x.fillRect(0, 0, 1024, 120);
+      // «ON» con trazo, como el logo: una O cuadrada y una N
+      x.strokeStyle = "#f7a9c9"; x.lineWidth = 13; x.lineJoin = "miter";
+      x.strokeRect(392, 66, 96, 124);
+      x.beginPath(); x.moveTo(536, 190); x.lineTo(536, 66); x.lineTo(632, 190); x.lineTo(632, 66); x.stroke();
+      const t = new THREE.CanvasTexture(cv); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4;
+      return t;
+    })();
+    const visorPts = [];
+    for (let i = 0; i <= 40; i++) {
+      const t = VISOR[0] + (VISOR[1] - VISOR[0]) * (i / 40);
+      visorPts.push(new THREE.Vector2(radiusAt(t) + 0.03, t * H));
+    }
+    const visorGeo = new THREE.LatheGeometry(visorPts, 64, -1.05, 2.1);
+    // La textura va a lo ancho de la visera (U) y a lo alto (V)
+    const vmat = M({ map: visorTex, roughness: 0.08, metalness: 0.3, clearcoat: 1, clearcoatRoughness: 0.05, clippingPlanes: [clip], side: THREE.DoubleSide });
+    piece.add(new THREE.Mesh(visorGeo, vmat));
 
-    // Las dos bandas negras del casco
-    for (const t of [0.4, 0.69]) {
+    // Las dos bandas negras que enmarcan la visera
+    for (const t of VISOR) {
       const band = new THREE.Mesh(new THREE.TorusGeometry(radiusAt(t) + 0.012, 0.028, 12, 140), black);
       band.rotation.x = Math.PI / 2;
       band.position.y = t * H;
       piece.add(band);
     }
     // Oreja redonda y cuerno
-    const ear = new THREE.Mesh(new THREE.SphereGeometry(0.4, 40, 24), plaSolid(0xf39cc2));
-    ear.position.set(-0.62, H * 0.9, 0.1);
-    const horn = new THREE.Mesh(new THREE.ConeGeometry(0.2, 0.55, 32), plaSolid(0xf6ac86));
-    horn.position.set(0.72, H * 0.93, 0.05);
-    horn.rotation.z = -0.62;
+    // Bolita a un lado y cuernito al otro, como la mascota
+    const ear = new THREE.Mesh(new THREE.SphereGeometry(0.36, 40, 24), plaSolid(0xf39cc2));
+    ear.position.set(-0.78, H * 0.86, 0.05);
+    const horn = new THREE.Mesh(new THREE.ConeGeometry(0.19, 0.5, 32), plaSolid(0xf6ac86));
+    horn.position.set(0.86, H * 0.87, 0.05);
+    horn.rotation.z = -0.75;
     piece.add(ear, horn);
   }
 
@@ -115,7 +152,7 @@ export function createPrinter(canvas) {
   })();
   const plate = new THREE.Mesh(
     new THREE.BoxGeometry(3.7, 0.14, 3.7),
-    [darkPart, darkPart, new THREE.MeshPhysicalMaterial({ map: plateTex, roughness: 0.6, clearcoat: 0.2 }), darkPart, darkPart, darkPart]
+    [darkPart, darkPart, M({ map: plateTex, roughness: 0.6, clearcoat: 0.2 }), darkPart, darkPart, darkPart]
   );
   plate.position.y = -0.07;
 

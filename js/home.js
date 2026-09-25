@@ -22,10 +22,13 @@ if (cd) {
 }
 
 /* ---------- Contador de la impresión ---------- */
+let hud = null, lastL = -1;
+function collectHud() { hud = { layer: $$('[data-hud="layer"]'), z: $$('[data-hud="z"]'), pct: $$('[data-hud="pct"]'), bar: $$(".hud-bar i") }; lastL = -1; }
 function paintHud(p, layers) {
-  // Se consulta cada vez: las tiras copiadas de la portada también llevan contador
-  const hud = { layer: $$('[data-hud="layer"]'), z: $$('[data-hud="z"]'), pct: $$('[data-hud="pct"]'), bar: $$(".hud-bar i") };
+  if (!hud) collectHud();
   const L = Math.round(p * layers);
+  if (L === lastL) return; // solo se toca el DOM cuando cambia la capa
+  lastL = L;
   hud.layer.forEach((e) => (e.textContent = String(L).padStart(3, "0")));
   hud.z.forEach((e) => (e.textContent = (p * PIECE_MM).toFixed(2).replace(".", ",")));
   hud.pct.forEach((e) => (e.textContent = Math.round(p * 100)));
@@ -62,6 +65,7 @@ async function start() {
     const a = (i / STRIPS) * 100, b = 100 - ((i + 1) / STRIPS) * 100;
     s.style.clipPath = `inset(${a}% 0 ${b}% 0)`;
   });
+  collectHud(); // ahora también incluye los contadores de las tiras copiadas
   const underLines = $$(".under-title .line > span");
   gsap.set(underLines, { yPercent: 110 });
   gsap.set([".under img", ".under-sub"], { opacity: 0, y: 20 });
@@ -83,17 +87,26 @@ async function start() {
     if (printer) root.classList.add("gl-ok");
   } catch (e) { console.warn("[3DOCNA] Sin 3D:", e); }
 
+  const coarse = matchMedia("(pointer: coarse)").matches;
   const printArea = $(".hero-print", layer);
   const P = { intro: 0, scroll: 0, park: 0, spin: 0, tiltX: 0, tiltY: 0, lift: 0, fade: 1 };
   let heroOn = true;
   const beadOn = new Set();
   const syncCanvas = () => canvas.classList.toggle("is-on", Boolean(printer) && (heroOn || beadOn.size > 0));
 
+  // Medidas del hueco de la impresora, calculadas una vez (la portada está fija mientras se ve)
+  let area = null;
+  const measure = () => {
+    const a = printArea.getBoundingClientRect(), s = stage.getBoundingClientRect();
+    area = { left: a.left, top: a.top - s.top, width: a.width, height: a.height };
+  };
   function placePrinter() {
     const progress = clamp(lerp(0, 0.1, P.intro) + P.scroll * 0.9, 0, 1);
+    if (coarse) P.spin = P.intro * 0.6 + P.scroll * Math.PI * 1.4;
     paintHud(progress, LAYERS);
-    if (!printer) return;
-    const r = printArea.getBoundingClientRect();
+    if (!printer || !heroOn) return;
+    if (!area) measure();
+    const r = area;
     const small = innerWidth < 700;
     const size = Math.min(r.height * (small ? 0.56 : 0.66), r.width * 0.78) * (1 - P.lift * 0.35);
     printer.hero({
@@ -104,8 +117,10 @@ async function start() {
   // Primeras capas solas al cargar
   gsap.to(P, { intro: 1, duration: 2.4, delay: 0.5, ease: "power1.inOut", onUpdate: placePrinter });
   // Giro lento y continuo mientras se ve
-  gsap.ticker.add(() => { if (heroOn && printer) { P.spin += 0.0035; placePrinter(); } });
-  addEventListener("resize", placePrinter);
+  // En ordenador gira siempre; en móvil el giro va con el scroll y solo se dibuja cuando algo cambia
+  if (!coarse) gsap.ticker.add(() => { if (heroOn && printer) { P.spin += 0.0035; placePrinter(); } });
+  addEventListener("resize", () => { area = null; placePrinter(); });
+  ScrollTrigger.addEventListener("refresh", () => { area = null; placePrinter(); });
   syncCanvas();
   placePrinter();
 
@@ -119,7 +134,7 @@ async function start() {
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: stage, start: "top top", end: () => "+=" + innerHeight * 2.4,
-      pin: true, scrub: true, anticipatePin: 1, invalidateOnRefresh: true,
+      pin: true, scrub: 0.7, anticipatePin: 1, invalidateOnRefresh: true,
       onUpdate: (self) => {
         const on = self.progress < 0.8;
         if (on !== heroOn) { heroOn = on; syncCanvas(); placePrinter(); }
@@ -147,7 +162,7 @@ async function start() {
     syncCanvas();
     const r = bead.getBoundingClientRect();
     const size = innerWidth < 700 ? 58 : 84;
-    printer.bead({ visible: beadOn.size > 0, x: r.left + r.width * p, y: r.top - size * 0.02, size, wobble: Math.sin(p * 40) });
+    printer.bead({ visible: beadOn.size > 0, x: r.left + r.width * p, y: r.top + 3, size, wobble: Math.sin(p * 40) });
   });
 
   /* ---------- Cinta de materiales ---------- */
@@ -171,13 +186,16 @@ async function start() {
   }
 
   /* ---------- Tarjetas de negocio apiladas ---------- */
-  const cards = $$(".stack-card");
-  cards.forEach((c, i) => {
-    const next = cards[i + 1];
-    if (!next) return;
-    gsap.to(c, {
-      scale: 0.94, opacity: 0.55, ease: "none",
-      scrollTrigger: { trigger: next, start: "top 85%", end: "top 30%", scrub: true },
+  // Solo en pantallas grandes: en móvil las tarjetas son una lista normal
+  gsap.matchMedia().add("(min-width: 701px) and (min-height: 701px)", () => {
+    const cards = $$(".stack-card");
+    cards.forEach((c, i) => {
+      const next = cards[i + 1];
+      if (!next) return;
+      gsap.to(c, {
+        scale: 0.94, "--dim": 0.5, ease: "none",
+        scrollTrigger: { trigger: next, start: "top 85%", end: "top 30%", scrub: true },
+      });
     });
   });
 
