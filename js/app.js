@@ -333,7 +333,7 @@ export function initReveals() {
     });
   });
   const mark = $(".ftr-mark span");
-  if (mark) gsap.from(mark, { yPercent: 100, ease: "none", scrollTrigger: { trigger: ".ftr", start: "top bottom", end: "top 35%", scrub: true } });
+  if (mark) gsap.from(mark, { yPercent: 100, ease: "none", scrollTrigger: { trigger: ".ftr", start: "top bottom", end: "bottom bottom", scrub: true } });
   gsap.to(".progress", { scaleX: 1, ease: "none", scrollTrigger: { start: 0, end: "max", scrub: true } });
 
   // Cabecera: se esconde al bajar y vuelve al subir
