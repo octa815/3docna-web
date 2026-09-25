@@ -1,0 +1,84 @@
+<!-- {"title": "Pedido y presupuesto", "desc": "Pide tu pieza impresa en 3D: sube tu idea, un STL o una foto y te enviamos precio, material y plazo en menos de 24 horas.", "nav": "pedido", "scripts": ["js/pedido.js"]} -->
+  <section class="page-top">
+    <div class="wrap">
+      <p class="tag" data-rise>Pedidos y piezas a medida</p>
+      <h1 class="title" data-split>¿Tienes algo en <span class="hl">mente?</span></h1>
+      <p class="lede" data-rise>Imprimimos lo que nos envíes: un archivo STL, una foto de referencia o solo la idea. Nosotros nos encargamos del resto.</p>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="wrap split">
+      <div style="display:grid;gap:30px">
+        <ol class="info-list">
+          <li><div><h3>Comparte tu idea</h3><p>Un archivo STL, una foto con una regla al lado o una descripción. No hace falta que sepas de medidas.</p></div></li>
+          <li><div><h3>Presupuesto en 24 h</h3><p>Te enviamos precio, material recomendado y plazo. Sin compromiso.</p></div></li>
+          <li><div><h3>Imprimimos y entregamos</h3><p>Confirmado el pedido, lo imprimimos y te lo llevamos en mano en Elda y Petrer, o lo enviamos por mensajería.</p></div></li>
+        </ol>
+        <div class="panel" style="display:grid;gap:14px">
+          <p class="from-price">Piezas a medida desde <b>10 €</b></p>
+          <p class="muted" style="font-size:0.92rem">Formatos que aceptamos</p>
+          <div class="formats"><span>.STL</span><span>.OBJ</span><span>.3MF</span><span>Foto</span><span>Descripción</span></div>
+          <p class="form-note">Para adjuntar archivos, mándalos por <a href="https://wa.me/34694455979" target="_blank" rel="noopener">WhatsApp</a> o a <a href="mailto:contacto@3docna.es">contacto@3docna.es</a> después de enviar el formulario.</p>
+        </div>
+      </div>
+
+      <div id="pedido">
+        <div class="success" id="orderOk" hidden tabindex="-1">
+          <p class="tag">Solicitud enviada</p>
+          <h2>¡Gracias! Ya lo tenemos.</h2>
+          <p>Te respondemos en menos de 24 horas con el presupuesto. Si es urgente, escríbenos por WhatsApp.</p>
+          <a class="btn btn-solid" href="/catalogo.html"><span>Seguir viendo el catálogo</span></a>
+        </div>
+        <form class="panel form" id="orderForm" name="order" method="POST" action="https://formsubmit.co/3docna@gmail.com" novalidate>
+          <input type="hidden" name="_next" value="https://3docna.netlify.app/pedido.html?ok=1#pedido">
+          <input type="hidden" name="_subject" value="Nuevo pedido desde la web de 3DOCNA">
+          <input type="hidden" name="_template" value="table">
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+          <input type="hidden" name="productos_cesta" id="cartHidden" value="">
+
+          <div class="summary" id="cartSummary" hidden></div>
+
+          <div class="form-row">
+            <div class="field"><label for="f-nombre">Nombre *</label><input id="f-nombre" name="nombre" autocomplete="name" required><p class="error" data-err></p></div>
+            <div class="field"><label for="f-email">Email *</label><input id="f-email" name="email" type="email" autocomplete="email" required><p class="error" data-err></p></div>
+          </div>
+          <div class="form-row">
+            <div class="field"><label for="f-tel">Teléfono</label><input id="f-tel" name="telefono" type="tel" autocomplete="tel" inputmode="tel"></div>
+            <div class="field"><label for="f-tipo">Tipo de pieza *</label>
+              <select id="f-tipo" name="tipo" required>
+                <option value="">Selecciona…</option>
+                <option>Producto del catálogo</option>
+                <option>Para mi negocio</option>
+                <option>Llavero o accesorio</option>
+                <option>Decoración del hogar</option>
+                <option>Figura o miniatura</option>
+                <option>Pieza funcional o repuesto</option>
+                <option>Diseño personalizado</option>
+                <option>Otro</option>
+              </select><p class="error" data-err></p></div>
+          </div>
+          <div class="form-row">
+            <div class="field"><label for="f-mat">Material</label>
+              <select id="f-mat" name="material">
+                <option value="">No lo sé, recomendadme</option>
+                <option>PLA (estándar)</option>
+                <option>PLA Silk (brillo satinado)</option>
+                <option>PLA Wood (aspecto madera)</option>
+                <option>PLA Metálico</option>
+                <option>PLA Glow (brilla en la oscuridad)</option>
+                <option>PETG (resistente)</option>
+                <option>TPU (flexible)</option>
+              </select></div>
+            <div class="field"><label for="f-color">Color</label><input id="f-color" name="color" placeholder="Rosa, negro, madera…"></div>
+          </div>
+          <div class="field"><label for="f-cant">Cantidad</label><input id="f-cant" name="cantidad" type="number" min="1" value="1" inputmode="numeric" style="max-width:140px"></div>
+          <div class="field"><label for="f-desc">Cuéntanos qué necesitas *</label><textarea id="f-desc" name="descripcion" required placeholder="Medidas aproximadas, para qué es, fecha en la que lo necesitas…"></textarea><p class="error" data-err></p></div>
+          <label class="check"><input type="checkbox" id="f-priv" name="acepto_privacidad" value="sí" required> <span>He leído la <a href="/privacidad.html" target="_blank">política de privacidad</a> y acepto que uséis mis datos para responder a esta solicitud. *</span></label>
+          <p class="error" data-err-priv></p>
+          <button class="btn btn-solid" type="submit" id="orderSend"><span>Enviar solicitud</span></button>
+          <p class="form-note">Respuesta en menos de 24 h · Sin compromiso · No pagas nada ahora</p>
+        </form>
+      </div>
+    </div>
+  </section>

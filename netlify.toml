@@ -1,5 +1,8 @@
+# Sitio estático: se publica la raíz tal cual. Las páginas se generan con
+# `python3 tools/build.py` antes de hacer push (no hace falta build en Netlify).
 [build]
   publish = "."
+  command = ""
 
 [[headers]]
   for = "/*"
@@ -9,16 +12,30 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
 
+[[headers]]
+  for = "/vendor/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/data/*"
+  [headers.values]
+    Cache-Control = "no-cache"
+
+# URLs cortas que ya circulaban
 [[redirects]]
   from = "/catalogo"
   to = "/catalogo.html"
   status = 200
-
 [[redirects]]
   from = "/pedido"
   to = "/pedido.html"
   status = 200
-
 [[redirects]]
   from = "/contacto"
   to = "/contacto.html"

@@ -1,77 +1,72 @@
-/* ═══════════════════════════════════════════════
-   3DOCNA — Configurador del farol calado
-   Precio en vivo + enlace de WhatsApp prerellenado
-   ═══════════════════════════════════════════════ */
+/* 3DOCNA — configurador del farol calado: precio en vivo, cesta y WhatsApp */
+import { $, $$, euros, addToCart, WA, hasGsap, motionOK } from "./app.js";
 
-"use strict";
+const PRECIOS = { casa: 20, escaparate: 45 };
+const VELA = 3;
+const form = $("#cfgForm");
 
-(function () {
+if (form) {
+  const el = {
+    nombre: $("#cfgNombre"), count: $("#cfgCount"), cant: $("#cfgCantidad"), vela: $("#cfgVela"),
+    unit: $("#cfgUnit"), qty: $("#cfgQty"), total: $("#cfgTotal"), svg: $("#cfgSvgText"), wall: $("#cfgWall"),
+    flame: $("#cfgFlame"), stage: $("#cfgStage"), wa: $("#cfgWa"), add: $("#cfgAdd"),
+  };
+  const limpiar = (t) => t.toUpperCase().replace(/\s+/g, " ").trimStart().slice(0, 16);
+  let last = { total: 20 };
 
-  var PRECIOS = { casa: 20.00, escaparate: 45.00 };
-  var PRECIO_VELA = 3.00;
-  var WA = "https://wa.me/34694455979?text=";
-
-  var form = document.getElementById("cfgForm");
-  if (!form) return;
-
-  var elNombre = document.getElementById("cfgNombre");
-  var elTamano = document.getElementById("cfgTamano");
-  var elCant   = document.getElementById("cfgCantidad");
-  var elVela   = document.getElementById("cfgVela");
-
-  var outUnit  = document.getElementById("cfgUnit");
-  var outQty   = document.getElementById("cfgQty");
-  var outTotal = document.getElementById("cfgTotal");
-  var outSvg   = document.getElementById("cfgSvgText");
-  var outWa    = document.getElementById("cfgWa");
-
-  function euros(n) { return n.toFixed(2).replace(".", ",") + "€"; }
-
-  function limpiar(txt) {
-    return txt.toUpperCase().replace(/\s+/g, " ").trim().slice(0, 16);
+  function state() {
+    const nombre = limpiar(el.nombre.value).trim();
+    const size = $('input[name="size"]:checked', form).value;
+    const cantidad = Math.max(1, Math.min(50, parseInt(el.cant.value, 10) || 1));
+    const vela = el.vela.checked;
+    const unidad = PRECIOS[size] + (vela ? VELA : 0);
+    return { nombre, size, cantidad, vela, unidad, total: unidad * cantidad };
   }
 
-  function actualizar() {
-    var nombre = limpiar(elNombre.value);
-    var tamano = elTamano.value;
-    var cantidad = Math.max(1, Math.min(50, parseInt(elCant.value, 10) || 1));
-    var vela = elVela.checked;
+  function update() {
+    const s = state();
+    el.count.textContent = s.nombre.length;
+    el.unit.textContent = euros(s.unidad);
+    el.qty.textContent = s.cantidad;
+    // El total cuenta hasta el nuevo valor
+    if (hasGsap && motionOK()) {
+      const o = { v: last.total };
+      window.gsap.to(o, { v: s.total, duration: 0.4, ease: "power2.out", onUpdate: () => (el.total.textContent = euros(o.v)) });
+    } else el.total.textContent = euros(s.total);
+    last = s;
 
-    var unidad = (PRECIOS[tamano] || PRECIOS.casa) + (vela ? PRECIO_VELA : 0);
-    var total = unidad * cantidad;
+    const txt = s.nombre || "TU NOMBRE";
+    el.svg.textContent = txt;
+    el.svg.setAttribute("font-size", s.nombre.length > 11 ? "9" : s.nombre.length > 7 ? "11" : "13");
+    el.svg.setAttribute("opacity", s.nombre ? "1" : "0.5");
+    el.wall.textContent = txt;
+    el.flame.setAttribute("opacity", s.vela ? "1" : "0");
+    el.stage.classList.toggle("is-lit", s.vela);
 
-    outUnit.textContent = euros(unidad);
-    outQty.textContent = String(cantidad);
-    outTotal.textContent = euros(total);
-
-    // Vista previa: el texto se encoge para que quepa en el farol
-    outSvg.textContent = nombre || "TU NOMBRE";
-    var size = nombre.length > 11 ? 10 : nombre.length > 7 ? 13 : 16;
-    outSvg.setAttribute("font-size", String(size));
-    outSvg.setAttribute("opacity", nombre ? "1" : "0.45");
-
-    var etiquetaTamano = tamano === "escaparate"
-      ? "escaparate (22 cm)"
-      : "casa (12 cm)";
-
-    var msg =
-      "Hola! Quiero pedir un farol calado.\n" +
-      "• Texto: " + (nombre || "(por decidir)") + "\n" +
-      "• Tamaño: " + etiquetaTamano + "\n" +
-      "• Unidades: " + cantidad + "\n" +
-      "• Vela LED: " + (vela ? "sí" : "no") + "\n" +
-      "• Total estimado: " + euros(total);
-
-    outWa.href = WA + encodeURIComponent(msg);
+    const tam = s.size === "escaparate" ? "escaparate (22 cm)" : "casa (12 cm)";
+    const msg = `Hola! Quiero pedir un farol calado.\n• Texto: ${s.nombre || "(por decidir)"}\n• Tamaño: ${tam}\n• Unidades: ${s.cantidad}\n• Vela LED: ${s.vela ? "sí" : "no"}\n• Total estimado: ${euros(s.total)}`;
+    el.wa.href = WA + encodeURIComponent(msg);
   }
 
-  ["input", "change"].forEach(function (ev) {
-    form.addEventListener(ev, actualizar);
+  $$("[data-step]", form).forEach((b) => b.addEventListener("click", () => {
+    el.cant.value = Math.max(1, Math.min(50, (parseInt(el.cant.value, 10) || 1) + Number(b.dataset.step)));
+    update();
+  }));
+  el.nombre.addEventListener("input", () => {
+    const pos = el.nombre.selectionStart;
+    el.nombre.value = limpiar(el.nombre.value);
+    el.nombre.setSelectionRange(pos, pos);
+  });
+  ["input", "change"].forEach((ev) => form.addEventListener(ev, update));
+  form.addEventListener("submit", (e) => e.preventDefault());
+
+  el.add.addEventListener("click", () => {
+    const s = state();
+    const name = `Farol calado «${s.nombre || "por decidir"}» · ${s.size === "escaparate" ? "escaparate 22 cm" : "casa 12 cm"}${s.vela ? " · con vela LED" : ""}`;
+    addToCart({ name, price: s.unidad, qty: s.cantidad }, el.add);
+    $("span", el.add).textContent = "Añadido a la cesta";
+    setTimeout(() => ($("span", el.add).textContent = "Añadir a la cesta"), 1600);
   });
 
-  // No recargar la página si alguien pulsa Enter
-  form.addEventListener("submit", function (e) { e.preventDefault(); });
-
-  actualizar();
-
-})();
+  update();
+}

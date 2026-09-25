@@ -1,0 +1,59 @@
+<!-- {"title": "Configurador de faroles", "desc": "Configura tu farol calado con el nombre de tu bar o de tu familia: elige texto y tamaño y calcula el precio al momento.", "nav": "configurador", "scripts": ["js/configurador.js"]} -->
+  <section class="page-top">
+    <div class="wrap">
+      <p class="tag" data-rise>Configurador · Halloween</p>
+      <h1 class="title" data-split>Tu farol, con <span class="hl">tu nombre</span></h1>
+      <p class="lede" data-rise>Escribe el nombre que quieres calado, elige el tamaño y te decimos el precio al momento. Con una vela LED dentro, el nombre se proyecta en la pared.</p>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0" aria-label="Configurador">
+    <div class="wrap cfg">
+      <form class="panel form" id="cfgForm" novalidate data-print>
+        <div class="field">
+          <label for="cfgNombre">¿Qué pone el farol?</label>
+          <input type="text" id="cfgNombre" maxlength="16" placeholder="BAR MANOLO" autocomplete="off" spellcheck="false">
+          <p class="hint"><span id="cfgCount">0</span>/16 caracteres. Cuanto más corto, más limpio queda el calado.</p>
+        </div>
+        <fieldset class="field" style="border:0;padding:0">
+          <legend class="lbl" style="margin-bottom:6px">Tamaño</legend>
+          <div class="sizes">
+            <div class="opt"><input type="radio" name="size" id="szCasa" value="casa" checked><label for="szCasa"><b>Casa</b><span>12 cm de alto · 20,00 €</span></label></div>
+            <div class="opt"><input type="radio" name="size" id="szEsc" value="escaparate"><label for="szEsc"><b>Escaparate</b><span>22 cm de alto · 45,00 €</span></label></div>
+          </div>
+        </fieldset>
+        <div class="field">
+          <label for="cfgCantidad">Unidades</label>
+          <div class="qty" role="group" aria-label="Unidades" style="justify-self:start">
+            <button type="button" data-step="-1" aria-label="Una menos">−</button>
+            <input id="cfgCantidad" type="number" min="1" max="50" value="1" inputmode="numeric" style="width:54px;min-height:32px;padding:0;border:0;text-align:center;background:none;font-family:var(--mono)">
+            <button type="button" data-step="1" aria-label="Una más">+</button>
+          </div>
+        </div>
+        <label class="check"><input type="checkbox" id="cfgVela"> <span>Añadir vela LED (+3,00 € por unidad)</span></label>
+        <p class="form-note">Te enseñamos el diseño antes de imprimir. Pedidos hasta el 24 de octubre para entregar antes de Halloween.</p>
+      </form>
+
+      <aside class="cfg-preview" aria-live="polite" data-print="1">
+        <div class="cfg-stage" id="cfgStage">
+          <div class="cfg-wall" aria-hidden="true"><span id="cfgWall">TU NOMBRE</span></div>
+          <svg viewBox="0 0 200 240" role="img" aria-label="Vista previa del farol">
+            <path d="M78 40h44M88 40v-12h24v12" fill="none" stroke="currentColor" stroke-width="3"/>
+            <path id="cfgBody" d="M68 48h64l12 108a14 14 0 0 1-14 15H70a14 14 0 0 1-14-15z" fill="rgba(246,162,109,0.08)" stroke="currentColor" stroke-width="3"/>
+            <path id="cfgFlame" class="flame" d="M100 128c-10-8-8-22 0-32 8 10 10 24 0 32z" fill="#ffb36b" opacity="0"/>
+            <text id="cfgSvgText" x="100" y="152" text-anchor="middle" fill="currentColor" font-family="JetBrains Mono, monospace" font-size="13" letter-spacing="2">TU NOMBRE</text>
+            <ellipse cx="100" cy="200" rx="62" ry="9" fill="rgba(246,162,109,0.16)"/>
+          </svg>
+        </div>
+        <div class="panel totals">
+          <div><span>Precio por unidad</span><strong id="cfgUnit">20,00 €</strong></div>
+          <div><span>Unidades</span><strong id="cfgQty">1</strong></div>
+          <div class="big"><span>Total</span><strong id="cfgTotal">20,00 €</strong></div>
+        </div>
+        <div class="cfg-actions">
+          <button class="btn btn-solid" type="button" id="cfgAdd"><span>Añadir a la cesta</span></button>
+          <a class="btn btn-wa" id="cfgWa" href="https://wa.me/34694455979" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+        </div>
+      </aside>
+    </div>
+  </section>

@@ -1,0 +1,13 @@
+{
+  "name": "3docna-web",
+  "private": true,
+  "description": "Web de 3DOCNA. Sitio estático; package.json solo para las pruebas.",
+  "scripts": {
+    "build": "python3 tools/build.py",
+    "serve": "python3 -m http.server 8080",
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0"
+  }
+}
