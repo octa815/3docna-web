@@ -4,14 +4,14 @@ Todo el catálogo sale de **`data/productos.json`**. El HTML ya no lleva product
 
 ## Añadir una foto a un producto que ya existe
 
-1. Sube la foto a esta carpeta (`img/`). Nombres sin espacios ni tildes: `farol-bar-manolo-1.jpg`.
+1. Sube la foto a `img/productos/`. Nombres sin espacios ni tildes: `litofania-1.webp`.
 2. Abre `data/productos.json`, busca el producto y mete la ruta en `"imgs"`:
 
 ```json
-"imgs": ["img/farol-bar-manolo-1.jpg", "img/farol-bar-manolo-2.jpg"]
+"imgs": ["img/productos/litofania-1.webp", "img/productos/litofania-2.webp"]
 ```
 
-3. `git add . && git commit -m "Fotos del farol" && git push`. Netlify lo despliega solo.
+3. `git add . && git commit -m "Fotos de la litofanía" && git push`. Netlify lo despliega solo.
 
 Si `"imgs"` está vacío (`[]`), la web dibuja sola un icono de relleno. **No se rompe nada por dejarlo vacío**, así que puedes publicar el producto antes de tener la foto.
 
@@ -38,7 +38,7 @@ Copia un bloque entero de `"productos"` y cámbialo. Campos:
 | `icono` | no | Dibujo de relleno mientras no hay foto (ver lista abajo) |
 | `imgs` | sí | Array de rutas. Vacío `[]` si aún no hay fotos |
 
-**Iconos disponibles:** `farol`, `escaparate`, `cuenco`, `colgantes`, `carta`, `base`, `expositor`, `litofania`, `organizador`, `moto`, `pieza`, `generico`.
+**Iconos disponibles:** `litofania` y `generico`.
 
 ## Categorías
 
@@ -46,7 +46,8 @@ Se editan en `"categorias"`, al principio del JSON. Los botones de filtro del ca
 
 ## Consejos para las fotos
 
-- **Horizontal**, la pieza colocada donde se usa (el soporte en la barra del bar, el farol encendido en el escaparate). Vale mil veces más que la pieza sobre la mesa.
+- **Horizontal**, la pieza colocada donde se usa (el fantasma en la ventana, el esqueleto en la maceta). Vale mil veces más que la pieza sobre la mesa.
+- Las tarjetas son **4:3** (1200 × 900 va perfecto). Si la foto es vertical, se recorta por arriba y por abajo: deja la pieza en el centro.
 - Fondo liso y luz de ventana. Nada de flash.
 - Redúcelas antes de subir: **máximo 1600 px de ancho y menos de 300 KB**. Si no, la web va lenta en el móvil. Con `squoosh.app` se hace en un minuto.
 - Una foto por producto ya sirve. Dos o tres, mejor.

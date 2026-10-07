@@ -185,26 +185,9 @@ async function start() {
     });
   }
 
-  /* ---------- Tarjetas de negocio apiladas ---------- */
-  // Solo en pantallas grandes: en móvil las tarjetas son una lista normal
-  gsap.matchMedia().add("(min-width: 701px) and (min-height: 701px)", () => {
-    const cards = $$(".stack-card");
-    cards.forEach((c, i) => {
-      const next = cards[i + 1];
-      if (!next) return;
-      gsap.to(c, {
-        scale: 0.94, "--dim": 0.5, ease: "none",
-        scrollTrigger: { trigger: next, start: "top 85%", end: "top 30%", scrub: true },
-      });
-    });
-  });
-
   /* ---------- Pasos: la línea se rellena ---------- */
   const fill = $(".steps-fill");
   if (fill) gsap.to(fill, { scaleY: 1, ease: "none", scrollTrigger: { trigger: ".steps", start: "top 70%", end: "bottom 60%", scrub: true } });
-
-  /* ---------- Farol de Halloween: vaivén suave ---------- */
-  gsap.to(".farol-art svg", { rotate: 2.5, transformOrigin: "50% 8%", duration: 2.6, ease: "sine.inOut", yoyo: true, repeat: -1 });
 
   initReveals();
 }

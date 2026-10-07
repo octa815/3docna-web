@@ -21,8 +21,7 @@ WA_MSG = "Hola! Me interesa hacer un pedido de impresión 3D"
 
 NAV = [
     ("catalogo", "/catalogo.html", "Catálogo"),
-    ("configurador", "/configurador.html", "Configurador"),
-    ("pedido", "/pedido.html", "Pedido a medida"),
+    ("pedido", "/pedido.html", "Pedido"),
     ("contacto", "/contacto.html", "Contacto"),
 ]
 

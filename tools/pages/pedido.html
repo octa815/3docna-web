@@ -1,9 +1,9 @@
-<!-- {"title": "Pedido y presupuesto", "desc": "Pide tu pieza impresa en 3D: sube tu idea, un STL o una foto y te enviamos precio, material y plazo en menos de 24 horas.", "nav": "pedido", "scripts": ["js/pedido.js"]} -->
+<!-- {"title": "Hacer un pedido", "desc": "Pide tus piezas impresas en 3D por 3DOCNA: te confirmamos color, plazo y entrega en menos de 24 horas.", "nav": "pedido", "scripts": ["js/pedido.js"]} -->
   <section class="page-top">
     <div class="wrap">
-      <p class="tag" data-rise>Pedidos y piezas a medida</p>
+      <p class="tag" data-rise>Pedidos</p>
       <h1 class="title" data-split>¿Tienes algo en <span class="hl">mente?</span></h1>
-      <p class="lede" data-rise>Imprimimos lo que nos envíes: un archivo STL, una foto de referencia o solo la idea. Nosotros nos encargamos del resto.</p>
+      <p class="lede" data-rise>Envía tu cesta o cuéntanos qué quieres. Te confirmamos color, plazo y precio final antes de imprimir.</p>
     </div>
   </section>
 
@@ -11,15 +11,13 @@
     <div class="wrap split">
       <div style="display:grid;gap:30px">
         <ol class="info-list">
-          <li><div><h3>Comparte tu idea</h3><p>Un archivo STL, una foto con una regla al lado o una descripción. No hace falta que sepas de medidas.</p></div></li>
-          <li><div><h3>Presupuesto en 24 h</h3><p>Te enviamos precio, material recomendado y plazo. Sin compromiso.</p></div></li>
+          <li><div><h3>Envía tu pedido</h3><p>Con lo que tengas en la cesta o escribiendo qué quieres. Si es una litofanía, nos mandas la foto después.</p></div></li>
+          <li><div><h3>Confirmación en 24 h</h3><p>Te escribimos con el color, el plazo y el precio final. Sin compromiso.</p></div></li>
           <li><div><h3>Imprimimos y entregamos</h3><p>Confirmado el pedido, lo imprimimos y te lo llevamos en mano en Elda y Petrer, o lo enviamos por mensajería.</p></div></li>
         </ol>
         <div class="panel" style="display:grid;gap:14px">
-          <p class="from-price">Piezas a medida desde <b>10 €</b></p>
-          <p class="muted" style="font-size:0.92rem">Formatos que aceptamos</p>
-          <div class="formats"><span>.STL</span><span>.OBJ</span><span>.3MF</span><span>Foto</span><span>Descripción</span></div>
-          <p class="form-note">Para adjuntar archivos, mándalos por <a href="https://wa.me/34694455979" target="_blank" rel="noopener">WhatsApp</a> o a <a href="mailto:contacto@3docna.es">contacto@3docna.es</a> después de enviar el formulario.</p>
+          <p class="from-price">Piezas desde <b>5 €</b></p>
+          <p class="form-note">Para la foto de tu litofanía, mándala por <a href="https://wa.me/34694455979" target="_blank" rel="noopener">WhatsApp</a> o a <a href="mailto:contacto@3docna.es">contacto@3docna.es</a> después de enviar el formulario.</p>
         </div>
       </div>
 
@@ -45,17 +43,14 @@
           </div>
           <div class="form-row">
             <div class="field"><label for="f-tel">Teléfono</label><input id="f-tel" name="telefono" type="tel" autocomplete="tel" inputmode="tel"></div>
-            <div class="field"><label for="f-tipo">Tipo de pieza *</label>
+            <div class="field"><label for="f-tipo">¿Qué te interesa? *</label>
               <select id="f-tipo" name="tipo" required>
                 <option value="">Selecciona…</option>
-                <option>Producto del catálogo</option>
-                <option>Para mi negocio</option>
-                <option>Llavero o accesorio</option>
-                <option>Decoración del hogar</option>
-                <option>Figura o miniatura</option>
-                <option>Pieza funcional o repuesto</option>
-                <option>Diseño personalizado</option>
-                <option>Otro</option>
+                <option>Lo que tengo en la cesta</option>
+                <option>Decoración de Halloween</option>
+                <option>Accesorios para el pelo</option>
+                <option>Cuadro litofanía con mi foto</option>
+                <option>Otra cosa</option>
               </select><p class="error" data-err></p></div>
           </div>
           <div class="form-row">
@@ -73,7 +68,7 @@
             <div class="field"><label for="f-color">Color</label><input id="f-color" name="color" placeholder="Rosa, negro, madera…"></div>
           </div>
           <div class="field"><label for="f-cant">Cantidad</label><input id="f-cant" name="cantidad" type="number" min="1" value="1" inputmode="numeric" style="max-width:140px"></div>
-          <div class="field"><label for="f-desc">Cuéntanos qué necesitas *</label><textarea id="f-desc" name="descripcion" required placeholder="Medidas aproximadas, para qué es, fecha en la que lo necesitas…"></textarea><p class="error" data-err></p></div>
+          <div class="field"><label for="f-desc">Cuéntanos qué necesitas *</label><textarea id="f-desc" name="descripcion" required placeholder="Qué piezas quieres, colores, cuántas unidades y para cuándo lo necesitas…"></textarea><p class="error" data-err></p></div>
           <label class="check"><input type="checkbox" id="f-priv" name="acepto_privacidad" value="sí" required> <span>He leído la <a href="/privacidad.html" target="_blank">política de privacidad</a> y acepto que uséis mis datos para responder a esta solicitud. *</span></label>
           <p class="error" data-err-priv></p>
           <button class="btn btn-solid" type="submit" id="orderSend"><span>Enviar solicitud</span></button>

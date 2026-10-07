@@ -19,7 +19,7 @@ if (form) {
   const pieza = params.get("pieza");
   if (pieza) {
     $("#f-desc").value = `Me interesa: ${pieza}.\n`;
-    $("#f-tipo").value = "Producto del catálogo";
+    $("#f-tipo").value = "Lo que tengo en la cesta";
   }
 
   const summary = $("#cartSummary");
@@ -30,7 +30,7 @@ if (form) {
     summary.hidden = false;
     summary.innerHTML = `<h3>Tu cesta</h3><ul>${cart.map((i) => `<li><span>${i.qty} × ${i.name.replace(/</g, "&lt;")}</span><span>${euros(i.price * i.qty)}</span></li>`).join("")}<li class="sum-total"><span>Total estimado</span><span>${euros(cartTotal(cart))}</span></li></ul>`;
     hidden.value = cart.map((i) => `${i.qty} × ${i.name} (${euros(i.price)}/ud.)`).join(" | ") + ` — Total estimado: ${euros(cartTotal(cart))}`;
-    if (!$("#f-tipo").value) $("#f-tipo").value = "Producto del catálogo";
+    if (!$("#f-tipo").value) $("#f-tipo").value = "Lo que tengo en la cesta";
   }
   paintSummary();
   document.addEventListener("cart:change", paintSummary);
@@ -38,7 +38,7 @@ if (form) {
   const rules = {
     "f-nombre": (v) => (v.trim().length >= 2 ? "" : "Dinos tu nombre."),
     "f-email": (v) => (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) ? "" : "Revisa el email, parece que falta algo."),
-    "f-tipo": (v) => (v ? "" : "Elige el tipo de pieza."),
+    "f-tipo": (v) => (v ? "" : "Dinos qué te interesa."),
     "f-desc": (v) => (v.trim().length >= 10 ? "" : "Cuéntanos un poco más (al menos una frase)."),
   };
   function check(id) {

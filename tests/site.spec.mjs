@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 const isMobile = (ti) => ti.project.name === "movil";
-const PAGES = ["/", "/catalogo.html", "/configurador.html", "/pedido.html", "/contacto.html", "/aviso-legal.html", "/condiciones.html", "/privacidad.html", "/cookies.html", "/404.html"];
+const PAGES = ["/", "/catalogo.html", "/pedido.html", "/contacto.html", "/aviso-legal.html", "/condiciones.html", "/privacidad.html", "/cookies.html", "/404.html"];
 
 test.describe("Todas las páginas", () => {
   for (const path of PAGES) {
@@ -33,15 +33,15 @@ test.describe("Catálogo y cesta", () => {
     const data = await (await request.get("/data/productos.json")).json();
     await page.goto("/catalogo.html");
     await expect(page.locator(".card")).toHaveCount(data.productos.length);
-    await page.locator(".filters").getByRole("button", { name: "Halloween" }).click();
+    await page.locator(".filters").getByRole("button", { name: "Decoración Halloween" }).click();
     const n = data.productos.filter((p) => p.categoria === "halloween").length;
     await expect(page.locator(".card")).toHaveCount(n);
     await expect(page).toHaveURL(/#halloween$/);
   });
 
   test("un enlace con categoría abre el filtro ya elegido", async ({ page }) => {
-    await page.goto("/catalogo.html#negocios");
-    await expect(page.locator('.filters [aria-pressed="true"]')).toHaveText("Para negocios");
+    await page.goto("/catalogo.html#pelo");
+    await expect(page.locator('.filters [aria-pressed="true"]')).toHaveText("Accesorios para el pelo");
   });
 
   test("la portada enseña solo destacados", async ({ page, request }) => {
@@ -52,42 +52,37 @@ test.describe("Catálogo y cesta", () => {
 
   test("añadir a la cesta, cambiar cantidades y total", async ({ page }) => {
     await page.goto("/catalogo.html");
-    const card = page.locator("#p-cuenco-caramelos");
+    const card = page.locator("#p-tres-en-raya-halloween");
     await card.locator("[data-add]").click();
     await card.locator("[data-add]").click();
     await expect(page.locator(".cart-count")).toHaveText("2");
     await page.locator(".cart-toggle").click();
     const drawer = page.locator("#drawer");
     await expect(drawer).toBeVisible();
-    await expect(drawer.locator("#drawerTotal")).toHaveText("44,00 €");
+    await expect(drawer.locator("#drawerTotal")).toHaveText("24,00 €");
     await drawer.getByRole("button", { name: "Quitar una unidad" }).click();
-    await expect(drawer.locator("#drawerTotal")).toHaveText("22,00 €");
+    await expect(drawer.locator("#drawerTotal")).toHaveText("12,00 €");
     await page.reload();
     await expect(page.locator(".cart-count")).toHaveText("1");
   });
 
   test("la cesta vieja (formato anterior) se sigue leyendo", async ({ page }) => {
-    await page.evaluate(() => localStorage.setItem("3docna_cart", JSON.stringify([{ name: "Pack 12 colgantes articulados", price: 15, qty: 3 }])));
+    await page.evaluate(() => localStorage.setItem("3docna_cart", JSON.stringify([{ name: "Fantasma de ventana", price: 5.5, qty: 3 }])));
     await page.goto("/pedido.html");
     await expect(page.locator(".cart-count")).toHaveText("3");
-    await expect(page.locator("#cartSummary")).toContainText("45,00 €");
+    await expect(page.locator("#cartSummary")).toContainText("16,50 €");
   });
 });
 
-test.describe("Configurador y pedido", () => {
-  test("configurador calcula el precio y prepara WhatsApp", async ({ page }) => {
-    await page.goto("/configurador.html");
-    await page.fill("#cfgNombre", "bar manolo");
-    await expect(page.locator("#cfgNombre")).toHaveValue("BAR MANOLO");
-    await page.locator('label[for="szEsc"]').click();
-    await page.check("#cfgVela");
-    await page.locator('[data-step="1"]').click();
-    await expect(page.locator("#cfgTotal")).toHaveText("96,00 €");
-    const wa = decodeURIComponent(await page.locator("#cfgWa").getAttribute("href"));
-    expect(wa).toContain("Texto: BAR MANOLO");
-    expect(wa).toContain("escaparate (22 cm)");
-    await page.locator("#cfgAdd").click();
-    await expect(page.locator(".cart-count")).toHaveText("2");
+test.describe("Fotos y pedido", () => {
+  test("las fotos de los productos cargan", async ({ page }) => {
+    await page.goto("/catalogo.html");
+    const imgs = page.locator(".card .slide img");
+    await expect(imgs.first()).toBeVisible();
+    for (const img of await imgs.all()) {
+      await img.scrollIntoViewIfNeeded();
+      await expect.poll(() => img.evaluate((el) => el.complete && el.naturalWidth > 0)).toBe(true);
+    }
   });
 
   test("el pedido no se envía sin datos obligatorios", async ({ page }) => {
@@ -104,14 +99,14 @@ test.describe("Configurador y pedido", () => {
     let body = "";
     await page.route("**/formsubmit.co/**", async (r) => { body = r.request().postData() || ""; await r.fulfill({ status: 200, body: "ok" }); });
     await page.goto("/");
-    await page.evaluate(() => localStorage.setItem("3docna_cart", JSON.stringify([{ name: "Litofanía-retrato con marco", price: 24, qty: 1 }])));
+    await page.evaluate(() => localStorage.setItem("3docna_cart", JSON.stringify([{ name: "Cuadro litofanía con tu foto", price: 24, qty: 1 }])));
     await page.goto("/pedido.html");
     await page.fill("#f-nombre", "Ana");
     await page.fill("#f-email", "ana@example.com");
     await page.fill("#f-desc", "Una litofanía con la foto de mi perro, por favor.");
     await page.check("#f-priv");
     await page.locator("#orderSend").click();
-    await expect.poll(() => body).toContain("Litofan");
+    await expect.poll(() => body).toContain("Cuadro+litofan");
     expect(body).toContain("ana%40example.com");
   });
 

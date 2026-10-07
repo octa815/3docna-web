@@ -40,7 +40,13 @@
   from = "/contacto"
   to = "/contacto.html"
   status = 200
+# El configurador del farol se retiró: los enlaces antiguos van al catálogo
 [[redirects]]
   from = "/configurador"
-  to = "/configurador.html"
-  status = 200
+  to = "/catalogo.html"
+  status = 301
+[[redirects]]
+  from = "/configurador.html"
+  to = "/catalogo.html"
+  status = 301
+  force = true
