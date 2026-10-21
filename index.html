@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>3DOCNA · Impresión 3D en Elda</title>
 <meta name="description" content="Impresión 3D en Elda: decoración de Halloween, accesorios para el pelo con calaveras y cuadros litofanía con tu foto. Entrega en mano en Elda y Petrer.">
-<meta name="theme-color" content="#f5f2ee">
+<meta name="theme-color" content="#111013">
 <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon-180.png">
 <meta property="og:type" content="website">
@@ -17,7 +17,7 @@
   (function () {
     var d = document.documentElement, g = function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } };
     var t = g("3docna_theme");
-    if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    if (!t) t = "dark";
     d.dataset.theme = t;
     var fs = g("3docna_fs"); if (fs) d.dataset.fs = fs;
     var mo = g("3docna_motion"); if (mo) d.dataset.motion = mo;
@@ -26,17 +26,12 @@
 </script>
 <link rel="preload" href="/fonts/BricolageGrotesque-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/css/site.css">
-<script type="importmap">{ "imports": { "three": "/vendor/three.module.min.js" } }</script>
-<script src="/vendor/gsap.min.js" defer></script>
-<script src="/vendor/ScrollTrigger.min.js" defer></script>
-<script src="/vendor/lenis.min.js" defer></script>
 <script type="module" src="/js/app.js"></script>
 <script type="module" src="/js/home.js"></script>
 <script type="module" src="/js/catalog.js"></script>
 </head>
 <body data-page="inicio">
 <a class="skip" href="#main">Saltar al contenido</a>
-<div class="progress" aria-hidden="true"></div>
 <header class="hdr">
   <div class="hdr-row">
     <a class="brand glass" href="/" aria-label="3DOCNA, inicio">
@@ -80,50 +75,42 @@
 </aside>
 
 <main id="main">
-<!-- ============ ESCENARIO: la mascota se imprime ============ -->
-  <section class="stage" id="top" aria-labelledby="hero-title" data-hide-wa>
-    <div class="under">
-      <img src="/img/brand/mascota-240.webp" width="120" height="168" alt="">
-      <p class="under-title"><span class="line"><span>Diseñado</span></span><span class="line"><span>e impreso</span></span><span class="line"><span class="hl">en Elda.</span></span></p>
-      <p class="under-sub">Capa a capa · 0,20 mm · Bambu Lab A1</p>
-    </div>
-
-    <div class="layer">
-      <div class="hero">
-        <div class="hero-grid">
-          <div class="hero-copy">
-            <p class="tag">Impresión 3D en Elda · Octavio y Natalia</p>
-            <h1 id="hero-title" class="hero-title">Impreso capa a capa <span class="hl">en Elda.</span></h1>
-            <p class="lede">Decoración de Halloween, accesorios para el pelo con calaveras y cuadros con tu foto en relieve. Lo imprimimos nosotros y, si eres de aquí, te lo llevamos en mano.</p>
-            <div class="hero-actions">
-              <a class="btn btn-solid magnetic" href="/catalogo.html"><span>Ver catálogo</span></a>
-              <a class="btn btn-ghost" href="/pedido.html">Hacer un pedido</a>
-            </div>
-            <div class="hero-stats">
-              <div><b>24 h</b><span>Respuesta</span></div>
-              <div><b>Elda</b><span>Entrega en mano</span></div>
-              <div><b>2</b><span>Personas detrás</span></div>
-            </div>
-          </div>
-          <div class="hero-print" aria-hidden="true">
-            <img class="hero-fallback" src="/img/brand/mascota-480.webp" width="480" height="674" alt="">
-            <div class="hud glass">
-              <span>CAPA <b data-hud="layer">000</b>/<span data-hud="layers">096</span></span>
-              <span>Z <b data-hud="z">0,00</b> mm</span>
-              <span>PLA Silk · <b>215 °C</b></span>
-              <span><b data-hud="pct">0</b> %</span>
-              <div class="hud-bar"><i></i></div>
-            </div>
-          </div>
+<!-- ============ PORTADA ============ -->
+  <section class="hero" id="top" aria-labelledby="hero-title" data-hide-wa>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="tag">Impresión 3D en Elda · Octavio y Natalia</p>
+        <h1 id="hero-title" class="hero-title">Impreso capa a capa <span class="hl">en Elda.</span></h1>
+        <p class="lede">Decoración de Halloween, pendientes pixel art, accesorios para el pelo con calaveras y cuadros con tu foto en relieve. Lo imprimimos nosotros y, si eres de aquí, te lo llevamos en mano.</p>
+        <div class="hero-actions">
+          <a class="btn btn-solid" href="/catalogo.html"><span>Ver catálogo</span></a>
+          <a class="btn btn-ghost" href="/pedido.html">Hacer un pedido</a>
+        </div>
+        <div class="hero-stats">
+          <div><b>24 h</b><span>Respuesta</span></div>
+          <div><b>Elda</b><span>Entrega en mano</span></div>
+          <div><b>2</b><span>Personas detrás</span></div>
         </div>
       </div>
+      <figure class="hero-art" aria-hidden="true">
+        <img src="/img/brand/mascota-480.webp" width="480" height="674" alt="" fetchpriority="high" decoding="async">
+        <figcaption class="hero-spec">Capa 0,20 mm · Bambu Lab A1</figcaption>
+      </figure>
     </div>
-    <p class="hero-cue" aria-hidden="true"><span>Desliza para imprimir</span><i></i></p>
   </section>
 
   <!-- ============ MATERIALES ============ -->
-  <div class="marquee" aria-label="Materiales disponibles: PLA, PETG, TPU flexible, PLA Silk, PLA Wood, PLA Metálico y PLA Glow">
+  <div class="marquee">
+    <p class="visually-hidden">Materiales disponibles: PLA, PETG, TPU flexible, PLA Silk, PLA Wood, PLA Metálico y PLA Glow.</p>
     <div class="marquee-track" aria-hidden="true">
+      <span class="mat"><i class="spool" style="--c:#4f8fe8"></i>PLA</span>
+      <span class="mat"><i class="spool" style="--c:#3cc7a0"></i>PETG</span>
+      <span class="mat"><i class="spool" style="--c:#f08a3c"></i>TPU flexible</span>
+      <span class="mat"><i class="spool" style="--c:#f07bb0"></i>PLA Silk</span>
+      <span class="mat"><i class="spool" style="--c:#b8874f"></i>PLA Wood</span>
+      <span class="mat"><i class="spool" style="--c:#b9bec6"></i>PLA Metálico</span>
+      <span class="mat"><i class="spool" style="--c:#b6f06a"></i>PLA Glow</span>
+
       <span class="mat"><i class="spool" style="--c:#4f8fe8"></i>PLA</span>
       <span class="mat"><i class="spool" style="--c:#3cc7a0"></i>PETG</span>
       <span class="mat"><i class="spool" style="--c:#f08a3c"></i>TPU flexible</span>
@@ -145,7 +132,7 @@
         <a class="link-arrow" href="/catalogo.html" data-rise>Ver catálogo completo</a>
       </header>
       <div class="grid" data-catalog="destacados" data-limit="6">
-        <p class="grid-status">Cargando productos…</p>
+        <p class="grid-status is-loading">Cargando productos…</p>
       </div>
     </div>
   </section>

@@ -37,6 +37,9 @@ Copia un bloque entero de `"productos"` y cámbialo. Campos:
 | `destacado` | no | `true` para que salga también en la portada |
 | `icono` | no | Dibujo de relleno mientras no hay foto (ver lista abajo) |
 | `imgs` | sí | Array de rutas. Vacío `[]` si aún no hay fotos |
+| `alts` | no | Texto alternativo de cada foto, en el mismo orden que `imgs` |
+| `variantes` | no | Diseños a elegir dentro de la tarjeta (pendientes): `{"id", "nombre", "medidas", "img"}`. Cada uno se pide por separado con su cantidad, al `precio` de la tarjeta |
+| `varLabel` | no | Cómo se llama en la cesta: `"Pendientes Clásicos"` → "Pendientes Clásicos: Calavera" |
 
 **Iconos disponibles:** `litofania` y `generico`.
 

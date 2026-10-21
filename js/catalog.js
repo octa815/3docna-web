@@ -1,7 +1,7 @@
 /* 3DOCNA — catálogo
    Lee data/productos.json y pinta las tarjetas. Para añadir productos no se toca este archivo:
    se edita el JSON (instrucciones en img/README.md). */
-import { $, $$, euros, addToCart, hasGsap, motionOK, finePointer } from "./app.js";
+import { $, $$, euros, addToCart, reveal } from "./app.js";
 
 const DATA_URL = "/data/productos.json";
 
@@ -23,10 +23,10 @@ const ICONS = {
 
 const esc = (s) => { const d = document.createElement("div"); d.textContent = String(s ?? ""); return d.innerHTML; };
 
-function card(p) {
+function card(p, n = 99) {
   const imgs = (Array.isArray(p.imgs) ? p.imgs : []).filter(Boolean);
   const slides = imgs.length
-    ? imgs.map((src, i) => `<div class="slide"><img src="/${esc(src.replace(/^\//, ""))}" alt="${esc(p.nombre)}${imgs.length > 1 ? ` (${i + 1} de ${imgs.length})` : ""}" loading="lazy" decoding="async"></div>`).join("")
+    ? imgs.map((src, i) => `<div class="slide"><img src="/${esc(src.replace(/^\//, ""))}" alt="${esc((p.alts && p.alts[i]) || p.nombre)}${imgs.length > 1 ? ` (${i + 1} de ${imgs.length})` : ""}" ${n < 2 && i === 0 ? ' fetchpriority="high"' : ' loading="lazy"'} decoding="async"></div>`).join("")
     : `<div class="slide ph-${(p.nombre.length) % 4}"><svg viewBox="0 0 160 160" aria-hidden="true">${ICONS[p.icono] || ICONS.generico}</svg></div>`;
   const multi = imgs.length > 1;
   const nav = multi
@@ -35,15 +35,32 @@ function card(p) {
     : "";
   const price = p.precioTexto ? esc(p.precioTexto) : typeof p.precio === "number" ? euros(p.precio) : "Consultar";
   const unit = p.unidad ? ` <small>${esc(p.unidad)}</small>` : "";
-  const action = typeof p.precio === "number"
+  const vars = Array.isArray(p.variantes) && p.variantes.length && typeof p.precio === "number" ? p.variantes : null;
+  const action = vars
+    ? `<button class="add" type="button" data-add-vars disabled aria-describedby="sum-${esc(p.id)}">Añadir</button>`
+    : typeof p.precio === "number"
     ? `<button class="add" type="button" data-add="${esc(p.id)}" aria-label="Añadir ${esc(p.nombre)} a la cesta">Añadir</button>`
     : `<a class="add is-quote" href="/pedido.html?pieza=${encodeURIComponent(p.nombre)}#pedido">Presupuesto</a>`;
-  return `<article class="card${p.wide ? " is-wide" : ""}" data-category="${esc(p.categoria)}" id="p-${esc(p.id)}">
+  const picker = vars ? `
+      <fieldset class="vars">
+        <legend>Elige diseños y cuántos pares de cada uno</legend>
+        <ul class="vars-list">${vars.map((v, k) => `
+          <li class="var">
+            ${v.img ? `<img src="/${esc(v.img.replace(/^\//, ""))}" width="56" height="56" alt="" loading="lazy" decoding="async">` : ""}
+            <span class="var-name">${esc(v.nombre)}${v.medidas ? `<small>${esc(v.medidas)}</small>` : ""}</span>
+            <span class="var-qty" role="group" aria-label="Pares de ${esc(v.nombre)}">
+              <button type="button" data-dec="${k}" aria-label="Quitar un par de ${esc(v.nombre)}" disabled>−</button><output data-q="${k}" aria-live="off">0</output><button type="button" data-inc="${k}" aria-label="Añadir un par de ${esc(v.nombre)}">+</button>
+            </span>
+          </li>`).join("")}
+        </ul>
+        <p class="vars-sum" id="sum-${esc(p.id)}" aria-live="polite">Ningún par elegido</p>
+      </fieldset>` : "";
+  return `<article class="card${p.wide ? " is-wide" : ""}${vars ? " has-vars" : ""}" data-category="${esc(p.categoria)}" id="p-${esc(p.id)}">
     <div class="card-media"><div class="slides">${slides}</div>${imgs.length ? "" : '<span class="grid-lines" aria-hidden="true"></span>'}${p.badge ? `<span class="badge${p.badgeColor === "purple" ? " is-purple" : ""}">${esc(p.badge)}</span>` : ""}${nav}</div>
     <div class="card-body">
       <p class="card-cat">${esc(p.catLabel || "")}</p>
       <h3 class="card-name">${esc(p.nombre)}</h3>
-      <p class="card-desc">${esc(p.desc || "")}</p>
+      <p class="card-desc">${esc(p.desc || "")}</p>${picker}
       <div class="card-foot"><p class="price">${price}${unit}</p>${action}</div>
     </div>
   </article>`;
@@ -75,38 +92,50 @@ function wireCard(el, p) {
     add.textContent = "Añadido";
     setTimeout(() => { add.classList.remove("is-added"); add.textContent = "Añadir"; }, 1400);
   });
-  // Inclinación 3D suave con el ratón
-  if (finePointer && hasGsap && motionOK()) {
-    const { gsap } = window;
-    const rx = gsap.quickTo(el, "rotationX", { duration: 0.6, ease: "power3.out" });
-    const ry = gsap.quickTo(el, "rotationY", { duration: 0.6, ease: "power3.out" });
-    gsap.set(el, { transformPerspective: 900 });
-    el.addEventListener("pointermove", (e) => {
-      const r = el.getBoundingClientRect();
-      ry(((e.clientX - r.left) / r.width - 0.5) * 7);
-      rx(((e.clientY - r.top) / r.height - 0.5) * -7);
+  // Selector de diseños (pendientes): cantidad por diseño y un solo botón para añadirlos
+  const addVars = $("[data-add-vars]", el);
+  if (addVars) {
+    const qty = p.variantes.map(() => 0);
+    const sum = $(".vars-sum", el);
+    const paint = () => {
+      const n = qty.reduce((a, b) => a + b, 0);
+      qty.forEach((q, k) => {
+        $(`[data-q="${k}"]`, el).textContent = q;
+        $(`[data-dec="${k}"]`, el).disabled = q === 0;
+        $(`[data-q="${k}"]`, el).closest(".var").classList.toggle("is-on", q > 0);
+      });
+      addVars.disabled = n === 0;
+      addVars.textContent = n ? `Añadir ${n} · ${euros(n * p.precio)}` : "Añadir";
+      sum.textContent = n ? `${n} ${n === 1 ? "par" : "pares"} · ${euros(n * p.precio)}` : "Ningún par elegido";
+    };
+    $(".vars", el).addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      if (btn.dataset.inc) qty[btn.dataset.inc]++;
+      if (btn.dataset.dec && qty[btn.dataset.dec] > 0) qty[btn.dataset.dec]--;
+      paint();
     });
-    el.addEventListener("pointerleave", () => { rx(0); ry(0); });
+    addVars.addEventListener("click", () => {
+      const label = p.varLabel || p.nombre;
+      const items = p.variantes.map((v, k) => ({ name: `${label}: ${v.nombre}`, price: p.precio, qty: qty[k] })).filter((i) => i.qty > 0);
+      if (!items.length) return;
+      addToCart(items, addVars);
+      qty.fill(0);
+      paint();
+      addVars.classList.add("is-added");
+      addVars.textContent = "Añadido";
+      sum.textContent = "Añadido a la cesta";
+      setTimeout(() => { addVars.classList.remove("is-added"); paint(); }, 1400);
+    });
+    paint();
   }
-}
-
-function reveal(cards) {
-  if (!hasGsap || !motionOK()) return;
-  const { gsap } = window;
-  gsap.fromTo(cards, { clipPath: "inset(100% 0 0 0 round 22px)" }, {
-    clipPath: "inset(0% 0 0 0 round 22px)", duration: 0.9, ease: "steps(12)", stagger: 0.08,
-    scrollTrigger: { trigger: cards[0], start: "top 92%", once: true },
-    onComplete: () => gsap.set(cards, { clearProps: "clipPath" }),
-  });
-  gsap.fromTo(cards, { y: 30 }, { y: 0, duration: 0.9, ease: "expo.out", stagger: 0.08, scrollTrigger: { trigger: cards[0], start: "top 92%", once: true } });
 }
 
 function renderGrid(grid, list, all) {
   if (!list.length) { grid.innerHTML = '<p class="grid-status">No hay productos en esta categoría todavía.</p>'; return []; }
-  grid.innerHTML = list.map(card).join("");
+  grid.innerHTML = list.map((p, n) => card(p, n)).join("");
   const els = $$(".card", grid);
   els.forEach((el, k) => wireCard(el, list[k]));
-  window.ScrollTrigger?.refresh();
   return els;
 }
 
@@ -158,7 +187,6 @@ async function main() {
         const sel = id === "todos" ? list : list.filter((p) => p.categoria === id);
         const els = renderGrid(grid, sel, list);
         if (first) { reveal(els); first = false; }
-        else if (hasGsap && motionOK()) window.gsap.from(els, { y: 24, opacity: 0, duration: 0.5, ease: "expo.out", stagger: 0.04 });
       }, initial);
     } else {
       reveal(renderGrid(grid, list, list));

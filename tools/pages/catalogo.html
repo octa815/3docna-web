@@ -7,11 +7,12 @@
     </div>
   </section>
 
-  <section class="sec" style="padding-top:0" aria-label="Productos">
+  <section class="sec" style="padding-top:0" aria-labelledby="prod-title">
     <div class="wrap">
+      <h2 id="prod-title" class="visually-hidden">Productos</h2>
       <div class="filters" data-catalog-tabs role="group" aria-label="Filtrar por categoría"></div>
       <div class="grid" data-catalog="todos" aria-live="polite">
-        <p class="grid-status">Cargando catálogo…</p>
+        <p class="grid-status is-loading">Cargando catálogo…</p>
       </div>
       <noscript><p class="grid-status">Activa JavaScript para ver el catálogo, o escríbenos por <a href="https://wa.me/34694455979">WhatsApp</a>.</p></noscript>
     </div>

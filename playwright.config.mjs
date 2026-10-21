@@ -1,6 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
 
-// Usa el Chrome del sistema; WebGL por software para que la impresora 3D se pinte sin GPU.
+// Usa el Chrome del sistema.
 export default defineConfig({
   testDir: "tests",
   timeout: 30_000,

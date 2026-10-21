@@ -66,6 +66,27 @@ test.describe("Catálogo y cesta", () => {
     await expect(page.locator(".cart-count")).toHaveText("1");
   });
 
+  test("pendientes: se eligen diseños y cantidades dentro de cada juego", async ({ page }) => {
+    await page.goto("/catalogo.html#pendientes");
+    await expect(page.locator(".card")).toHaveCount(3);
+    const card = page.locator("#p-pendientes-clasicos");
+    await expect(card.locator(".var")).toHaveCount(7);
+    const add = card.locator("[data-add-vars]");
+    await expect(add).toBeDisabled();
+    await card.getByRole("button", { name: "Añadir un par de Calavera" }).click();
+    await card.getByRole("button", { name: "Añadir un par de Calavera" }).click();
+    await card.getByRole("button", { name: "Añadir un par de Fantasma" }).click();
+    await expect(card.locator(".vars-sum")).toHaveText("3 pares · 10,50 €");
+    await add.click();
+    await expect(page.locator(".cart-count")).toHaveText("3");
+    await page.evaluate(() => window.scrollTo(0, 0)); // como alguien que sube a la cesta
+    await page.locator(".cart-toggle").click();
+    const drawer = page.locator("#drawer");
+    await expect(drawer.getByText("Pendientes Clásicos: Calavera")).toBeVisible();
+    await expect(drawer.getByText("Pendientes Clásicos: Fantasma")).toBeVisible();
+    await expect(drawer.locator("#drawerTotal")).toHaveText("10,50 €");
+  });
+
   test("la cesta vieja (formato anterior) se sigue leyendo", async ({ page }) => {
     await page.evaluate(() => localStorage.setItem("3docna_cart", JSON.stringify([{ name: "Fantasma de ventana", price: 5.5, qty: 3 }])));
     await page.goto("/pedido.html");
@@ -120,28 +141,38 @@ test.describe("Fotos y pedido", () => {
   });
 });
 
-test.describe("Portada en movimiento", () => {
-  test("la impresora 3D se enciende y la pieza avanza con el scroll", async ({ page }) => {
-    await page.goto("/");
-    await expect(page.locator(".gl-canvas")).toHaveClass(/is-on/, { timeout: 8000 });
-    await page.waitForTimeout(3000);
-    const before = Number(await page.locator('[data-hud="pct"]').first().textContent());
-    await page.evaluate(() => window.scrollTo(0, innerHeight * 1));
-    await expect.poll(async () => Number(await page.locator('[data-hud="pct"]').first().textContent()), { timeout: 6000 }).toBeGreaterThan(before + 20);
-  });
-
-  test("las copias del laminado no se leen ni duplican títulos", async ({ page }) => {
-    await page.goto("/");
-    await expect(page.locator(".layer[aria-hidden='true']")).toHaveCount(5);
+test.describe("Portada ligera", () => {
+  test("no carga librerías 3D ni de animación", async ({ page }) => {
+    const pedidos = [];
+    page.on("request", (r) => pedidos.push(r.url()));
+    await page.goto("/", { waitUntil: "networkidle" });
+    expect(pedidos.filter((u) => /three|gsap|ScrollTrigger|lenis|printer/i.test(u))).toEqual([]);
+    await expect(page.locator("canvas")).toHaveCount(0);
     await expect(page.locator("h1")).toHaveCount(1);
+    await expect(page.locator("h1")).toBeVisible();
   });
 
-  test("con animaciones desactivadas no hay 3D y todo se ve", async ({ page }) => {
+  test("con animaciones desactivadas todo se ve", async ({ page }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/");
-    await expect(page.locator(".gl-canvas")).toHaveCount(0);
-    await expect(page.locator(".hero-fallback")).toBeVisible();
-    await expect(page.locator('[data-hud="pct"]')).toHaveText("100");
+    await expect(page.locator(".rv")).toHaveCount(0);
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await expect(page.locator("#contacto .title")).toBeVisible();
+  });
+
+  test("lo que aparece al bajar termina visible", async ({ page }) => {
+    await page.goto("/");
+    await page.locator("#contacto").scrollIntoViewIfNeeded();
+    await expect(page.locator("#contacto .title")).toHaveClass(/in/);
+    await expect.poll(async () => Number(await page.locator("#contacto .title").evaluate((e) => getComputedStyle(e).opacity))).toBe(1);
+  });
+
+  test("tema oscuro por defecto", async ({ page }) => {
+    await page.emulateMedia({ colorScheme: "light" });
+    await page.goto("/");
+    await page.evaluate(() => localStorage.clear());
+    await page.reload();
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   });
 
   test("ajustes: tema y tamaño de texto se recuerdan", async ({ page }) => {

@@ -1,5 +1,5 @@
 /* 3DOCNA — configurador del farol calado: precio en vivo, cesta y WhatsApp */
-import { $, $$, euros, addToCart, WA, hasGsap, motionOK } from "./app.js";
+import { $, $$, euros, addToCart, WA } from "./app.js";
 
 const PRECIOS = { casa: 20, escaparate: 45 };
 const VELA = 3;
@@ -28,11 +28,7 @@ if (form) {
     el.count.textContent = s.nombre.length;
     el.unit.textContent = euros(s.unidad);
     el.qty.textContent = s.cantidad;
-    // El total cuenta hasta el nuevo valor
-    if (hasGsap && motionOK()) {
-      const o = { v: last.total };
-      window.gsap.to(o, { v: s.total, duration: 0.4, ease: "power2.out", onUpdate: () => (el.total.textContent = euros(o.v)) });
-    } else el.total.textContent = euros(s.total);
+    el.total.textContent = euros(s.total);
     last = s;
 
     const txt = s.nombre || "TU NOMBRE";

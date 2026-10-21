@@ -1,78 +1,282 @@
 {
   "_ayuda": "Este archivo es el catálogo. Para añadir o cambiar un producto NO hay que tocar el HTML: edita este JSON, sube las fotos a /img/productos y haz push. Instrucciones completas en img/README.md",
-
   "categorias": [
-    { "id": "todos",         "label": "Todos" },
-    { "id": "halloween",     "label": "Decoración Halloween" },
-    { "id": "pelo",          "label": "Accesorios para el pelo" },
-    { "id": "personalizado", "label": "Personalizado" }
+    {
+      "id": "todos",
+      "label": "Todos"
+    },
+    {
+      "id": "halloween",
+      "label": "Decoración Halloween"
+    },
+    {
+      "id": "pendientes",
+      "label": "Pendientes"
+    },
+    {
+      "id": "pelo",
+      "label": "Accesorios para el pelo"
+    },
+    {
+      "id": "personalizado",
+      "label": "Personalizado"
+    }
   ],
-
   "productos": [
+    {
+      "id": "pendientes-clasicos",
+      "nombre": "Pendientes pixel art · Clásicos",
+      "categoria": "pendientes",
+      "catLabel": "Halloween · Pendientes · 7 diseños",
+      "precio": 3.5,
+      "unidad": "/ par",
+      "desc": "Calavera, murciélago, fantasma, ojo sangrante, corazón atravesado, boca de vampiro y cuchillo. Pixel art 8 bits en 4 colores, con relieve y gancho plateado. Pesan menos de 1 g: no tiran de la oreja.",
+      "badge": "Nuevo",
+      "badgeColor": "purple",
+      "destacado": true,
+      "varLabel": "Pendientes Clásicos",
+      "imgs": [
+        "img/productos/pendientes/clasicos-portada.webp",
+        "img/productos/pendientes/expositor.webp",
+        "img/productos/pendientes/clasicos-todos.webp"
+      ],
+      "alts": [
+        "Pendientes pixel art de Halloween, juego Clásicos: los 7 diseños",
+        "Pendientes pixel art impresos por 3DOCNA, colgados en sus tarjetas rosas",
+        "Los 7 diseños del juego Clásicos con sus medidas"
+      ],
+      "variantes": [
+        {
+          "id": "calavera",
+          "nombre": "Calavera",
+          "medidas": "24,0 × 27,6 mm",
+          "img": "img/productos/pendientes/calavera.webp"
+        },
+        {
+          "id": "murcielago",
+          "nombre": "Murciélago",
+          "medidas": "31,2 × 21,6 mm",
+          "img": "img/productos/pendientes/murcielago.webp"
+        },
+        {
+          "id": "fantasma",
+          "nombre": "Fantasma",
+          "medidas": "21,6 × 28,8 mm",
+          "img": "img/productos/pendientes/fantasma.webp"
+        },
+        {
+          "id": "ojo-sangrante",
+          "nombre": "Ojo sangrante",
+          "medidas": "24,0 × 26,4 mm",
+          "img": "img/productos/pendientes/ojo-sangrante.webp"
+        },
+        {
+          "id": "corazon-atravesado",
+          "nombre": "Corazón atravesado",
+          "medidas": "24,0 × 30,0 mm",
+          "img": "img/productos/pendientes/corazon-atravesado.webp"
+        },
+        {
+          "id": "boca-de-vampiro",
+          "nombre": "Boca de vampiro",
+          "medidas": "24,0 × 26,4 mm",
+          "img": "img/productos/pendientes/boca-de-vampiro.webp"
+        },
+        {
+          "id": "cuchillo-carnicero",
+          "nombre": "Cuchillo carnicero",
+          "medidas": "16,8 × 31,2 mm",
+          "img": "img/productos/pendientes/cuchillo-carnicero.webp"
+        }
+      ]
+    },
+    {
+      "id": "pendientes-calabaza",
+      "nombre": "Pendientes pixel art · Calabaza",
+      "categoria": "pendientes",
+      "catLabel": "Halloween · Pendientes · 4 diseños",
+      "precio": 3.5,
+      "unidad": "/ par",
+      "desc": "Calabaza maldita, polilla de la muerte, vela ritual y reloj de arena, en naranja, amarillo, rojo oscuro y negro. Pixel art 8 bits con relieve y gancho plateado. Ligeros: alrededor de 1 g cada uno.",
+      "badge": "Nuevo",
+      "badgeColor": "purple",
+      "destacado": true,
+      "varLabel": "Pendientes Calabaza",
+      "imgs": [
+        "img/productos/pendientes/calabaza-portada.webp",
+        "img/productos/pendientes/expositor.webp",
+        "img/productos/pendientes/calabaza-todos.webp"
+      ],
+      "alts": [
+        "Pendientes pixel art de Halloween, juego Calabaza: los 4 diseños",
+        "Pendientes pixel art impresos por 3DOCNA, colgados en sus tarjetas rosas",
+        "Los 4 diseños del juego Calabaza con sus medidas"
+      ],
+      "variantes": [
+        {
+          "id": "calabaza-maldita",
+          "nombre": "Calabaza maldita",
+          "medidas": "26,4 × 32,4 mm",
+          "img": "img/productos/pendientes/calabaza-maldita.webp"
+        },
+        {
+          "id": "polilla-de-la-muerte",
+          "nombre": "Polilla de la muerte",
+          "medidas": "28,8 × 24,0 mm",
+          "img": "img/productos/pendientes/polilla-de-la-muerte.webp"
+        },
+        {
+          "id": "vela-ritual",
+          "nombre": "Vela ritual",
+          "medidas": "16,8 × 28,8 mm",
+          "img": "img/productos/pendientes/vela-ritual.webp"
+        },
+        {
+          "id": "reloj-de-arena",
+          "nombre": "Reloj de arena",
+          "medidas": "19,2 × 27,6 mm",
+          "img": "img/productos/pendientes/reloj-de-arena.webp"
+        }
+      ]
+    },
+    {
+      "id": "pendientes-terror",
+      "nombre": "Pendientes pixel art · Terror",
+      "categoria": "pendientes",
+      "catLabel": "Halloween · Pendientes · 6 diseños",
+      "precio": 3.5,
+      "unidad": "/ par",
+      "desc": "Máscara de hockey, payaso siniestro, jeringa, diente arrancado, cráneo de ciervo y guadaña. Pixel art 8 bits en 4 colores, con relieve y gancho plateado. Ligeros: menos de 1 g cada uno.",
+      "badge": "Nuevo",
+      "badgeColor": "purple",
+      "destacado": true,
+      "varLabel": "Pendientes Terror",
+      "imgs": [
+        "img/productos/pendientes/terror-portada.webp",
+        "img/productos/pendientes/expositor.webp",
+        "img/productos/pendientes/terror-todos.webp"
+      ],
+      "alts": [
+        "Pendientes pixel art de Halloween, juego Terror: los 6 diseños",
+        "Pendientes pixel art impresos por 3DOCNA, colgados en sus tarjetas rosas",
+        "Los 6 diseños del juego Terror con sus medidas"
+      ],
+      "variantes": [
+        {
+          "id": "mascara-de-hockey",
+          "nombre": "Máscara de hockey",
+          "medidas": "21,6 × 24,0 mm",
+          "img": "img/productos/pendientes/mascara-de-hockey.webp"
+        },
+        {
+          "id": "payaso-siniestro",
+          "nombre": "Payaso siniestro",
+          "medidas": "26,4 × 26,4 mm",
+          "img": "img/productos/pendientes/payaso-siniestro.webp"
+        },
+        {
+          "id": "jeringa",
+          "nombre": "Jeringa",
+          "medidas": "14,4 × 33,6 mm",
+          "img": "img/productos/pendientes/jeringa.webp"
+        },
+        {
+          "id": "diente-arrancado",
+          "nombre": "Diente arrancado",
+          "medidas": "21,6 × 26,4 mm",
+          "img": "img/productos/pendientes/diente-arrancado.webp"
+        },
+        {
+          "id": "craneo-de-ciervo",
+          "nombre": "Cráneo de ciervo",
+          "medidas": "28,8 × 26,4 mm",
+          "img": "img/productos/pendientes/craneo-de-ciervo.webp"
+        },
+        {
+          "id": "guadana",
+          "nombre": "Guadaña",
+          "medidas": "22,8 × 33,6 mm",
+          "img": "img/productos/pendientes/guadana.webp"
+        }
+      ]
+    },
     {
       "id": "tres-en-raya-halloween",
       "nombre": "Tres en raya Halloween",
       "categoria": "halloween",
       "catLabel": "Halloween · Juego y decoración",
-      "precio": 12.00,
+      "precio": 12.0,
       "desc": "Tablero con lápida «Game Over» y 6 fichas + 4 de recambio: 5 fantasmas y 5 calabazas. Para jugar en familia o decorar una maceta y no aburrirte regando.",
       "badge": "Halloween",
       "destacado": true,
       "icono": "generico",
-      "imgs": ["img/productos/tres-en-raya-1.webp", "img/productos/tres-en-raya-2.webp"]
+      "imgs": [
+        "img/productos/tres-en-raya-1.webp",
+        "img/productos/tres-en-raya-2.webp"
+      ]
     },
     {
       "id": "fantasma-ventana",
       "nombre": "Fantasma de ventana",
       "categoria": "halloween",
       "catLabel": "Halloween · Decoración",
-      "precio": 5.50,
+      "precio": 5.5,
       "desc": "Se asoma desde el marco de una ventana, un cristal o la esquina de una pared. Perfecto para puertas y escaparates.",
       "destacado": true,
       "icono": "generico",
-      "imgs": ["img/productos/fantasma-ventana-1.webp", "img/productos/fantasma-ventana-2.webp"]
+      "imgs": [
+        "img/productos/fantasma-ventana-1.webp",
+        "img/productos/fantasma-ventana-2.webp"
+      ]
     },
     {
       "id": "esqueleto-emergente",
       "nombre": "Esqueleto emergente",
       "categoria": "halloween",
       "catLabel": "Halloween · Decoración",
-      "precio": 5.50,
+      "precio": 5.5,
       "desc": "Medio enterrado en una mesa o maceta, da la sensación de estar saliendo de la tierra.",
       "destacado": true,
       "icono": "generico",
-      "imgs": ["img/productos/esqueleto-1.webp", "img/productos/esqueleto-2.webp"]
+      "imgs": [
+        "img/productos/esqueleto-1.webp",
+        "img/productos/esqueleto-2.webp"
+      ]
     },
     {
       "id": "pasador-mono",
       "nombre": "Pasador para moño",
       "categoria": "pelo",
       "catLabel": "Accesorios para el pelo · Calaveras",
-      "precio": 5.50,
+      "precio": 5.5,
       "desc": "Calaveras y columna vertebral con palo para sujetar un moño o una coleta. Hay más modelos: pregúntanos por WhatsApp y te los enseñamos.",
       "badge": "Varios modelos",
       "badgeColor": "purple",
       "destacado": true,
       "icono": "generico",
-      "imgs": ["img/productos/pasador-mono-1.webp"]
+      "imgs": [
+        "img/productos/pasador-mono-1.webp"
+      ]
     },
     {
       "id": "horquilla-calavera",
       "nombre": "Horquilla de calavera",
       "categoria": "pelo",
       "catLabel": "Accesorios para el pelo · Calaveras",
-      "precio": 5.00,
+      "precio": 5.0,
       "desc": "Calavera entre hojas ornamentales para recoger un mechón o adornar un semirrecogido.",
       "destacado": true,
       "icono": "generico",
-      "imgs": ["img/productos/horquilla-calavera-1.webp"]
+      "imgs": [
+        "img/productos/horquilla-calavera-1.webp"
+      ]
     },
     {
       "id": "litofania",
       "nombre": "Cuadro litofanía con tu foto",
       "categoria": "personalizado",
       "catLabel": "Personalizado · Regalo",
-      "precio": 24.00,
+      "precio": 24.0,
       "desc": "Tu foto convertida en relieve dentro de un marco: a contraluz aparece la imagen completa. Nos mandas la foto por WhatsApp y te enseñamos cómo queda antes de imprimirla.",
       "badge": "Regalo",
       "destacado": true,

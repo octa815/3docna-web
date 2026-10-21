@@ -36,8 +36,6 @@ def head(meta):
     title = meta["title"]
     full = title if title.startswith("3DOCNA") else f"{title} · 3DOCNA"
     extra = ""
-    if meta.get("three"):
-        extra += '\n<script type="importmap">{ "imports": { "three": "/vendor/three.module.min.js" } }</script>'
     scripts = "".join(f'\n<script type="module" src="/{s}"></script>' for s in meta.get("scripts", []))
     robots = '\n<meta name="robots" content="noindex, follow">' if meta.get("noindex") else ""
     return f"""<!doctype html>
@@ -47,7 +45,7 @@ def head(meta):
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{full}</title>
 <meta name="description" content="{meta['desc']}">{robots}
-<meta name="theme-color" content="#f5f2ee">
+<meta name="theme-color" content="#111013">
 <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon-180.png">
 <meta property="og:type" content="website">
@@ -59,7 +57,7 @@ def head(meta):
   (function () {{
     var d = document.documentElement, g = function (k) {{ try {{ return localStorage.getItem(k); }} catch (e) {{ return null; }} }};
     var t = g("3docna_theme");
-    if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    if (!t) t = "dark";
     d.dataset.theme = t;
     var fs = g("3docna_fs"); if (fs) d.dataset.fs = fs;
     var mo = g("3docna_motion"); if (mo) d.dataset.motion = mo;
@@ -68,14 +66,10 @@ def head(meta):
 </script>
 <link rel="preload" href="/fonts/BricolageGrotesque-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/css/site.css">{extra}
-<script src="/vendor/gsap.min.js" defer></script>
-<script src="/vendor/ScrollTrigger.min.js" defer></script>
-<script src="/vendor/lenis.min.js" defer></script>
 <script type="module" src="/js/app.js"></script>{scripts}
 </head>
 <body data-page="{meta.get('nav', '')}">
 <a class="skip" href="#main">Saltar al contenido</a>
-<div class="progress" aria-hidden="true"></div>
 """
 
 
