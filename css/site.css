@@ -346,6 +346,8 @@ h1, h2, h3 { text-wrap: balance; font-weight: 700; }
 .card-media .grid-lines { position: absolute; inset: 0; background: linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 24px 24px, linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 24px 24px; opacity: 0.6; pointer-events: none; }
 .badge { position: absolute; left: 14px; top: 14px; padding: 5px 10px; border-radius: 999px; font-family: var(--mono); font-size: 0.76rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; background: var(--ink); color: var(--paper); }
 .badge.is-purple { background: #6d4ad8; color: #fff; }
+.badge.is-red { background: #c8202f; color: #fff; }
+.badge.is-green { background: #1f7a3f; color: #fff; }
 .sl-btn { position: absolute; top: 50%; margin-top: -18px; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: color-mix(in srgb, var(--card) 85%, transparent); opacity: 0; transition: opacity var(--dur-fast) ease; }
 .sl-btn span { width: 16px; height: 16px; background: currentColor; -webkit-mask: var(--ico-arrow) center / contain no-repeat; mask: var(--ico-arrow) center / contain no-repeat; }
 .sl-prev { left: 10px; } .sl-prev span { rotate: 180deg; }
@@ -411,16 +413,18 @@ h1, h2, h3 { text-wrap: balance; font-weight: 700; }
 .filters button[aria-pressed="true"] { color: var(--paper); }
 .filters .pill-bg { position: absolute; z-index: 0; top: 0; left: 0; border-radius: 999px; background: var(--ink); transition: transform 350ms var(--ease-out), width 350ms var(--ease-out), height 350ms var(--ease-out); }
 
-/* ---------- Halloween ---------- */
+/* ---------- Campaña de temporada (ahora Navidad) ---------- */
 .season {
   position: relative; overflow: hidden;
   display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: clamp(24px, 4vw, 60px); align-items: center;
   padding: clamp(28px, 5vw, 70px);
   border-radius: calc(var(--radius) + 10px);
-  background: #141016; color: #f3eff4;
+  background: #12161a; color: #f3eff4;
 }
-.season .tag { color: #f6a26d; }
+.season .tag { color: #f3c233; }
 .season .lede { color: #cfc6d2; }
+.season-note { color: #cfc6d2; }
+.season-note strong { color: #fff; }
 .season-title { font-family: var(--display); font-size: clamp(2.4rem, 5.4vw, 5rem); line-height: 0.95; letter-spacing: -0.035em; }
 .season-copy { display: grid; gap: 20px; }
 .countdown { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -429,7 +433,7 @@ h1, h2, h3 { text-wrap: balance; font-weight: 700; }
 .countdown span { font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.7; }
 .season .btn-ghost { border-color: rgba(255,255,255,0.3); }
 .season .btn-ghost:hover { border-color: #fff; }
-.season-photo { margin: 0; aspect-ratio: 4 / 3; border-radius: var(--radius); overflow: hidden; background: #0f0c10; box-shadow: 0 30px 80px -30px rgba(246,162,109,0.45); }
+.season-photo { margin: 0; aspect-ratio: 4 / 3; border-radius: var(--radius); overflow: hidden; background: #0f0c10; box-shadow: 0 30px 80px -30px rgba(200,32,47,0.5); }
 .season-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 
