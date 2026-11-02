@@ -33,10 +33,10 @@ test.describe("Catálogo y cesta", () => {
     const data = await (await request.get("/data/productos.json")).json();
     await page.goto("/catalogo.html");
     await expect(page.locator(".card")).toHaveCount(data.productos.length);
-    await page.locator(".filters").getByRole("button", { name: "Decoración Halloween" }).click();
-    const n = data.productos.filter((p) => p.categoria === "halloween").length;
+    await page.locator(".filters").getByRole("button", { name: "Navidad", exact: true }).click();
+    const n = data.productos.filter((p) => p.categoria === "navidad").length;
     await expect(page.locator(".card")).toHaveCount(n);
-    await expect(page).toHaveURL(/#halloween$/);
+    await expect(page).toHaveURL(/#navidad$/);
   });
 
   test("un enlace con categoría abre el filtro ya elegido", async ({ page }) => {
@@ -52,39 +52,48 @@ test.describe("Catálogo y cesta", () => {
 
   test("añadir a la cesta, cambiar cantidades y total", async ({ page }) => {
     await page.goto("/catalogo.html");
-    const card = page.locator("#p-tres-en-raya-halloween");
+    const card = page.locator("#p-bola-nombre");
     await card.locator("[data-add]").click();
     await card.locator("[data-add]").click();
     await expect(page.locator(".cart-count")).toHaveText("2");
     await page.locator(".cart-toggle").click();
     const drawer = page.locator("#drawer");
     await expect(drawer).toBeVisible();
-    await expect(drawer.locator("#drawerTotal")).toHaveText("24,00 €");
+    await expect(drawer.locator("#drawerTotal")).toHaveText("14,00 €");
     await drawer.getByRole("button", { name: "Quitar una unidad" }).click();
-    await expect(drawer.locator("#drawerTotal")).toHaveText("12,00 €");
+    await expect(drawer.locator("#drawerTotal")).toHaveText("7,00 €");
     await page.reload();
     await expect(page.locator(".cart-count")).toHaveText("1");
   });
 
   test("pendientes: se eligen diseños y cantidades dentro de cada juego", async ({ page }) => {
     await page.goto("/catalogo.html#pendientes");
-    await expect(page.locator(".card")).toHaveCount(3);
-    const card = page.locator("#p-pendientes-clasicos");
+    await expect(page.locator(".card")).toHaveCount(2);
+    const card = page.locator("#p-pendientes-navidad");
     await expect(card.locator(".var")).toHaveCount(7);
     const add = card.locator("[data-add-vars]");
     await expect(add).toBeDisabled();
-    await card.getByRole("button", { name: "Añadir un par de Calavera" }).click();
-    await card.getByRole("button", { name: "Añadir un par de Calavera" }).click();
-    await card.getByRole("button", { name: "Añadir un par de Fantasma" }).click();
+    await card.getByRole("button", { name: "Añadir un par de Árbol" }).click();
+    await card.getByRole("button", { name: "Añadir un par de Árbol" }).click();
+    await card.getByRole("button", { name: "Añadir un par de Regalo" }).click();
     await expect(card.locator(".vars-sum")).toHaveText("3 pares · 10,50 €");
     await add.click();
     await expect(page.locator(".cart-count")).toHaveText("3");
     await page.evaluate(() => window.scrollTo(0, 0)); // como alguien que sube a la cesta
     await page.locator(".cart-toggle").click();
     const drawer = page.locator("#drawer");
-    await expect(drawer.getByText("Pendientes Clásicos: Calavera")).toBeVisible();
-    await expect(drawer.getByText("Pendientes Clásicos: Fantasma")).toBeVisible();
+    await expect(drawer.getByText("Pendientes Navidad: Árbol")).toBeVisible();
+    await expect(drawer.getByText("Pendientes Navidad: Regalo")).toBeVisible();
     await expect(drawer.locator("#drawerTotal")).toHaveText("10,50 €");
+  });
+
+  test("llaveros pixel: se cuentan en llaveros, no en pares", async ({ page }) => {
+    await page.goto("/catalogo.html#llaveros");
+    const card = page.locator("#p-llavero-pixel");
+    await expect(card.locator(".var")).toHaveCount(13);
+    await card.getByRole("button", { name: "Añadir un llavero de Pingüino" }).click();
+    await card.getByRole("button", { name: "Añadir un llavero de Copo de nieve" }).click();
+    await expect(card.locator(".vars-sum")).toHaveText("2 llaveros · 8,00 €");
   });
 
   test("la cesta vieja (formato anterior) se sigue leyendo", async ({ page }) => {

@@ -18,10 +18,35 @@ const ICONS = {
     '<rect x="40" y="46" width="80" height="68" rx="4" fill="none" stroke="var(--neon)" stroke-width="2.5"/>' +
     '<path d="M40 92l22-20 18 16 14-12 26 22" fill="none" stroke="var(--neon2)" stroke-width="2"/>' +
     '<circle cx="64" cy="66" r="7" fill="var(--neon)" opacity="0.5"/>' +
-    '<text x="80" y="140" text-anchor="middle" fill="var(--neon)" font-size="9" font-family="monospace" letter-spacing="2" opacity="0.75">3DOCNA</text>'
+    '<text x="80" y="140" text-anchor="middle" fill="var(--neon)" font-size="9" font-family="monospace" letter-spacing="2" opacity="0.75">3DOCNA</text>',
+  copo:
+    '<g fill="none" stroke="var(--neon)" stroke-width="2.5" stroke-linecap="round">' +
+    [0, 60, 120, 180, 240, 300].map((a) => `<g transform="rotate(${a} 80 74)"><path d="M80 74V30M80 46l-9-9M80 46l9-9M80 58l-12-8M80 58l12-8"/></g>`).join("") +
+    '</g><circle cx="80" cy="74" r="13" fill="var(--paper-2)" stroke="var(--neon2)" stroke-width="2"/>' +
+    '<text x="80" y="142" text-anchor="middle" fill="var(--neon)" font-size="9" font-family="monospace" letter-spacing="2" opacity="0.75">TU NOMBRE</text>',
+  bola:
+    '<circle cx="80" cy="78" r="36" fill="none" stroke="var(--neon)" stroke-width="2.5"/>' +
+    '<rect x="71" y="34" width="18" height="9" rx="1.5" fill="none" stroke="var(--neon2)" stroke-width="2"/><circle cx="80" cy="29" r="4" fill="none" stroke="var(--neon2)" stroke-width="2"/>' +
+    '<path d="M60 78h40" stroke="var(--neon2)" stroke-width="3" stroke-linecap="round"/><path d="M68 92h24" stroke="var(--neon2)" stroke-width="2" stroke-linecap="round" opacity="0.6"/>' +
+    '<text x="80" y="142" text-anchor="middle" fill="var(--neon)" font-size="9" font-family="monospace" letter-spacing="2" opacity="0.75">TU NOMBRE</text>',
+  bombo:
+    '<path d="M42 104a38 38 0 0 1 76 0z" fill="none" stroke="var(--neon)" stroke-width="2.5" stroke-linejoin="round"/>' +
+    '<path d="M108 74c8-6 16-6 20 0s-4 14-12 12" fill="none" stroke="var(--neon2)" stroke-width="2"/>' +
+    '<text x="80" y="94" text-anchor="middle" fill="var(--neon2)" font-size="17" font-family="monospace" font-weight="700">00000</text>' +
+    '<text x="80" y="140" text-anchor="middle" fill="var(--neon)" font-size="9" font-family="monospace" letter-spacing="2" opacity="0.75">TU NÚMERO</text>',
+  marcasitio:
+    '<rect x="26" y="52" width="108" height="42" rx="6" fill="none" stroke="var(--neon)" stroke-width="2.5"/>' +
+    '<path d="M44 84l9-22 9 22z" fill="none" stroke="var(--neon2)" stroke-width="2" stroke-linejoin="round"/>' +
+    '<path d="M72 73h46" stroke="var(--neon2)" stroke-width="3" stroke-linecap="round"/>' +
+    '<path d="M46 94l-6 16h80l-6-16" fill="none" stroke="var(--neon)" stroke-width="2" opacity="0.6"/>' +
+    '<text x="80" y="140" text-anchor="middle" fill="var(--neon)" font-size="9" font-family="monospace" letter-spacing="2" opacity="0.75">TU NOMBRE</text>'
 };
+const BADGES = ["purple", "red", "green"];
 
 const esc = (s) => { const d = document.createElement("div"); d.textContent = String(s ?? ""); return d.innerHTML; };
+
+// Cómo se cuentan las variantes: pares (pendientes) por defecto, o lo que diga "varUnidad"
+const unidades = (p) => (Array.isArray(p.varUnidad) && p.varUnidad.length === 2 ? p.varUnidad : ["par", "pares"]);
 
 function card(p, n = 99) {
   const imgs = (Array.isArray(p.imgs) ? p.imgs : []).filter(Boolean);
@@ -36,6 +61,7 @@ function card(p, n = 99) {
   const price = p.precioTexto ? esc(p.precioTexto) : typeof p.precio === "number" ? euros(p.precio) : "Consultar";
   const unit = p.unidad ? ` <small>${esc(p.unidad)}</small>` : "";
   const vars = Array.isArray(p.variantes) && p.variantes.length && typeof p.precio === "number" ? p.variantes : null;
+  const [u1, u2] = unidades(p);
   const action = vars
     ? `<button class="add" type="button" data-add-vars disabled aria-describedby="sum-${esc(p.id)}">Añadir</button>`
     : typeof p.precio === "number"
@@ -43,20 +69,20 @@ function card(p, n = 99) {
     : `<a class="add is-quote" href="/pedido.html?pieza=${encodeURIComponent(p.nombre)}#pedido">Presupuesto</a>`;
   const picker = vars ? `
       <fieldset class="vars">
-        <legend>Elige diseños y cuántos pares de cada uno</legend>
+        <legend>Elige diseños y cuántos ${u2} de cada uno</legend>
         <ul class="vars-list">${vars.map((v, k) => `
           <li class="var">
             ${v.img ? `<img src="/${esc(v.img.replace(/^\//, ""))}" width="56" height="56" alt="" loading="lazy" decoding="async">` : ""}
             <span class="var-name">${esc(v.nombre)}${v.medidas ? `<small>${esc(v.medidas)}</small>` : ""}</span>
-            <span class="var-qty" role="group" aria-label="Pares de ${esc(v.nombre)}">
-              <button type="button" data-dec="${k}" aria-label="Quitar un par de ${esc(v.nombre)}" disabled>−</button><output data-q="${k}" aria-live="off">0</output><button type="button" data-inc="${k}" aria-label="Añadir un par de ${esc(v.nombre)}">+</button>
+            <span class="var-qty" role="group" aria-label="${u2[0].toUpperCase() + u2.slice(1)} de ${esc(v.nombre)}">
+              <button type="button" data-dec="${k}" aria-label="Quitar un ${u1} de ${esc(v.nombre)}" disabled>−</button><output data-q="${k}" aria-live="off">0</output><button type="button" data-inc="${k}" aria-label="Añadir un ${u1} de ${esc(v.nombre)}">+</button>
             </span>
           </li>`).join("")}
         </ul>
-        <p class="vars-sum" id="sum-${esc(p.id)}" aria-live="polite">Ningún par elegido</p>
+        <p class="vars-sum" id="sum-${esc(p.id)}" aria-live="polite">Ningún ${u1} elegido</p>
       </fieldset>` : "";
   return `<article class="card${p.wide ? " is-wide" : ""}${vars ? " has-vars" : ""}" data-category="${esc(p.categoria)}" id="p-${esc(p.id)}">
-    <div class="card-media"><div class="slides">${slides}</div>${imgs.length ? "" : '<span class="grid-lines" aria-hidden="true"></span>'}${p.badge ? `<span class="badge${p.badgeColor === "purple" ? " is-purple" : ""}">${esc(p.badge)}</span>` : ""}${nav}</div>
+    <div class="card-media"><div class="slides">${slides}</div>${imgs.length ? "" : '<span class="grid-lines" aria-hidden="true"></span>'}${p.badge ? `<span class="badge${BADGES.includes(p.badgeColor) ? ` is-${p.badgeColor}` : ""}">${esc(p.badge)}</span>` : ""}${nav}</div>
     <div class="card-body">
       <p class="card-cat">${esc(p.catLabel || "")}</p>
       <h3 class="card-name">${esc(p.nombre)}</h3>
@@ -106,7 +132,8 @@ function wireCard(el, p) {
       });
       addVars.disabled = n === 0;
       addVars.textContent = n ? `Añadir ${n} · ${euros(n * p.precio)}` : "Añadir";
-      sum.textContent = n ? `${n} ${n === 1 ? "par" : "pares"} · ${euros(n * p.precio)}` : "Ningún par elegido";
+      const [u1, u2] = unidades(p);
+      sum.textContent = n ? `${n} ${n === 1 ? u1 : u2} · ${euros(n * p.precio)}` : `Ningún ${u1} elegido`;
     };
     $(".vars", el).addEventListener("click", (e) => {
       const btn = e.target.closest("button");

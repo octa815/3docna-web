@@ -6,242 +6,310 @@
       "label": "Todos"
     },
     {
-      "id": "halloween",
-      "label": "Decoración Halloween"
+      "id": "navidad",
+      "label": "Navidad"
     },
     {
       "id": "pendientes",
       "label": "Pendientes"
     },
     {
-      "id": "pelo",
-      "label": "Accesorios para el pelo"
+      "id": "llaveros",
+      "label": "Llaveros"
     },
     {
       "id": "personalizado",
       "label": "Personalizado"
+    },
+    {
+      "id": "pelo",
+      "label": "Accesorios para el pelo"
     }
   ],
   "productos": [
     {
-      "id": "pendientes-clasicos",
-      "nombre": "Pendientes pixel art · Clásicos",
+      "id": "pendientes-navidad",
+      "nombre": "Pendientes pixel art · Navidad",
       "categoria": "pendientes",
-      "catLabel": "Halloween · Pendientes · 7 diseños",
+      "catLabel": "Navidad · Pendientes · 7 diseños",
       "precio": 3.5,
       "unidad": "/ par",
-      "desc": "Calavera, murciélago, fantasma, ojo sangrante, corazón atravesado, boca de vampiro y cuchillo. Pixel art 8 bits en 4 colores, con relieve y gancho plateado. Pesan menos de 1 g: no tiran de la oreja.",
+      "desc": "Árbol, bola, bastón de caramelo, gorro, regalo, calcetín y corona. Pixel art 8 bits en rojo, verde, blanco y negro, con relieve y gancho plateado. Pesan menos de 1 g.",
       "badge": "Nuevo",
-      "badgeColor": "purple",
+      "badgeColor": "red",
       "destacado": true,
-      "varLabel": "Pendientes Clásicos",
+      "varLabel": "Pendientes Navidad",
       "imgs": [
-        "img/productos/pendientes/clasicos-portada.webp",
-        "img/productos/pendientes/expositor.webp",
-        "img/productos/pendientes/clasicos-todos.webp"
+        "img/productos/navidad/navidad-portada.webp",
+        "img/productos/navidad/navidad-todos.webp"
       ],
       "alts": [
-        "Pendientes pixel art de Halloween, juego Clásicos: los 7 diseños",
-        "Pendientes pixel art impresos por 3DOCNA, colgados en sus tarjetas rosas",
-        "Los 7 diseños del juego Clásicos con sus medidas"
+        "Pendientes pixel art de Navidad, juego Navidad: los 7 diseños",
+        "Los 7 diseños del juego Navidad con sus medidas"
       ],
       "variantes": [
         {
-          "id": "calavera",
-          "nombre": "Calavera",
-          "medidas": "24,0 × 27,6 mm",
-          "img": "img/productos/pendientes/calavera.webp"
+          "id": "arbol",
+          "nombre": "Árbol",
+          "medidas": "22,8 × 31,2 mm",
+          "img": "img/productos/navidad/arbol.webp"
         },
         {
-          "id": "murcielago",
-          "nombre": "Murciélago",
-          "medidas": "31,2 × 21,6 mm",
-          "img": "img/productos/pendientes/murcielago.webp"
+          "id": "bola",
+          "nombre": "Bola",
+          "medidas": "18,0 × 25,2 mm",
+          "img": "img/productos/navidad/bola.webp"
         },
         {
-          "id": "fantasma",
-          "nombre": "Fantasma",
-          "medidas": "21,6 × 28,8 mm",
-          "img": "img/productos/pendientes/fantasma.webp"
+          "id": "baston",
+          "nombre": "Bastón de caramelo",
+          "medidas": "15,6 × 31,2 mm",
+          "img": "img/productos/navidad/baston.webp"
         },
         {
-          "id": "ojo-sangrante",
-          "nombre": "Ojo sangrante",
-          "medidas": "24,0 × 26,4 mm",
-          "img": "img/productos/pendientes/ojo-sangrante.webp"
+          "id": "gorro",
+          "nombre": "Gorro",
+          "medidas": "20,4 × 21,6 mm",
+          "img": "img/productos/navidad/gorro.webp"
         },
         {
-          "id": "corazon-atravesado",
-          "nombre": "Corazón atravesado",
-          "medidas": "24,0 × 30,0 mm",
-          "img": "img/productos/pendientes/corazon-atravesado.webp"
+          "id": "regalo",
+          "nombre": "Regalo",
+          "medidas": "20,4 × 20,4 mm",
+          "img": "img/productos/navidad/regalo.webp"
         },
         {
-          "id": "boca-de-vampiro",
-          "nombre": "Boca de vampiro",
-          "medidas": "24,0 × 26,4 mm",
-          "img": "img/productos/pendientes/boca-de-vampiro.webp"
+          "id": "calcetin",
+          "nombre": "Calcetín",
+          "medidas": "18,0 × 22,8 mm",
+          "img": "img/productos/navidad/calcetin.webp"
         },
         {
-          "id": "cuchillo-carnicero",
-          "nombre": "Cuchillo carnicero",
-          "medidas": "16,8 × 31,2 mm",
-          "img": "img/productos/pendientes/cuchillo-carnicero.webp"
+          "id": "corona",
+          "nombre": "Corona",
+          "medidas": "22,8 × 26,4 mm",
+          "img": "img/productos/navidad/corona.webp"
         }
       ]
     },
     {
-      "id": "pendientes-calabaza",
-      "nombre": "Pendientes pixel art · Calabaza",
+      "id": "pendientes-invierno",
+      "nombre": "Pendientes pixel art · Invierno",
       "categoria": "pendientes",
-      "catLabel": "Halloween · Pendientes · 4 diseños",
+      "catLabel": "Navidad · Pendientes · 6 diseños",
       "precio": 3.5,
       "unidad": "/ par",
-      "desc": "Calabaza maldita, polilla de la muerte, vela ritual y reloj de arena, en naranja, amarillo, rojo oscuro y negro. Pixel art 8 bits con relieve y gancho plateado. Ligeros: alrededor de 1 g cada uno.",
+      "desc": "Copo de nieve, muñeco de nieve, estrella, campana, vela y pingüino. Pixel art 8 bits en blanco, azul hielo, amarillo y negro, con relieve y gancho plateado. Pesan menos de 1 g.",
       "badge": "Nuevo",
-      "badgeColor": "purple",
+      "badgeColor": "red",
       "destacado": true,
-      "varLabel": "Pendientes Calabaza",
+      "varLabel": "Pendientes Invierno",
       "imgs": [
-        "img/productos/pendientes/calabaza-portada.webp",
-        "img/productos/pendientes/expositor.webp",
-        "img/productos/pendientes/calabaza-todos.webp"
+        "img/productos/navidad/invierno-portada.webp",
+        "img/productos/navidad/invierno-todos.webp"
       ],
       "alts": [
-        "Pendientes pixel art de Halloween, juego Calabaza: los 4 diseños",
-        "Pendientes pixel art impresos por 3DOCNA, colgados en sus tarjetas rosas",
-        "Los 4 diseños del juego Calabaza con sus medidas"
+        "Pendientes pixel art de Navidad, juego Invierno: los 6 diseños",
+        "Los 6 diseños del juego Invierno con sus medidas"
       ],
       "variantes": [
         {
-          "id": "calabaza-maldita",
-          "nombre": "Calabaza maldita",
-          "medidas": "26,4 × 32,4 mm",
-          "img": "img/productos/pendientes/calabaza-maldita.webp"
+          "id": "copo",
+          "nombre": "Copo de nieve",
+          "medidas": "25,2 × 28,8 mm",
+          "img": "img/productos/navidad/copo.webp"
         },
         {
-          "id": "polilla-de-la-muerte",
-          "nombre": "Polilla de la muerte",
-          "medidas": "28,8 × 24,0 mm",
-          "img": "img/productos/pendientes/polilla-de-la-muerte.webp"
+          "id": "muneco",
+          "nombre": "Muñeco de nieve",
+          "medidas": "15,6 × 26,4 mm",
+          "img": "img/productos/navidad/muneco.webp"
         },
         {
-          "id": "vela-ritual",
-          "nombre": "Vela ritual",
-          "medidas": "16,8 × 28,8 mm",
-          "img": "img/productos/pendientes/vela-ritual.webp"
+          "id": "estrella",
+          "nombre": "Estrella",
+          "medidas": "22,8 × 25,2 mm",
+          "img": "img/productos/navidad/estrella.webp"
         },
         {
-          "id": "reloj-de-arena",
-          "nombre": "Reloj de arena",
-          "medidas": "19,2 × 27,6 mm",
-          "img": "img/productos/pendientes/reloj-de-arena.webp"
+          "id": "campana",
+          "nombre": "Campana",
+          "medidas": "18,0 × 21,6 mm",
+          "img": "img/productos/navidad/campana.webp"
+        },
+        {
+          "id": "vela",
+          "nombre": "Vela",
+          "medidas": "15,6 × 25,2 mm",
+          "img": "img/productos/navidad/vela.webp"
+        },
+        {
+          "id": "pinguino",
+          "nombre": "Pingüino",
+          "medidas": "18,0 × 24,0 mm",
+          "img": "img/productos/navidad/pinguino.webp"
         }
       ]
     },
     {
-      "id": "pendientes-terror",
-      "nombre": "Pendientes pixel art · Terror",
-      "categoria": "pendientes",
-      "catLabel": "Halloween · Pendientes · 6 diseños",
-      "precio": 3.5,
-      "unidad": "/ par",
-      "desc": "Máscara de hockey, payaso siniestro, jeringa, diente arrancado, cráneo de ciervo y guadaña. Pixel art 8 bits en 4 colores, con relieve y gancho plateado. Ligeros: menos de 1 g cada uno.",
-      "badge": "Nuevo",
-      "badgeColor": "purple",
+      "id": "copo-nombre",
+      "nombre": "Copo de nieve con tu nombre",
+      "categoria": "navidad",
+      "catLabel": "Navidad · Adorno personalizado",
+      "precio": 6.0,
+      "desc": "El dibujo del copo sale de las letras del nombre: cada nombre da un copo distinto, así que el tuyo no lo tiene nadie más. 8 cm, con nombre y año en relieve y aro para colgar. Escríbenos el nombre en el pedido.",
+      "badge": "Único",
+      "badgeColor": "green",
       "destacado": true,
-      "varLabel": "Pendientes Terror",
+      "icono": "copo",
+      "imgs": []
+    },
+    {
+      "id": "bola-nombre",
+      "nombre": "Bola de árbol con nombre",
+      "categoria": "navidad",
+      "catLabel": "Navidad · Adorno personalizado",
+      "precio": 7.0,
+      "desc": "Bola plana de 7 cm con el nombre y el año en relieve de otro color. Para el árbol, para regalar o para la primera Navidad de un bebé (le añadimos «Mi primera Navidad»). Escríbenos el nombre en el pedido.",
+      "destacado": true,
+      "icono": "bola",
+      "imgs": []
+    },
+    {
+      "id": "llavero-bombo",
+      "nombre": "Llavero bola del bombo con tu número",
+      "categoria": "llaveros",
+      "catLabel": "Navidad · Llavero personalizado",
+      "precio": 5.0,
+      "desc": "Media bola de 3,2 cm, como las del sorteo, con tu número de lotería en relieve y el año grabado detrás. Para regalarlo con el décimo o para toda la peña. Escríbenos el número en el pedido.",
+      "badge": "Nuevo",
+      "badgeColor": "red",
+      "destacado": true,
+      "icono": "bombo",
+      "imgs": []
+    },
+    {
+      "id": "llavero-pixel",
+      "nombre": "Llavero pixel art de Navidad",
+      "categoria": "llaveros",
+      "catLabel": "Navidad · Llaveros · 13 diseños",
+      "precio": 4.0,
+      "unidad": "/ llavero",
+      "desc": "Los mismos diseños de los pendientes, en grande y más gruesos, con anilla metálica. Para la mochila, las llaves o como detalle de amigo invisible.",
+      "varLabel": "Llavero pixel",
+      "varUnidad": [
+        "llavero",
+        "llaveros"
+      ],
       "imgs": [
-        "img/productos/pendientes/terror-portada.webp",
-        "img/productos/pendientes/expositor.webp",
-        "img/productos/pendientes/terror-todos.webp"
+        "img/productos/navidad/llaveros-portada.webp"
       ],
       "alts": [
-        "Pendientes pixel art de Halloween, juego Terror: los 6 diseños",
-        "Pendientes pixel art impresos por 3DOCNA, colgados en sus tarjetas rosas",
-        "Los 6 diseños del juego Terror con sus medidas"
+        "Llaveros pixel art de Navidad: los 13 diseños"
       ],
       "variantes": [
         {
-          "id": "mascara-de-hockey",
-          "nombre": "Máscara de hockey",
-          "medidas": "21,6 × 24,0 mm",
-          "img": "img/productos/pendientes/mascara-de-hockey.webp"
+          "id": "arbol",
+          "nombre": "Árbol",
+          "medidas": "38,0 × 52,0 mm",
+          "img": "img/productos/navidad/arbol.webp"
         },
         {
-          "id": "payaso-siniestro",
-          "nombre": "Payaso siniestro",
-          "medidas": "26,4 × 26,4 mm",
-          "img": "img/productos/pendientes/payaso-siniestro.webp"
+          "id": "bola",
+          "nombre": "Bola",
+          "medidas": "30,0 × 42,0 mm",
+          "img": "img/productos/navidad/bola.webp"
         },
         {
-          "id": "jeringa",
-          "nombre": "Jeringa",
-          "medidas": "14,4 × 33,6 mm",
-          "img": "img/productos/pendientes/jeringa.webp"
+          "id": "baston",
+          "nombre": "Bastón de caramelo",
+          "medidas": "26,0 × 52,0 mm",
+          "img": "img/productos/navidad/baston.webp"
         },
         {
-          "id": "diente-arrancado",
-          "nombre": "Diente arrancado",
-          "medidas": "21,6 × 26,4 mm",
-          "img": "img/productos/pendientes/diente-arrancado.webp"
+          "id": "gorro",
+          "nombre": "Gorro",
+          "medidas": "34,0 × 36,0 mm",
+          "img": "img/productos/navidad/gorro.webp"
         },
         {
-          "id": "craneo-de-ciervo",
-          "nombre": "Cráneo de ciervo",
-          "medidas": "28,8 × 26,4 mm",
-          "img": "img/productos/pendientes/craneo-de-ciervo.webp"
+          "id": "regalo",
+          "nombre": "Regalo",
+          "medidas": "34,0 × 34,0 mm",
+          "img": "img/productos/navidad/regalo.webp"
         },
         {
-          "id": "guadana",
-          "nombre": "Guadaña",
-          "medidas": "22,8 × 33,6 mm",
-          "img": "img/productos/pendientes/guadana.webp"
+          "id": "calcetin",
+          "nombre": "Calcetín",
+          "medidas": "30,0 × 38,0 mm",
+          "img": "img/productos/navidad/calcetin.webp"
+        },
+        {
+          "id": "corona",
+          "nombre": "Corona",
+          "medidas": "38,0 × 44,0 mm",
+          "img": "img/productos/navidad/corona.webp"
+        },
+        {
+          "id": "copo",
+          "nombre": "Copo de nieve",
+          "medidas": "42,0 × 48,0 mm",
+          "img": "img/productos/navidad/copo.webp"
+        },
+        {
+          "id": "muneco",
+          "nombre": "Muñeco de nieve",
+          "medidas": "26,0 × 44,0 mm",
+          "img": "img/productos/navidad/muneco.webp"
+        },
+        {
+          "id": "estrella",
+          "nombre": "Estrella",
+          "medidas": "38,0 × 42,0 mm",
+          "img": "img/productos/navidad/estrella.webp"
+        },
+        {
+          "id": "campana",
+          "nombre": "Campana",
+          "medidas": "30,0 × 36,0 mm",
+          "img": "img/productos/navidad/campana.webp"
+        },
+        {
+          "id": "vela",
+          "nombre": "Vela",
+          "medidas": "26,0 × 42,0 mm",
+          "img": "img/productos/navidad/vela.webp"
+        },
+        {
+          "id": "pinguino",
+          "nombre": "Pingüino",
+          "medidas": "30,0 × 40,0 mm",
+          "img": "img/productos/navidad/pinguino.webp"
         }
       ]
     },
     {
-      "id": "tres-en-raya-halloween",
-      "nombre": "Tres en raya Halloween",
-      "categoria": "halloween",
-      "catLabel": "Halloween · Juego y decoración",
-      "precio": 12.0,
-      "desc": "Tablero con lápida «Game Over» y 6 fichas + 4 de recambio: 5 fantasmas y 5 calabazas. Para jugar en familia o decorar una maceta y no aburrirte regando.",
-      "badge": "Halloween",
-      "destacado": true,
-      "icono": "generico",
-      "imgs": [
-        "img/productos/tres-en-raya-1.webp",
-        "img/productos/tres-en-raya-2.webp"
-      ]
+      "id": "marcasitio-nombre",
+      "nombre": "Marcasitio con nombre para la cena",
+      "categoria": "navidad",
+      "catLabel": "Navidad · Mesa personalizada",
+      "precio": 3.0,
+      "unidad": "/ unidad",
+      "desc": "Cartel con el nombre de cada invitado y un soporte para que se quede de pie. Con agujerito sirve también de etiqueta para el regalo. Desde 6 unidades: para Nochebuena, Nochevieja o la cena de empresa.",
+      "icono": "marcasitio",
+      "imgs": []
     },
     {
-      "id": "fantasma-ventana",
-      "nombre": "Fantasma de ventana",
-      "categoria": "halloween",
-      "catLabel": "Halloween · Decoración",
-      "precio": 5.5,
-      "desc": "Se asoma desde el marco de una ventana, un cristal o la esquina de una pared. Perfecto para puertas y escaparates.",
+      "id": "litofania",
+      "nombre": "Cuadro litofanía con tu foto",
+      "categoria": "personalizado",
+      "catLabel": "Personalizado · Regalo de Navidad",
+      "precio": 24.0,
+      "desc": "Tu foto convertida en relieve dentro de un marco: a contraluz aparece la imagen completa. Nos mandas la foto por WhatsApp y te enseñamos cómo queda antes de imprimirla.",
+      "badge": "Regalo",
       "destacado": true,
-      "icono": "generico",
-      "imgs": [
-        "img/productos/fantasma-ventana-1.webp",
-        "img/productos/fantasma-ventana-2.webp"
-      ]
-    },
-    {
-      "id": "esqueleto-emergente",
-      "nombre": "Esqueleto emergente",
-      "categoria": "halloween",
-      "catLabel": "Halloween · Decoración",
-      "precio": 5.5,
-      "desc": "Medio enterrado en una mesa o maceta, da la sensación de estar saliendo de la tierra.",
-      "destacado": true,
-      "icono": "generico",
-      "imgs": [
-        "img/productos/esqueleto-1.webp",
-        "img/productos/esqueleto-2.webp"
-      ]
+      "icono": "litofania",
+      "imgs": []
     },
     {
       "id": "pasador-mono",
@@ -252,7 +320,7 @@
       "desc": "Calaveras y columna vertebral con palo para sujetar un moño o una coleta. Hay más modelos: pregúntanos por WhatsApp y te los enseñamos.",
       "badge": "Varios modelos",
       "badgeColor": "purple",
-      "destacado": true,
+      "destacado": false,
       "icono": "generico",
       "imgs": [
         "img/productos/pasador-mono-1.webp"
@@ -265,23 +333,11 @@
       "catLabel": "Accesorios para el pelo · Calaveras",
       "precio": 5.0,
       "desc": "Calavera entre hojas ornamentales para recoger un mechón o adornar un semirrecogido.",
-      "destacado": true,
+      "destacado": false,
       "icono": "generico",
       "imgs": [
         "img/productos/horquilla-calavera-1.webp"
       ]
-    },
-    {
-      "id": "litofania",
-      "nombre": "Cuadro litofanía con tu foto",
-      "categoria": "personalizado",
-      "catLabel": "Personalizado · Regalo",
-      "precio": 24.0,
-      "desc": "Tu foto convertida en relieve dentro de un marco: a contraluz aparece la imagen completa. Nos mandas la foto por WhatsApp y te enseñamos cómo queda antes de imprimirla.",
-      "badge": "Regalo",
-      "destacado": true,
-      "icono": "litofania",
-      "imgs": []
     }
   ]
 }

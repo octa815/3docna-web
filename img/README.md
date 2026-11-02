@@ -32,16 +32,17 @@ Copia un bloque entero de `"productos"` y cámbialo. Campos:
 | `unidad` | no | `"/ unidad"`, `"/ lote"`… |
 | `desc` | sí | Dos o tres frases. Di qué problema resuelve, no de qué material es |
 | `badge` | no | Etiqueta de la esquina: `"Nuevo"`, `"Halloween"`… |
-| `badgeColor` | no | `"purple"` para la variante morada |
+| `badgeColor` | no | `"purple"`, `"red"` o `"green"`. Sin poner, sale con el color de la marca |
 | `wide` | no | `true` para que la tarjeta ocupe doble ancho |
 | `destacado` | no | `true` para que salga también en la portada |
 | `icono` | no | Dibujo de relleno mientras no hay foto (ver lista abajo) |
 | `imgs` | sí | Array de rutas. Vacío `[]` si aún no hay fotos |
 | `alts` | no | Texto alternativo de cada foto, en el mismo orden que `imgs` |
 | `variantes` | no | Diseños a elegir dentro de la tarjeta (pendientes): `{"id", "nombre", "medidas", "img"}`. Cada uno se pide por separado con su cantidad, al `precio` de la tarjeta |
+| `varUnidad` | no | Cómo se cuentan las variantes, en singular y plural: `["llavero", "llaveros"]`. Sin poner, son pares (pendientes) |
 | `varLabel` | no | Cómo se llama en la cesta: `"Pendientes Clásicos"` → "Pendientes Clásicos: Calavera" |
 
-**Iconos disponibles:** `litofania` y `generico`.
+**Iconos disponibles:** `litofania`, `copo`, `bola`, `bombo`, `marcasitio` y `generico`.
 
 ## Categorías
 
