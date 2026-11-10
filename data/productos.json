@@ -93,76 +93,27 @@
       ]
     },
     {
-      "id": "pendientes-invierno",
-      "nombre": "Pendientes pixel art · Invierno",
-      "categoria": "pendientes",
-      "catLabel": "Navidad · Pendientes · 6 diseños",
-      "precio": 3.5,
-      "unidad": "/ par",
-      "desc": "Copo de nieve, muñeco de nieve, estrella, campana, vela y pingüino. Pixel art 8 bits en blanco, azul hielo, amarillo y negro, con relieve y gancho plateado. Pesan menos de 1 g.",
-      "badge": "Nuevo",
-      "badgeColor": "red",
-      "destacado": true,
-      "varLabel": "Pendientes Invierno",
-      "imgs": [
-        "img/productos/navidad/invierno-portada.webp",
-        "img/productos/navidad/invierno-todos.webp"
-      ],
-      "alts": [
-        "Pendientes pixel art de Navidad, juego Invierno: los 6 diseños",
-        "Los 6 diseños del juego Invierno con sus medidas"
-      ],
-      "variantes": [
-        {
-          "id": "copo",
-          "nombre": "Copo de nieve",
-          "medidas": "25,2 × 28,8 mm",
-          "img": "img/productos/navidad/copo.webp"
-        },
-        {
-          "id": "muneco",
-          "nombre": "Muñeco de nieve",
-          "medidas": "15,6 × 26,4 mm",
-          "img": "img/productos/navidad/muneco.webp"
-        },
-        {
-          "id": "estrella",
-          "nombre": "Estrella",
-          "medidas": "22,8 × 25,2 mm",
-          "img": "img/productos/navidad/estrella.webp"
-        },
-        {
-          "id": "campana",
-          "nombre": "Campana",
-          "medidas": "18,0 × 21,6 mm",
-          "img": "img/productos/navidad/campana.webp"
-        },
-        {
-          "id": "vela",
-          "nombre": "Vela",
-          "medidas": "15,6 × 25,2 mm",
-          "img": "img/productos/navidad/vela.webp"
-        },
-        {
-          "id": "pinguino",
-          "nombre": "Pingüino",
-          "medidas": "18,0 × 24,0 mm",
-          "img": "img/productos/navidad/pinguino.webp"
-        }
-      ]
-    },
-    {
       "id": "copo-nombre",
       "nombre": "Copo de nieve con tu nombre",
       "categoria": "navidad",
       "catLabel": "Navidad · Adorno personalizado",
       "precio": 6.0,
-      "desc": "El dibujo del copo sale de las letras del nombre: cada nombre da un copo distinto, así que el tuyo no lo tiene nadie más. 8 cm, con nombre y año en relieve y aro para colgar. Escríbenos el nombre en el pedido.",
+      "desc": "El dibujo del copo sale de las letras del nombre: cada nombre da un copo distinto, así que el tuyo no lo tiene nadie más. 8 cm, con aro para colgar y el nombre por las dos caras. Eliges estilo (liso o pixel art) y si lleva año o no. Escríbenos el nombre en el pedido.",
       "badge": "Único",
       "badgeColor": "green",
       "destacado": true,
-      "icono": "copo",
-      "imgs": []
+      "imgs": [
+        "img/productos/navidad/copo-nombre-liso-2026.webp",
+        "img/productos/navidad/copo-nombre-pixel-2026.webp",
+        "img/productos/navidad/copo-nombre-liso.webp",
+        "img/productos/navidad/copo-nombre-pixel.webp"
+      ],
+      "alts": [
+        "Copo de nieve con nombre, estilo liso y con año (ejemplo con el nombre Nube)",
+        "Copo de nieve con nombre, estilo pixel art y con año (ejemplo con el nombre Nube)",
+        "Copo de nieve con nombre, estilo liso y sin año (ejemplo con el nombre Nube)",
+        "Copo de nieve con nombre, estilo pixel art y sin año (ejemplo con el nombre Nube)"
+      ]
     },
     {
       "id": "bola-nombre",
