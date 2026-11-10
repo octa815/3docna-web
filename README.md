@@ -5,6 +5,7 @@ Web de 3DOCNA (Octavio y Natalia). Sitio estático: HTML, CSS y JavaScript, publ
 ## Qué tiene
 
 - Portada ligera, pensada para móvil: sin librerías de animación ni 3D. Las apariciones al bajar son CSS + una IntersectionObserver.
+- Movimiento «capa a capa»: el titular y la mascota se imprimen por capas, la mascota y las tarjetas siguen al ratón en ordenador, y en móvil los efectos van ligados al scroll (los mueve el navegador). Todo es CSS y un poco de JavaScript propio; el final de `css/site.css` lo explica. Con «Animaciones: No» no se aplica nada.
 - Pendientes con selector: en cada juego se eligen diseños y cantidades (campo `variantes` en `data/productos.json`).
 - Catálogo que se genera desde `data/productos.json`, con filtros, carrusel de fotos y cesta.
 - Formulario de pedido (FormSubmit) con el resumen de la cesta.

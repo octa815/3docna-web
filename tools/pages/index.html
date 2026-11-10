@@ -1,10 +1,11 @@
 <!-- {"title": "3DOCNA · Impresión 3D en Elda", "desc": "Impresión 3D en Elda: adornos de Navidad con tu nombre, pendientes y llaveros pixel art y cuadros litofanía con tu foto. Entrega en mano en Elda y Petrer.", "nav": "inicio", "scripts": ["js/home.js", "js/catalog.js"]} -->
   <!-- ============ PORTADA ============ -->
   <section class="hero" id="top" aria-labelledby="hero-title" data-hide-wa>
+    <span class="hero-glow" aria-hidden="true"></span>
     <div class="hero-grid">
       <div class="hero-copy">
         <p class="tag">Impresión 3D en Elda · Octavio y Natalia</p>
-        <h1 id="hero-title" class="hero-title">Impreso capa a capa <span class="hl">en Elda.</span></h1>
+        <h1 id="hero-title" class="hero-title"><span class="print">Impreso capa a capa <span class="hl">en Elda.</span></span><i class="nozzle" aria-hidden="true"></i></h1>
         <p class="lede">Adornos de Navidad con tu nombre, pendientes y llaveros pixel art y cuadros con tu foto en relieve. Lo imprimimos nosotros y, si eres de aquí, te lo llevamos en mano.</p>
         <div class="hero-actions">
           <a class="btn btn-solid" href="/catalogo.html"><span>Ver catálogo</span></a>
@@ -17,8 +18,11 @@
         </div>
       </div>
       <figure class="hero-art" aria-hidden="true">
-        <img src="/img/brand/mascota-480.webp" width="480" height="674" alt="" fetchpriority="high" decoding="async">
-        <figcaption class="hero-spec">Capa 0,20 mm · Bambu Lab A1</figcaption>
+        <div class="stage">
+          <span class="plate"></span>
+          <span class="float"><span class="tilt"><img src="/img/brand/mascota-480.webp" width="480" height="674" alt="" fetchpriority="high" decoding="async"></span></span>
+        </div>
+        <figcaption class="hero-spec" data-spec="Capa 0,20 mm · Bambu Lab A1">Capa 0,20 mm · Bambu Lab A1</figcaption>
       </figure>
     </div>
   </section>
@@ -66,7 +70,7 @@
   <!-- ============ NAVIDAD ============ -->
   <section class="sec" id="navidad" aria-labelledby="nav-title">
     <div class="wrap">
-      <div class="season" data-print>
+      <div class="season season--snow" data-print>
         <div class="season-copy">
           <p class="tag">Colección Navidad 2026</p>
           <h2 id="nav-title" class="season-title">Navidad <span class="hl">con tu nombre</span></h2>

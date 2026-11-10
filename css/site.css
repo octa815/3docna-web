@@ -639,3 +639,162 @@ h1, h2, h3 { text-wrap: balance; font-weight: 700; }
   .drawer:not(.is-open) { opacity: 0; }
 }
 :root[data-motion="off"] *, :root[data-motion="off"] *::before, :root[data-motion="off"] *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+
+/* ==========================================================================
+   Movimiento «capa a capa» (nov. 2026)
+   La idea: en esta web las cosas se imprimen. El titular y la mascota salen
+   por capas, las líneas se rellenan como filamento y el pie se imprime al llegar.
+   - Ordenador (ratón): la mascota y las tarjetas se inclinan hacia el cursor.
+   - Móvil (táctil): los efectos van ligados al scroll y los mueve el navegador,
+     sin JavaScript por fotograma, para que vaya fluido.
+   Solo se animan transform, opacity y clip-path. Sin librerías ni canvas.
+   Con «Animaciones: No» o movimiento reducido no se aplica nada de esto.
+   ========================================================================== */
+
+/* ---------- Portada: escenario de la mascota ---------- */
+.hero-title { position: relative; }
+.hero-title .print { display: block; }
+.hero-title .hl {
+  background-image: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.16) 0 1px, transparent 1px 0.085em), var(--fil-strong);
+}
+.nozzle {
+  position: absolute; left: -1%; right: -1%; bottom: 0; height: 3px; border-radius: 3px;
+  background: var(--fil); box-shadow: 0 0 14px 1px rgba(240, 123, 176, 0.75);
+  opacity: 0; pointer-events: none;
+}
+.stage { position: relative; width: min(100%, 360px); aspect-ratio: 480 / 674; perspective: 900px; }
+.stage .float, .stage .tilt { display: block; width: 100%; height: 100%; }
+.stage .tilt { transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform 500ms var(--ease-out); transform-origin: 50% 70%; }
+.stage.is-live .tilt { transition-duration: 120ms; transition-timing-function: linear; }
+.hero-art .stage img { position: relative; width: 100%; height: 100%; object-fit: contain; }
+.plate {
+  position: absolute; left: 50%; bottom: 2%; z-index: -1;
+  width: 118%; aspect-ratio: 1; margin-left: -59%; margin-bottom: -52%;
+  border-radius: 50%; border: 1px dashed var(--line-strong);
+  background:
+    radial-gradient(closest-side, var(--accent-soft), transparent 78%),
+    repeating-linear-gradient(0deg, var(--line) 0 1px, transparent 1px 22px),
+    repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px 22px);
+  transform: rotateX(74deg);
+}
+.hero-glow {
+  position: absolute; left: 0; top: 0; z-index: 0; width: 560px; height: 560px; margin: -280px 0 0 -280px; border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--pink) 20%, transparent), transparent);
+  opacity: 0; pointer-events: none; transition: opacity 500ms ease; will-change: transform;
+}
+.hero.is-live .hero-glow { opacity: 1; }
+.hero-grid { z-index: 1; }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* El titular se imprime de abajo arriba, con la boquilla marcando la capa */
+  :root:not([data-motion="off"]) .hero-copy > .hero-title { animation: none; }
+  :root:not([data-motion="off"]) .hero-title .print { animation: print-up 1150ms steps(16, end) 120ms both; }
+  :root:not([data-motion="off"]) .nozzle { animation: nozzle-rise 1150ms steps(16, end) 120ms both; }
+  /* La mascota también sale por capas y luego flota */
+  :root:not([data-motion="off"]) .hero-art { animation: none; }
+  :root:not([data-motion="off"]) .stage .tilt { animation: print-up 1500ms steps(26, end) 250ms both; }
+  :root:not([data-motion="off"]) .stage .float { animation: bob 5.5s ease-in-out 1800ms infinite alternate; }
+  :root:not([data-motion="off"]) .plate { animation: plate-spin 36s linear infinite; }
+  :root:not([data-motion="off"]) .hero-spec { animation: hero-in 700ms var(--ease-out) 300ms both; }
+  :root:not([data-motion="off"]) .spool { animation: spin 7s linear infinite; }
+}
+@keyframes print-up { from { clip-path: inset(100% -6% 0 -6%); } to { clip-path: inset(-12% -6% -12% -6%); } }
+@keyframes nozzle-rise { 0% { bottom: 0; opacity: 1; } 92% { opacity: 1; } 100% { bottom: 100%; opacity: 0; } }
+@keyframes bob { to { transform: translateY(-12px) rotate(-1.5deg); } }
+@keyframes plate-spin { from { transform: rotateX(74deg) rotateZ(0deg); } to { transform: rotateX(74deg) rotateZ(360deg); } }
+@keyframes spin { to { rotate: 360deg; } }
+
+.spool { background: conic-gradient(from 0deg, color-mix(in srgb, var(--c) 78%, #000) 0 8%, var(--c) 8% 50%, color-mix(in srgb, var(--c) 78%, #000) 50% 58%, var(--c) 58%); -webkit-mask: radial-gradient(circle, transparent 0 21%, #000 23%); mask: radial-gradient(circle, transparent 0 21%, #000 23%); }
+
+/* ---------- Titulares de sección: las palabras suben una a una ---------- */
+.title .w { display: inline-block; overflow: hidden; vertical-align: bottom; padding: 0.14em 0.04em 0.16em; margin: -0.14em -0.04em -0.16em; }
+.title .w > span { display: inline-block; }
+.title.is-split.rv { opacity: 1; translate: none; }
+.title.is-split.rv .w > span { translate: 0 118%; rotate: 5deg; transform-origin: 0 100%; transition: translate 850ms var(--ease-out) calc(var(--i, 0) * 60ms), rotate 850ms var(--ease-out) calc(var(--i, 0) * 60ms); }
+.title.is-split.rv.in .w > span { translate: 0 0; rotate: 0deg; }
+
+/* ---------- Pie: la marca se imprime al llegar ---------- */
+.ftr-mark.rv { opacity: 1; translate: none; }
+.ftr-mark.rv > span { clip-path: inset(100% 0 0 0); }
+.ftr-mark.rv.in > span { clip-path: inset(-5% 0 -12% 0); transition: clip-path 1400ms steps(18, end) 120ms; }
+
+/* ---------- Campaña: nieve pixelada y foto con profundidad ---------- */
+.season-copy, .season-photo { position: relative; z-index: 1; }
+.season--snow::before, .season--snow::after {
+  content: ""; position: absolute; left: 0; top: -700px; width: 6px; height: 6px; background: #fff; pointer-events: none; opacity: 0;
+  box-shadow:
+    4vw 60px #fff, 13vw 380px #fff, 22vw 190px #fff, 31vw 560px #fff, 40vw 90px #fff, 49vw 430px #fff, 58vw 250px #fff, 67vw 620px #fff, 76vw 140px #fff, 85vw 480px #fff, 94vw 310px #fff,
+    4vw 760px #fff, 13vw 1080px #fff, 22vw 890px #fff, 31vw 1260px #fff, 40vw 790px #fff, 49vw 1130px #fff, 58vw 950px #fff, 67vw 1320px #fff, 76vw 840px #fff, 85vw 1180px #fff, 94vw 1010px #fff;
+}
+.season--snow::after { width: 4px; height: 4px; margin-left: 5vw; }
+@media (prefers-reduced-motion: no-preference) {
+  :root:not([data-motion="off"]) .season--snow::before { opacity: 0.5; animation: snow 16s linear infinite; }
+  :root:not([data-motion="off"]) .season--snow::after { opacity: 0.3; animation: snow 25s linear -8s infinite; }
+}
+@keyframes snow { to { transform: translateY(700px); } }
+
+/* ---------- Ordenador: todo responde al ratón ---------- */
+@media (hover: hover) and (pointer: fine) {
+  .grid { perspective: 1500px; }
+  .card { transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform 500ms var(--ease-out), box-shadow var(--dur-ui) ease, border-color var(--dur-ui) ease; }
+  .card.is-live { transition: transform 90ms linear, box-shadow var(--dur-ui) ease, border-color var(--dur-ui) ease; }
+  .card::after {
+    content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none; border-radius: inherit;
+    background: radial-gradient(460px circle at var(--gx, 50%) var(--gy, 0%), rgba(255, 255, 255, 0.13), transparent 60%);
+    opacity: 0; transition: opacity 350ms ease;
+  }
+  .card:hover::after { opacity: 1; }
+  .slide img { transition: scale 700ms var(--ease-out); }
+  .card:hover .slide img { scale: 1.045; }
+  .channel { transition: border-color var(--dur-fast) ease, transform 350ms var(--ease-out), box-shadow 350ms var(--ease-out); }
+  .channel:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+  .season-photo img { transition: scale 900ms var(--ease-out); }
+  .season-photo:hover img { scale: 1.05; }
+  .hero-stats div { transition: translate 350ms var(--ease-out); }
+  .hero-stats div:hover { translate: 0 -4px; }
+}
+
+/* ---------- Móvil: composición propia de la portada ---------- */
+@media (max-width: 1040px) {
+  .hero-art .stage { width: min(44vw, 230px); }
+  .hero-art img { width: 100%; }
+  .hero-grid { justify-items: center; text-align: center; }
+  .hero-copy { justify-items: center; }
+  .hero-actions { justify-content: center; width: 100%; }
+  .hero-stats { justify-content: center; }
+  .hero .lede { margin-inline: auto; }
+  .hero::before { -webkit-mask: linear-gradient(180deg, #000 0, transparent 70%); mask: linear-gradient(180deg, #000 0, transparent 70%); }
+}
+@media (max-width: 700px) {
+  .hero-title { font-size: clamp(3rem, 15.2vw, 4.6rem); }
+  .hero-art .stage { width: min(52vw, 220px); }
+}
+
+/* ---------- Efectos ligados al scroll (los mueve el navegador) ---------- */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* La línea de los pasos se rellena según bajas */
+    :root:not([data-motion="off"]) .steps .steps-fill { transition: none; animation: fill-y linear both; animation-timeline: view(); animation-range: cover 12% cover 58%; }
+    /* El manifiesto se «enciende» al leerlo */
+    :root:not([data-motion="off"]) .manifesto.is-split .mw { animation: word-on linear both; animation-timeline: view(); animation-range: cover 14% cover 40%; }
+    /* La foto de la campaña gana profundidad */
+    :root:not([data-motion="off"]) .season-photo img { animation: photo-depth linear both; animation-timeline: view(); animation-range: cover 0% cover 100%; }
+
+    @media (max-width: 1040px) {
+      /* La mascota se aparta al empezar a bajar */
+      :root:not([data-motion="off"]) .hero-art .stage { animation: stage-out linear both; animation-timeline: scroll(root); animation-range: 0 62svh; }
+      :root:not([data-motion="off"]) .marquee-track { animation-duration: 30s; }
+    }
+    @media not ((hover: hover) and (pointer: fine)) {
+      /* Táctil: cada tarjeta entra con el propio scroll, sin temporizadores */
+      :root:not([data-motion="off"]) .card.rv, :root:not([data-motion="off"]) .channel.rv { opacity: 1; translate: none; transition: none; }
+      :root:not([data-motion="off"]) .card { animation: card-in linear both; animation-timeline: view(); animation-range: entry 0% entry 42%; }
+      :root:not([data-motion="off"]) .channel { animation: card-in linear both; animation-timeline: view(); animation-range: entry 0% entry 80%; }
+    }
+  }
+}
+@keyframes fill-y { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes word-on { from { opacity: 0.2; } }
+@keyframes photo-depth { from { scale: 1.16; } to { scale: 1; } }
+@keyframes stage-out { to { transform: translateY(26%) scale(0.78) rotate(-9deg); opacity: 0.25; } }
+@keyframes card-in { from { opacity: 0; scale: 0.93; } }

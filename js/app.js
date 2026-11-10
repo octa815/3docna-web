@@ -257,8 +257,92 @@ export function reveal(els) {
 }
 
 export function initReveals() {
-  reveal($$("[data-rise], [data-split], [data-print], .bead, .steps"));
+  reveal($$("[data-rise], [data-split], [data-print], .bead, .steps, .ftr-mark"));
 }
+
+/* =====================================================================
+   Movimiento «capa a capa» (el dibujo está en CSS; aquí solo se prepara)
+   ===================================================================== */
+// Envuelve cada palabra en un span, sin tocar el texto que leen los lectores de pantalla
+function wrapWords(node, make) {
+  [...node.childNodes].forEach((n) => {
+    if (n.nodeType === 3) {
+      const frag = document.createDocumentFragment();
+      n.textContent.split(/(\s+)/).forEach((part) => {
+        if (!part) return;
+        frag.append(/^\s+$/.test(part) ? part : make(part));
+      });
+      n.replaceWith(frag);
+    } else if (n.nodeType === 1) wrapWords(n, make);
+  });
+}
+function splitTitles() {
+  if (!motionOK()) return;
+  // Titulares: cada palabra sube desde su propia línea
+  $$("[data-split]").forEach((title) => {
+    let i = 0;
+    [...title.childNodes].forEach((n) => {
+      const unit = (content) => {
+        const w = document.createElement("span"), inner = document.createElement("span");
+        w.className = "w"; w.style.setProperty("--i", i++);
+        inner.append(content); w.append(inner);
+        return w;
+      };
+      if (n.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        n.textContent.split(/(\s+)/).forEach((part) => { if (part) frag.append(/^\s+$/.test(part) ? part : unit(part)); });
+        n.replaceWith(frag);
+      } else if (n.nodeType === 1) {
+        // Un elemento con color o degradado (.hl, .oc, .na) sube entero, sin partirse
+        const holder = document.createComment("");
+        n.replaceWith(holder);
+        holder.replaceWith(unit(n));
+      }
+    });
+    title.classList.add("is-split");
+  });
+  // Manifiesto: se enciende al leerlo (solo donde el navegador liga animaciones al scroll)
+  if (window.CSS?.supports?.("animation-timeline: view()")) {
+    $$(".manifesto").forEach((m) => {
+      wrapWords(m, (word) => { const s = document.createElement("span"); s.className = "mw"; s.textContent = word; return s; });
+      m.classList.add("is-split");
+    });
+  }
+}
+
+// Ordenador: las tarjetas se inclinan hacia el cursor. Un solo oyente para toda la página.
+if (finePointer && motionOK()) {
+  let live = null, raf = 0, ev = null;
+  const paint = () => {
+    raf = 0;
+    if (!live || !ev) return;
+    const r = live.getBoundingClientRect();
+    const px = clamp((ev.clientX - r.left) / r.width, 0, 1), py = clamp((ev.clientY - r.top) / r.height, 0, 1);
+    live.style.setProperty("--gx", `${px * 100}%`);
+    live.style.setProperty("--gy", `${py * 100}%`);
+    // Las tarjetas con selector de diseños no se inclinan: tienen muchos botones pequeños
+    if (!live.classList.contains("has-vars")) {
+      live.style.setProperty("--ry", `${(px - 0.5) * 5}deg`);
+      live.style.setProperty("--rx", `${(0.5 - py) * 4}deg`);
+    }
+  };
+  const drop = () => {
+    if (!live) return;
+    live.classList.remove("is-live");
+    live.style.removeProperty("--rx"); live.style.removeProperty("--ry");
+    live = null;
+  };
+  document.addEventListener("pointermove", (e) => {
+    const card = e.target.closest?.(".card");
+    if (card !== live) { drop(); live = card; card?.classList.add("is-live"); }
+    if (!card) return;
+    ev = e;
+    if (!raf) raf = requestAnimationFrame(paint);
+  }, { passive: true });
+  document.addEventListener("pointerleave", drop);
+}
+
+splitTitles();
 
 /* Cabecera: se esconde al bajar y vuelve al subir */
 const hdr = $(".hdr");
