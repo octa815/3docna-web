@@ -43,6 +43,7 @@ const ICONS = {
 };
 const BADGES = ["purple", "red", "green"];
 
+const varPrice = (p, v) => (typeof v.precio === "number" ? v.precio : p.precio);
 const esc = (s) => { const d = document.createElement("div"); d.textContent = String(s ?? ""); return d.innerHTML; };
 
 // Cómo se cuentan las variantes: pares (pendientes) por defecto, o lo que diga "varUnidad"
@@ -60,7 +61,8 @@ function card(p, n = 99) {
     : "";
   const price = p.precioTexto ? esc(p.precioTexto) : typeof p.precio === "number" ? euros(p.precio) : "Consultar";
   const unit = p.unidad ? ` <small>${esc(p.unidad)}</small>` : "";
-  const vars = Array.isArray(p.variantes) && p.variantes.length && typeof p.precio === "number" ? p.variantes : null;
+  // Variantes: o todas al precio del producto (pendientes) o cada una con su precio (piezas sueltas de un sistema)
+  const vars = Array.isArray(p.variantes) && p.variantes.length && p.variantes.every((v) => typeof varPrice(p, v) === "number") ? p.variantes : null;
   const [u1, u2] = unidades(p);
   const action = vars
     ? `<button class="add" type="button" data-add-vars disabled aria-describedby="sum-${esc(p.id)}">Añadir</button>`
@@ -80,7 +82,7 @@ function card(p, n = 99) {
         <ul class="vars-list">${vars.map((v, k) => `
           <li class="var">
             ${v.img ? `<img src="/${esc(v.img.replace(/^\//, ""))}" width="56" height="56" alt="" loading="lazy" decoding="async">` : ""}
-            <span class="var-name">${esc(v.nombre)}${v.medidas ? `<small>${esc(v.medidas)}</small>` : ""}</span>
+            <span class="var-name">${esc(v.nombre)}${typeof v.precio === "number" ? `<small class="var-price">${euros(v.precio)}</small>` : ""}${v.medidas ? `<small>${esc(v.medidas)}</small>` : ""}</span>
             <span class="var-qty" role="group" aria-label="${u2[0].toUpperCase() + u2.slice(1)} de ${esc(v.nombre)}">
               <button type="button" data-dec="${k}" aria-label="Quitar un ${u1} de ${esc(v.nombre)}" disabled>−</button><output data-q="${k}" aria-live="off">0</output><button type="button" data-inc="${k}" aria-label="Añadir un ${u1} de ${esc(v.nombre)}">+</button>
             </span>
@@ -135,15 +137,16 @@ function wireCard(el, p) {
     const info = $("[data-vd-info]", el);
     const paint = () => {
       const n = qty.reduce((a, b) => a + b, 0);
+      const total = qty.reduce((a, q, k) => a + q * varPrice(p, p.variantes[k]), 0);
       qty.forEach((q, k) => {
         $(`[data-q="${k}"]`, el).textContent = q;
         $(`[data-dec="${k}"]`, el).disabled = q === 0;
         $(`[data-q="${k}"]`, el).closest(".var").classList.toggle("is-on", q > 0);
       });
       addVars.disabled = n === 0;
-      addVars.textContent = n ? `Añadir ${n} · ${euros(n * p.precio)}` : "Añadir";
+      addVars.textContent = n ? `Añadir ${n} · ${euros(total)}` : "Añadir";
       const [u1, u2] = unidades(p);
-      sum.textContent = n ? `${n} ${n === 1 ? u1 : u2} · ${euros(n * p.precio)}` : `Ningún ${u1} elegido`;
+      sum.textContent = n ? `${n} ${n === 1 ? u1 : u2} · ${euros(total)}` : `Ningún ${u1} elegido`;
       const picked = qty.filter((q) => q > 0).length;
       info.textContent = picked ? `${picked} de ${qty.length} elegidos` : `${qty.length} diseños`;
       drop.classList.toggle("has-picks", picked > 0);
@@ -157,7 +160,7 @@ function wireCard(el, p) {
     });
     addVars.addEventListener("click", () => {
       const label = p.varLabel || p.nombre;
-      const items = p.variantes.map((v, k) => ({ name: `${label}: ${v.nombre}`, price: p.precio, qty: qty[k] })).filter((i) => i.qty > 0);
+      const items = p.variantes.map((v, k) => ({ name: `${label}: ${v.nombre}`, price: varPrice(p, v), qty: qty[k] })).filter((i) => i.qty > 0);
       if (!items.length) return;
       addToCart(items, addVars);
       qty.fill(0);
