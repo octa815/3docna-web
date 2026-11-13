@@ -43,6 +43,8 @@ const ICONS = {
 };
 const BADGES = ["purple", "red", "green"];
 
+// Género de la unidad: "un par", "un llavero"… o "una pieza" ("varFemenino": true en el JSON)
+const art = (p) => (p.varFemenino ? { un: "una", ninguno: (u) => `Ninguna ${u} elegida` } : { un: "un", ninguno: (u) => `Ningún ${u} elegido` });
 const varPrice = (p, v) => (typeof v.precio === "number" ? v.precio : p.precio);
 const esc = (s) => { const d = document.createElement("div"); d.textContent = String(s ?? ""); return d.innerHTML; };
 
@@ -74,29 +76,29 @@ function card(p, n = 99) {
       <details class="vars-drop">
         <summary>
           <span class="vd-thumbs" aria-hidden="true">${thumbs}</span>
-          <span class="vd-label">Elegir diseños<small data-vd-info>${vars.length} diseños</small></span>
+          <span class="vd-label">${p.varFemenino ? "Elegir piezas" : "Elegir diseños"}<small data-vd-info>${vars.length} ${p.varFemenino ? "piezas" : "diseños"}</small></span>
           <span class="vd-chev" aria-hidden="true"></span>
         </summary>
       <fieldset class="vars">
-        <legend>Elige diseños y cuántos ${u2} de cada uno</legend>
+        <legend>${p.varFemenino ? "Elige piezas y cuántas de cada una" : `Elige diseños y cuántos ${u2} de cada uno`}</legend>
         <ul class="vars-list">${vars.map((v, k) => `
           <li class="var">
             ${v.img ? `<img src="/${esc(v.img.replace(/^\//, ""))}" width="56" height="56" alt="" loading="lazy" decoding="async">` : ""}
             <span class="var-name">${esc(v.nombre)}${typeof v.precio === "number" ? `<small class="var-price">${euros(v.precio)}</small>` : ""}${v.medidas ? `<small>${esc(v.medidas)}</small>` : ""}</span>
             <span class="var-qty" role="group" aria-label="${u2[0].toUpperCase() + u2.slice(1)} de ${esc(v.nombre)}">
-              <button type="button" data-dec="${k}" aria-label="Quitar un ${u1} de ${esc(v.nombre)}" disabled>−</button><output data-q="${k}" aria-live="off">0</output><button type="button" data-inc="${k}" aria-label="Añadir un ${u1} de ${esc(v.nombre)}">+</button>
+              <button type="button" data-dec="${k}" aria-label="Quitar ${art(p).un} ${u1} de ${esc(v.nombre)}" disabled>−</button><output data-q="${k}" aria-live="off">0</output><button type="button" data-inc="${k}" aria-label="Añadir ${art(p).un} ${u1} de ${esc(v.nombre)}">+</button>
             </span>
           </li>`).join("")}
         </ul>
       </fieldset>
       </details>
-      <p class="vars-sum" id="sum-${esc(p.id)}" aria-live="polite">Ningún ${u1} elegido</p>` : "";
+      <p class="vars-sum" id="sum-${esc(p.id)}" aria-live="polite">${art(p).ninguno(u1)}</p>` : "";
   return `<article class="card${p.wide ? " is-wide" : ""}${vars ? " has-vars" : ""}" data-category="${esc(p.categoria)}" id="p-${esc(p.id)}">
     <div class="card-media"><div class="slides">${slides}</div>${imgs.length ? "" : '<span class="grid-lines" aria-hidden="true"></span>'}${p.badge ? `<span class="badge${BADGES.includes(p.badgeColor) ? ` is-${p.badgeColor}` : ""}">${esc(p.badge)}</span>` : ""}${nav}</div>
     <div class="card-body">
       <p class="card-cat">${esc(p.catLabel || "")}</p>
       <h3 class="card-name">${esc(p.nombre)}</h3>
-      <p class="card-desc">${esc(p.desc || "")}</p>${picker}
+      <p class="card-desc">${esc(p.desc || "")}</p>${p.aviso ? `<p class="card-note">${esc(p.aviso)}</p>` : ""}${picker}
       <div class="card-foot"><p class="price">${price}${unit}</p>${action}</div>
     </div>
   </article>`;
@@ -146,9 +148,9 @@ function wireCard(el, p) {
       addVars.disabled = n === 0;
       addVars.textContent = n ? `Añadir ${n} · ${euros(total)}` : "Añadir";
       const [u1, u2] = unidades(p);
-      sum.textContent = n ? `${n} ${n === 1 ? u1 : u2} · ${euros(total)}` : `Ningún ${u1} elegido`;
+      sum.textContent = n ? `${n} ${n === 1 ? u1 : u2} · ${euros(total)}` : art(p).ninguno(u1);
       const picked = qty.filter((q) => q > 0).length;
-      info.textContent = picked ? `${picked} de ${qty.length} elegidos` : `${qty.length} diseños`;
+      info.textContent = picked ? `${picked} de ${qty.length} ${p.varFemenino ? "elegidas" : "elegidos"}` : `${qty.length} ${p.varFemenino ? "piezas" : "diseños"}`;
       drop.classList.toggle("has-picks", picked > 0);
     };
     $(".vars", el).addEventListener("click", (e) => {

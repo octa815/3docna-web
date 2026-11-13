@@ -123,6 +123,114 @@
       "imgs": []
     },
     {
+      "id": "llavero-nfc",
+      "nombre": "Llavero NFC modular",
+      "categoria": "llaveros",
+      "catLabel": "Llaveros · NFC · Diseño propio",
+      "precio": 12.0,
+      "precioTexto": "Desde 12 €",
+      "desc": "Acercas el móvil y abre tu contacto, tu Instagram o la web que quieras. El cajón se saca y se cambia por otro: cada cajón lleva su propia pegatina NFC, que te dejamos programada. Arma tu sistema por piezas y elige los colores; en el pedido nos dices qué quieres que abra cada cajón.",
+      "aviso": "¿Es tu primer llavero? Empieza por el pack inicial: el resto de piezas encaja en él.",
+      "badge": "Nuevo",
+      "badgeColor": "purple",
+      "destacado": true,
+      "icono": "generico",
+      "varLabel": "Llavero NFC",
+      "varUnidad": [
+        "pieza",
+        "piezas"
+      ],
+      "varFemenino": true,
+      "variantes": [
+        {
+          "id": "pack",
+          "nombre": "Pack inicial",
+          "precio": 12.0,
+          "medidas": "Llavero + 1 cajón con NFC programado"
+        },
+        {
+          "id": "cajon-contacto",
+          "nombre": "Cajón Contacto",
+          "precio": 5.0,
+          "medidas": "Con NFC programado"
+        },
+        {
+          "id": "cajon-redes",
+          "nombre": "Cajón Redes",
+          "precio": 5.0,
+          "medidas": "Con NFC programado"
+        },
+        {
+          "id": "estacion",
+          "nombre": "Estación de sobremesa",
+          "precio": 10.0,
+          "medidas": "Guarda 3 cajones y el llavero"
+        },
+        {
+          "id": "clip",
+          "nombre": "Clip de mochila",
+          "precio": 3.0,
+          "medidas": "Para correas de hasta 4 cm"
+        }
+      ],
+      "imgs": [
+        "img/productos/nfc/llavero-nfc-montado.webp",
+        "img/productos/nfc/llavero-nfc-piezas.webp",
+        "img/productos/nfc/llavero-nfc-cajon.webp",
+        "img/productos/nfc/llavero-nfc-estacion.webp"
+      ],
+      "alts": [
+        "Llavero NFC blanco con marco negro encajando en su estación de sobremesa",
+        "Estación de sobremesa blanca y dos cajones con la pegatina NFC a la vista",
+        "Llavero NFC con un cajón sacado",
+        "Estación de sobremesa vacía, con tres ranuras para cajones y el hueco del llavero"
+      ]
+    },
+    {
+      "id": "llavero-nfc-recambios",
+      "nombre": "Recambios del llavero NFC",
+      "categoria": "llaveros",
+      "catLabel": "Llaveros · NFC · Recambios",
+      "precio": 2.5,
+      "precioTexto": "Desde 2,50 €",
+      "desc": "Piezas sueltas por si algo se rompe o se pierde. Del mismo color que el tuyo o del que quieras.",
+      "aviso": "Son piezas sueltas para quien ya tiene el llavero. Si es el primero, mira el pack inicial.",
+      "destacado": false,
+      "icono": "generico",
+      "varLabel": "Recambio NFC",
+      "varUnidad": [
+        "pieza",
+        "piezas"
+      ],
+      "varFemenino": true,
+      "variantes": [
+        {
+          "id": "carcasa",
+          "nombre": "Carcasa",
+          "precio": 4.0,
+          "medidas": "El cuerpo del llavero"
+        },
+        {
+          "id": "frontal",
+          "nombre": "Frontal",
+          "precio": 2.5,
+          "medidas": "La tapa con el icono NFC"
+        },
+        {
+          "id": "cajon",
+          "nombre": "Cajón con NFC",
+          "precio": 5.0,
+          "medidas": "Contacto o Redes, programado"
+        }
+      ],
+      "imgs": [
+        "img/productos/nfc/llavero-nfc-piezas.webp"
+      ],
+      "alts": [
+        "Estación de sobremesa blanca y dos cajones con la pegatina NFC a la vista"
+      ]
+    },
+    {
       "id": "llavero-bombo",
       "nombre": "Llavero bola del bombo con tu número",
       "categoria": "llaveros",
