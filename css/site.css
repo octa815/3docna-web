@@ -798,3 +798,120 @@ h1, h2, h3 { text-wrap: balance; font-weight: 700; }
 @keyframes photo-depth { from { scale: 1.16; } to { scale: 1; } }
 @keyframes stage-out { to { transform: translateY(26%) scale(0.78) rotate(-9deg); opacity: 0.25; } }
 @keyframes card-in { from { opacity: 0; scale: 0.93; } }
+
+/* ==========================================================================
+   Encargos realizados y regalos (nov. 2026)
+   Ordenador: galería en columnas; la foto se acerca y el texto sube al pasar el ratón.
+   Móvil: carrusel que se desliza con el dedo, una pieza por pantalla, como historias.
+   ========================================================================== */
+.works-note { max-width: 30rem; }
+.works { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 1.8vw, 22px); align-items: start; }
+.work { position: relative; margin: 0; border-radius: var(--radius); overflow: hidden; background: var(--paper-2); isolation: isolate; }
+.work:nth-child(3n + 2) { margin-top: clamp(30px, 5vw, 80px); }
+.work-media { position: relative; aspect-ratio: 9 / 16; overflow: hidden; }
+.work-media img, .work-media video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.work-video { cursor: pointer; }
+.work figcaption {
+  position: absolute; inset: auto 0 0 0; z-index: 2; display: grid; gap: 4px;
+  padding: 60px 20px 20px; color: #fff; pointer-events: none;
+  background: linear-gradient(to top, rgba(10, 8, 12, 0.88), rgba(10, 8, 12, 0.55) 55%, transparent);
+}
+.work figcaption b { font-family: var(--display); font-size: clamp(1.3rem, 2vw, 1.7rem); line-height: 1.05; letter-spacing: -0.02em; }
+.work figcaption > span:last-child { font-size: 0.92rem; color: rgba(255, 255, 255, 0.85); line-height: 1.45; }
+.work-k { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: #f6a26d; }
+.work-play {
+  position: absolute; top: 16px; right: 16px; z-index: 2; width: 34px; height: 34px; border-radius: 50%; pointer-events: none;
+  background: rgba(10, 8, 12, 0.55) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 7v10l8-5z' fill='%23fff'/%3E%3C/svg%3E") center / 18px no-repeat;
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); transition: opacity var(--dur-ui) ease;
+}
+.work.is-playing .work-play { opacity: 0; }
+
+@media (hover: hover) and (pointer: fine) {
+  .work-media img, .work-media video { transition: scale 900ms var(--ease-out); }
+  .work:hover .work-media img, .work:hover .work-media video { scale: 1.06; }
+  .work figcaption > span:last-child { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 500ms var(--ease-out), opacity 400ms ease; }
+  .work:hover figcaption > span:last-child, .work:focus-within figcaption > span:last-child { max-height: 8em; opacity: 1; }
+}
+
+/* Móvil: carrusel deslizable */
+@media (max-width: 700px) {
+  .works {
+    display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain;
+    margin-inline: calc(var(--gutter) * -1); padding: 4px var(--gutter) 10px; scroll-padding-inline: var(--gutter);
+  }
+  .works::-webkit-scrollbar { display: none; }
+  .work { flex: 0 0 78vw; scroll-snap-align: start; margin-top: 0 !important; }
+}
+@supports (animation-timeline: view(inline)) {
+  @media (max-width: 700px) and (prefers-reduced-motion: no-preference) {
+    /* La pieza que tienes delante se ve entera; las de los lados, algo más pequeñas */
+    :root:not([data-motion="off"]) .works .work { animation: work-focus linear both; animation-timeline: view(inline); }
+    :root:not([data-motion="off"]) .works .work.rv { opacity: 1; translate: none; transition: none; }
+  }
+}
+@keyframes work-focus { 0%, 100% { scale: 0.92; opacity: 0.65; } 30%, 70% { scale: 1; opacity: 1; } }
+
+/* Evento */
+.event { grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); }
+.event-list { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.event-list li { padding: 7px 14px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.18); font-size: 0.9rem; color: #f3eff4; }
+.event-photos { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: start; }
+.event-photo { margin: 0; aspect-ratio: 9 / 16; border-radius: var(--radius); overflow: hidden; background: #0f0c10; box-shadow: 0 30px 60px -30px rgba(209, 63, 124, 0.55); }
+.event-photo:nth-child(2) { margin-top: clamp(30px, 5vw, 70px); }
+.event-photo img { width: 100%; height: 100%; object-fit: cover; }
+@media (hover: hover) and (pointer: fine) {
+  .event-photo img { transition: scale 900ms var(--ease-out); }
+  .event-photo:hover img { scale: 1.05; }
+}
+
+/* Ideas de regalo */
+.ideas { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.idea {
+  position: relative; display: grid; align-content: start; gap: 10px; min-height: 230px; padding: 24px 24px 56px; border-radius: var(--radius);
+  background: var(--card); border: 1px solid var(--line); text-decoration: none; overflow: hidden; isolation: isolate;
+  transition: border-color var(--dur-fast) ease, transform 350ms var(--ease-out), color 300ms ease;
+}
+.idea::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--fil-strong); transform: translateY(101%); transition: transform 450ms var(--ease-out); }
+.idea-n { font-family: var(--mono); font-size: 0.8rem; color: var(--pink); }
+.idea b { font-family: var(--display); font-size: 1.6rem; line-height: 1.05; letter-spacing: -0.02em; }
+.idea > span:last-child { color: var(--ink-2); font-size: 0.95rem; }
+.idea::after { content: ""; position: absolute; right: 22px; bottom: 22px; width: 22px; height: 22px; background: currentColor; -webkit-mask: var(--ico-arrow) center / contain no-repeat; mask: var(--ico-arrow) center / contain no-repeat; transition: transform 300ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .idea:hover { transform: translateY(-6px); border-color: transparent; color: #fff; }
+  .idea:hover::before { transform: none; }
+  .idea:hover .idea-n, .idea:hover > span:last-child { color: rgba(255, 255, 255, 0.92); }
+  .idea:hover::after { transform: translateX(4px); }
+  :root[data-theme="dark"] .idea:hover, :root[data-theme="dark"] .idea:hover .idea-n, :root[data-theme="dark"] .idea:hover > span:last-child { color: #17141a; }
+}
+.idea:active { transform: scale(0.98); }
+
+/* Portada: tira de encargos */
+.works-strip { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; text-decoration: none; }
+.works-strip img { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: var(--radius-sm); background: var(--paper-2); }
+.works-strip img:nth-child(even) { margin-top: clamp(24px, 4vw, 56px); }
+.works-lede { margin-top: clamp(22px, 3vw, 36px); }
+@media (hover: hover) and (pointer: fine) {
+  .works-strip img { transition: translate 500ms var(--ease-out), rotate 500ms var(--ease-out); }
+  .works-strip:hover img:nth-child(odd) { translate: 0 -10px; rotate: -1.5deg; }
+  .works-strip:hover img:nth-child(even) { translate: 0 10px; rotate: 1.5deg; }
+}
+
+@media (max-width: 1040px) {
+  .event { grid-template-columns: minmax(0, 1fr); }
+  .ideas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .works { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .work:nth-child(3n + 2) { margin-top: 0; }
+  .work:nth-child(even) { margin-top: clamp(30px, 6vw, 60px); }
+}
+@media (max-width: 700px) {
+  .ideas { grid-template-columns: minmax(0, 1fr); }
+  .idea { min-height: 0; padding: 22px 56px 22px 22px; }
+  .idea::after { bottom: auto; top: 24px; }
+  .works-strip {
+    display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+    margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); scroll-padding-inline: var(--gutter);
+  }
+  .works-strip::-webkit-scrollbar { display: none; }
+  .works-strip img { flex: 0 0 42vw; scroll-snap-align: start; }
+  .works-strip img:nth-child(even) { margin-top: 18px; }
+}

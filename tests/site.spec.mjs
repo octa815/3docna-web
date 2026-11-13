@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 const isMobile = (ti) => ti.project.name === "movil";
-const PAGES = ["/", "/catalogo.html", "/pedido.html", "/contacto.html", "/aviso-legal.html", "/condiciones.html", "/privacidad.html", "/cookies.html", "/404.html"];
+const PAGES = ["/", "/catalogo.html", "/encargos.html", "/pedido.html", "/contacto.html", "/aviso-legal.html", "/condiciones.html", "/privacidad.html", "/cookies.html", "/404.html"];
 
 test.describe("Todas las páginas", () => {
   for (const path of PAGES) {
