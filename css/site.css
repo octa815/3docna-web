@@ -915,3 +915,39 @@ h1, h2, h3 { text-wrap: balance; font-weight: 700; }
   .works-strip img { flex: 0 0 42vw; scroll-snap-align: start; }
   .works-strip img:nth-child(even) { margin-top: 18px; }
 }
+
+/* ==========================================================================
+   Selector de diseños desplegable (nov. 2026)
+   Cerrado ocupa una línea con miniaturas; al abrirlo aparece la cuadrícula.
+   ========================================================================== */
+:root { interpolate-size: allow-keywords; }
+.vars-drop { margin-top: 6px; border-radius: var(--radius-sm); background: var(--paper-2); border: 1px solid var(--line); transition: border-color var(--dur-fast) ease; }
+.vars-drop.has-picks { border-color: var(--pink); }
+.vars-drop summary {
+  list-style: none; cursor: pointer; display: flex; align-items: center; gap: 12px;
+  min-height: 56px; padding: 8px 14px 8px 10px; border-radius: inherit;
+}
+.vars-drop summary::-webkit-details-marker { display: none; }
+.vd-thumbs { display: flex; flex: none; }
+.vd-thumbs img { width: 30px; height: 30px; object-fit: contain; padding: 2px; border-radius: 8px; background: var(--card); border: 1px solid var(--line); }
+.vd-thumbs img + img { margin-left: -8px; }
+.vd-label { flex: 1; min-width: 0; display: grid; font-weight: 600; font-size: 0.95rem; line-height: 1.2; }
+.vd-label small { font-family: var(--mono); font-weight: 400; font-size: 0.72rem; letter-spacing: 0.04em; color: var(--ink-3); }
+.vars-drop.has-picks .vd-label small { color: var(--pink); }
+.vd-chev { flex: none; width: 20px; height: 20px; background: currentColor; rotate: 90deg; -webkit-mask: var(--ico-arrow) center / contain no-repeat; mask: var(--ico-arrow) center / contain no-repeat; transition: rotate 300ms var(--ease-out); }
+.vars-drop[open] .vd-chev { rotate: -90deg; }
+.vars-drop .vars { margin: 0; padding: 4px 10px 12px; }
+.vars-drop .vars legend { padding: 0; }
+.vars-drop .var { background: var(--card); }
+.vars-drop .var.is-on { background: var(--accent-soft); }
+.has-vars .vars-sum { margin-top: 8px; }
+@media (hover: hover) and (pointer: fine) {
+  .vars-drop summary:hover { background: color-mix(in srgb, var(--ink) 5%, transparent); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  :root:not([data-motion="off"]) .vars-drop::details-content {
+    block-size: 0; overflow-y: clip;
+    transition: block-size 380ms var(--ease-out), content-visibility 380ms allow-discrete;
+  }
+  :root:not([data-motion="off"]) .vars-drop[open]::details-content { block-size: auto; }
+}

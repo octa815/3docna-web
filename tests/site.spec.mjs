@@ -73,6 +73,9 @@ test.describe("Catálogo y cesta", () => {
     await expect(card.locator(".var")).toHaveCount(7);
     const add = card.locator("[data-add-vars]");
     await expect(add).toBeDisabled();
+    // Los diseños van en un desplegable cerrado: primero se abre
+    await expect(card.getByRole("button", { name: "Añadir un par de Árbol" })).toBeHidden();
+    await card.locator(".vars-drop summary").click();
     await card.getByRole("button", { name: "Añadir un par de Árbol" }).click();
     await card.getByRole("button", { name: "Añadir un par de Árbol" }).click();
     await card.getByRole("button", { name: "Añadir un par de Regalo" }).click();
@@ -91,6 +94,7 @@ test.describe("Catálogo y cesta", () => {
     await page.goto("/catalogo.html#llaveros");
     const card = page.locator("#p-llavero-pixel");
     await expect(card.locator(".var")).toHaveCount(13);
+    await card.locator(".vars-drop summary").click();
     await card.getByRole("button", { name: "Añadir un llavero de Pingüino" }).click();
     await card.getByRole("button", { name: "Añadir un llavero de Copo de nieve" }).click();
     await expect(card.locator(".vars-sum")).toHaveText("2 llaveros · 8,00 €");

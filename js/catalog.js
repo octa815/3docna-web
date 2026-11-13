@@ -67,7 +67,14 @@ function card(p, n = 99) {
     : typeof p.precio === "number"
     ? `<button class="add" type="button" data-add="${esc(p.id)}" aria-label="Añadir ${esc(p.nombre)} a la cesta">Añadir</button>`
     : `<a class="add is-quote" href="/pedido.html?pieza=${encodeURIComponent(p.nombre)}#pedido">Presupuesto</a>`;
+  const thumbs = vars ? vars.filter((v) => v.img).slice(0, 4).map((v) => `<img src="/${esc(v.img.replace(/^\//, ""))}" width="28" height="28" alt="" loading="lazy" decoding="async">`).join("") : "";
   const picker = vars ? `
+      <details class="vars-drop">
+        <summary>
+          <span class="vd-thumbs" aria-hidden="true">${thumbs}</span>
+          <span class="vd-label">Elegir diseños<small data-vd-info>${vars.length} diseños</small></span>
+          <span class="vd-chev" aria-hidden="true"></span>
+        </summary>
       <fieldset class="vars">
         <legend>Elige diseños y cuántos ${u2} de cada uno</legend>
         <ul class="vars-list">${vars.map((v, k) => `
@@ -79,8 +86,9 @@ function card(p, n = 99) {
             </span>
           </li>`).join("")}
         </ul>
-        <p class="vars-sum" id="sum-${esc(p.id)}" aria-live="polite">Ningún ${u1} elegido</p>
-      </fieldset>` : "";
+      </fieldset>
+      </details>
+      <p class="vars-sum" id="sum-${esc(p.id)}" aria-live="polite">Ningún ${u1} elegido</p>` : "";
   return `<article class="card${p.wide ? " is-wide" : ""}${vars ? " has-vars" : ""}" data-category="${esc(p.categoria)}" id="p-${esc(p.id)}">
     <div class="card-media"><div class="slides">${slides}</div>${imgs.length ? "" : '<span class="grid-lines" aria-hidden="true"></span>'}${p.badge ? `<span class="badge${BADGES.includes(p.badgeColor) ? ` is-${p.badgeColor}` : ""}">${esc(p.badge)}</span>` : ""}${nav}</div>
     <div class="card-body">
@@ -123,6 +131,8 @@ function wireCard(el, p) {
   if (addVars) {
     const qty = p.variantes.map(() => 0);
     const sum = $(".vars-sum", el);
+    const drop = $(".vars-drop", el);
+    const info = $("[data-vd-info]", el);
     const paint = () => {
       const n = qty.reduce((a, b) => a + b, 0);
       qty.forEach((q, k) => {
@@ -134,6 +144,9 @@ function wireCard(el, p) {
       addVars.textContent = n ? `Añadir ${n} · ${euros(n * p.precio)}` : "Añadir";
       const [u1, u2] = unidades(p);
       sum.textContent = n ? `${n} ${n === 1 ? u1 : u2} · ${euros(n * p.precio)}` : `Ningún ${u1} elegido`;
+      const picked = qty.filter((q) => q > 0).length;
+      info.textContent = picked ? `${picked} de ${qty.length} elegidos` : `${qty.length} diseños`;
+      drop.classList.toggle("has-picks", picked > 0);
     };
     $(".vars", el).addEventListener("click", (e) => {
       const btn = e.target.closest("button");
