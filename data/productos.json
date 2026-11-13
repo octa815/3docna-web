@@ -20,10 +20,6 @@
     {
       "id": "personalizado",
       "label": "Personalizado"
-    },
-    {
-      "id": "pelo",
-      "label": "Accesorios para el pelo"
     }
   ],
   "productos": [
@@ -261,34 +257,6 @@
       "destacado": true,
       "icono": "litofania",
       "imgs": []
-    },
-    {
-      "id": "pasador-mono",
-      "nombre": "Pasador para moño",
-      "categoria": "pelo",
-      "catLabel": "Accesorios para el pelo · Calaveras",
-      "precio": 5.5,
-      "desc": "Calaveras y columna vertebral con palo para sujetar un moño o una coleta. Hay más modelos: pregúntanos por WhatsApp y te los enseñamos.",
-      "badge": "Varios modelos",
-      "badgeColor": "purple",
-      "destacado": false,
-      "icono": "generico",
-      "imgs": [
-        "img/productos/pasador-mono-1.webp"
-      ]
-    },
-    {
-      "id": "horquilla-calavera",
-      "nombre": "Horquilla de calavera",
-      "categoria": "pelo",
-      "catLabel": "Accesorios para el pelo · Calaveras",
-      "precio": 5.0,
-      "desc": "Calavera entre hojas ornamentales para recoger un mechón o adornar un semirrecogido.",
-      "destacado": false,
-      "icono": "generico",
-      "imgs": [
-        "img/productos/horquilla-calavera-1.webp"
-      ]
     }
   ]
 }

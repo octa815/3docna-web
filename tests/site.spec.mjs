@@ -40,8 +40,8 @@ test.describe("Catálogo y cesta", () => {
   });
 
   test("un enlace con categoría abre el filtro ya elegido", async ({ page }) => {
-    await page.goto("/catalogo.html#pelo");
-    await expect(page.locator('.filters [aria-pressed="true"]')).toHaveText("Accesorios para el pelo");
+    await page.goto("/catalogo.html#llaveros");
+    await expect(page.locator('.filters [aria-pressed="true"]')).toHaveText("Llaveros");
   });
 
   test("la portada enseña solo destacados", async ({ page, request }) => {
