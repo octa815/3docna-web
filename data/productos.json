@@ -146,31 +146,107 @@
           "id": "pack",
           "nombre": "Pack inicial",
           "precio": 12.0,
-          "medidas": "Llavero + 1 cajón con NFC programado"
+          "medidas": "Llavero + 1 cajón con NFC programado",
+          "modelo": "llavero",
+          "detalle": "El llavero montado: carcasa, frontal con el símbolo NFC y un cajón Contacto con su pegatina ya programada. Es lo que necesitas para empezar.",
+          "fotos": [
+            [
+              "img/productos/nfc/llavero-nfc-montado.webp",
+              "Foto"
+            ],
+            [
+              "img/productos/nfc/3d-pack.webp",
+              "3D"
+            ],
+            [
+              "img/productos/nfc/render-llavero-cajon.webp",
+              "Render"
+            ]
+          ]
         },
         {
           "id": "cajon-contacto",
           "nombre": "Cajón Contacto",
           "precio": 5.0,
-          "medidas": "Con NFC programado"
+          "medidas": "Con NFC programado",
+          "modelo": "cajonContacto",
+          "detalle": "Con el icono de una persona. Lo programamos para que abra tu contacto o lo que tú quieras.",
+          "fotos": [
+            [
+              "img/productos/nfc/llavero-nfc-piezas.webp",
+              "Foto"
+            ],
+            [
+              "img/productos/nfc/3d-cajon-contacto.webp",
+              "3D"
+            ],
+            [
+              "img/productos/nfc/render-llavero.webp",
+              "Render"
+            ]
+          ]
         },
         {
           "id": "cajon-redes",
           "nombre": "Cajón Redes",
           "precio": 5.0,
-          "medidas": "Con NFC programado"
+          "medidas": "Con NFC programado",
+          "modelo": "cajonRedes",
+          "detalle": "Con el icono @. Ideal para que abra tu Instagram, tu TikTok o tu web.",
+          "fotos": [
+            [
+              "img/productos/nfc/llavero-nfc-piezas.webp",
+              "Foto"
+            ],
+            [
+              "img/productos/nfc/3d-cajon-redes.webp",
+              "3D"
+            ],
+            [
+              "img/productos/nfc/render-llavero-cajon.webp",
+              "Render"
+            ]
+          ]
         },
         {
           "id": "estacion",
           "nombre": "Estación de sobremesa",
           "precio": 10.0,
-          "medidas": "Guarda 3 cajones y el llavero"
+          "medidas": "Guarda 3 cajones y el llavero",
+          "modelo": "estacion",
+          "detalle": "Para la mesa: guarda tres cajones de recambio y deja el llavero de pie, sujeto con un imán.",
+          "fotos": [
+            [
+              "img/productos/nfc/llavero-nfc-estacion.webp",
+              "Foto"
+            ],
+            [
+              "img/productos/nfc/3d-estacion.webp",
+              "3D"
+            ],
+            [
+              "img/productos/nfc/render-estacion.webp",
+              "Render"
+            ]
+          ]
         },
         {
           "id": "clip",
           "nombre": "Clip de mochila",
           "precio": 3.0,
-          "medidas": "Para correas de hasta 4 cm"
+          "medidas": "Para correas de hasta 4 cm",
+          "modelo": "clip",
+          "detalle": "Una pinza que se engancha a la correa de la mochila o del bolso para llevar el llavero a mano.",
+          "fotos": [
+            [
+              "img/productos/nfc/3d-clip.webp",
+              "3D"
+            ],
+            [
+              "img/productos/nfc/render-conjunto.webp",
+              "Render"
+            ]
+          ]
         }
       ],
       "imgs": [
@@ -184,7 +260,8 @@
         "Estación de sobremesa blanca y dos cajones con la pegatina NFC a la vista",
         "Llavero NFC con un cajón sacado",
         "Estación de sobremesa vacía, con tres ranuras para cajones y el hueco del llavero"
-      ]
+      ],
+      "pagina": "/llavero-nfc.html"
     },
     {
       "id": "llavero-nfc-recambios",

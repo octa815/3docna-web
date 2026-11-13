@@ -1,0 +1,112 @@
+<!-- {"title": "Llavero NFC modular", "desc": "Llavero NFC con cajones intercambiables, diseñado e impreso en Elda: acercas el móvil y abre tu contacto o tus redes. Arma tu sistema por piezas y míralo en 3D antes de pedirlo.", "nav": "catalogo", "scripts": ["js/llavero-nfc.js"]} -->
+  <section class="nfc" aria-labelledby="nfc-title">
+    <div class="wrap nfc-grid">
+      <div class="nfc-stage-col">
+        <div class="nfc-stage" id="nfcStage" data-hide-wa>
+          <img class="nfc-poster" src="/img/productos/nfc/llavero-nfc-montado.webp" width="1200" height="900" alt="Llavero NFC blanco con marco negro encajando en su estación de sobremesa">
+          <p class="nfc-hint" aria-hidden="true">Arrastra para girar</p>
+          <p class="nfc-loading" aria-hidden="true">Cargando el modelo 3D…</p>
+        </div>
+        <p class="nfc-stage-note">Modelo 3D real de las piezas: lo que ves es lo que te llevas.</p>
+      </div>
+
+      <div class="nfc-config">
+        <nav class="crumbs" aria-label="Estás en"><a href="/catalogo.html#llaveros">Catálogo</a> <span aria-hidden="true">/</span> <span>Llavero NFC</span></nav>
+        <p class="tag">Diseño propio · Hecho en Elda</p>
+        <h1 id="nfc-title" class="nfc-title">Llavero NFC <span class="hl">modular</span></h1>
+        <p class="lede">Acercas el móvil y abre tu contacto, tu Instagram o la web que quieras. El cajón se saca y se cambia por otro: cada uno lleva su propia pegatina NFC, que te dejamos programada.</p>
+
+        <p class="card-note" id="nfcAviso" hidden></p>
+
+        <fieldset class="nfc-pieces">
+          <legend>Arma tu sistema</legend>
+          <ul id="nfcPieces"><li class="muted">Cargando piezas…</li></ul>
+        </fieldset>
+
+        <fieldset class="nfc-colors" id="nfcColors">
+          <legend>Elige los colores</legend>
+        </fieldset>
+
+        <div class="nfc-buy" id="nfcBuy">
+          <div class="nfc-total"><span>Total</span><strong id="nfcTotal">0,00 €</strong></div>
+          <button class="btn btn-solid nfc-add" type="button" id="nfcAdd" disabled><span>Añadir a la cesta</span></button>
+        </div>
+        <p class="form-note">No pagas nada ahora. Con el pedido nos dices qué quieres que abra cada cajón y te confirmamos plazo y precio en menos de 24 h.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PIEZA A PIEZA ============ -->
+  <section class="sec" id="piezas" aria-labelledby="piezas-title">
+    <div class="wrap">
+      <header class="sec-head">
+        <div>
+          <p class="tag" data-rise>Pieza a pieza</p>
+          <h2 id="piezas-title" class="title" data-split>Qué es <span class="hl">cada cosa</span></h2>
+        </div>
+        <p class="muted works-note" data-rise>Fotos de las piezas impresas y renders del modelo. Desde aquí también puedes añadirlas a tu sistema.</p>
+      </header>
+      <div class="nfc-cards" id="nfcCards"></div>
+    </div>
+  </section>
+
+  <!-- ============ VÍDEO ============ -->
+  <section class="sec nfc-video-sec" id="video" aria-labelledby="video-title">
+    <div class="wrap nfc-video-grid">
+      <div>
+        <p class="tag" data-rise>En vídeo</p>
+        <h2 id="video-title" class="title" data-split>Así <span class="hl">encaja</span></h2>
+        <p class="lede" data-rise>Los cajones entran en la estación, el llavero se queda de pie sujeto por un imán y el cajón se saca y se cambia en un momento.</p>
+      </div>
+      <figure class="work work--video nfc-video">
+        <div class="work-media">
+          <video class="work-video" muted loop playsinline preload="none" poster="/img/productos/nfc/llavero-nfc-video-poster.webp" width="464" height="832" aria-label="Vídeo: los cajones entran en la estación y el llavero se coloca de pie">
+            <source src="/media/llavero-nfc.mp4" type="video/mp4">
+          </video>
+          <span class="work-play" aria-hidden="true"></span>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ RECAMBIOS ============ -->
+  <section class="sec" id="recambios" aria-labelledby="rec-title">
+    <div class="wrap">
+      <header class="sec-head">
+        <div>
+          <p class="tag" data-rise>Recambios</p>
+          <h2 id="rec-title" class="title" data-split>¿Se te ha roto <span class="hl">o perdido</span> algo?</h2>
+        </div>
+      </header>
+      <div class="nfc-rec">
+        <p class="card-note" id="recAviso" hidden></p>
+        <ul class="nfc-rec-list" id="recList"></ul>
+        <div class="nfc-buy">
+          <div class="nfc-total"><span>Recambios</span><strong id="recTotal">0,00 €</strong></div>
+          <button class="btn btn-ghost" type="button" id="recAdd" disabled>Añadir recambios</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PREGUNTAS ============ -->
+  <section class="sec" id="dudas" aria-labelledby="dudas-title">
+    <div class="wrap about">
+      <div>
+        <p class="tag" data-rise>Dudas</p>
+        <h2 id="dudas-title" class="title" data-split>Lo que nos <span class="hl">preguntan</span></h2>
+      </div>
+      <div class="faq">
+        <details><summary>¿Con qué móviles funciona?</summary><div class="faq-a"><p>Con casi todos los que tienen NFC: los iPhone desde el XS y la mayoría de Android, con el NFC activado. Basta con acercar la parte de arriba del móvil al llavero.</p></div></details>
+        <details><summary>¿Qué puede abrir cada cajón?</summary><div class="faq-a"><p>Un enlace: tu Instagram, tu web, tu WhatsApp o una página con tus datos de contacto. Nos lo dices en el pedido y te lo dejamos grabado.</p></div></details>
+        <details><summary>¿Puedo tener varios cajones?</summary><div class="faq-a"><p>Sí: esa es la gracia. Cada cajón abre una cosa y cambias de uno a otro según lo que quieras compartir. La estación guarda tres.</p></div></details>
+        <details><summary>¿Necesita pilas o batería?</summary><div class="faq-a"><p>No. La pegatina NFC funciona con la energía del propio móvil al acercarlo.</p></div></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Barra de compra en móvil -->
+  <div class="nfc-bar" id="nfcBar" aria-hidden="true">
+    <div class="nfc-total"><span>Tu sistema</span><strong data-nfc-total>0,00 €</strong></div>
+    <button class="btn btn-solid" type="button" data-nfc-add tabindex="-1"><span>Añadir</span></button>
+  </div>

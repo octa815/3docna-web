@@ -66,13 +66,17 @@ function card(p, n = 99) {
   // Variantes: o todas al precio del producto (pendientes) o cada una con su precio (piezas sueltas de un sistema)
   const vars = Array.isArray(p.variantes) && p.variantes.length && p.variantes.every((v) => typeof varPrice(p, v) === "number") ? p.variantes : null;
   const [u1, u2] = unidades(p);
-  const action = vars
+  // Productos con página propia (llavero NFC): la tarjeta lleva a la página, donde se configura
+  const page = typeof p.pagina === "string" && p.pagina.startsWith("/") ? p.pagina : null;
+  const action = page
+    ? `<a class="add is-quote card-cta" href="${esc(page)}">Personalizar</a>`
+    : vars
     ? `<button class="add" type="button" data-add-vars disabled aria-describedby="sum-${esc(p.id)}">Añadir</button>`
     : typeof p.precio === "number"
     ? `<button class="add" type="button" data-add="${esc(p.id)}" aria-label="Añadir ${esc(p.nombre)} a la cesta">Añadir</button>`
     : `<a class="add is-quote" href="/pedido.html?pieza=${encodeURIComponent(p.nombre)}#pedido">Presupuesto</a>`;
   const thumbs = vars ? vars.filter((v) => v.img).slice(0, 4).map((v) => `<img src="/${esc(v.img.replace(/^\//, ""))}" width="28" height="28" alt="" loading="lazy" decoding="async">`).join("") : "";
-  const picker = vars ? `
+  const picker = vars && !page ? `
       <details class="vars-drop">
         <summary>
           <span class="vd-thumbs" aria-hidden="true">${thumbs}</span>
@@ -93,11 +97,11 @@ function card(p, n = 99) {
       </fieldset>
       </details>
       <p class="vars-sum" id="sum-${esc(p.id)}" aria-live="polite">${art(p).ninguno(u1)}</p>` : "";
-  return `<article class="card${p.wide ? " is-wide" : ""}${vars ? " has-vars" : ""}" data-category="${esc(p.categoria)}" id="p-${esc(p.id)}">
+  return `<article class="card${p.wide ? " is-wide" : ""}${vars && !page ? " has-vars" : ""}${page ? " has-page" : ""}" data-category="${esc(p.categoria)}" id="p-${esc(p.id)}">
     <div class="card-media"><div class="slides">${slides}</div>${imgs.length ? "" : '<span class="grid-lines" aria-hidden="true"></span>'}${p.badge ? `<span class="badge${BADGES.includes(p.badgeColor) ? ` is-${p.badgeColor}` : ""}">${esc(p.badge)}</span>` : ""}${nav}</div>
     <div class="card-body">
       <p class="card-cat">${esc(p.catLabel || "")}</p>
-      <h3 class="card-name">${esc(p.nombre)}</h3>
+      <h3 class="card-name">${page ? `<a class="card-name-link" href="${esc(page)}">${esc(p.nombre)}</a>` : esc(p.nombre)}</h3>
       <p class="card-desc">${esc(p.desc || "")}</p>${p.aviso ? `<p class="card-note">${esc(p.aviso)}</p>` : ""}${picker}
       <div class="card-foot"><p class="price">${price}${unit}</p>${action}</div>
     </div>
