@@ -127,8 +127,8 @@
       "nombre": "Llavero NFC modular",
       "categoria": "llaveros",
       "catLabel": "Llaveros · NFC · Diseño propio",
-      "precio": 12.0,
-      "precioTexto": "Desde 12 €",
+      "precio": 10.0,
+      "precioTexto": "Desde 10 €",
       "desc": "Acercas el móvil y abre tu contacto, tu Instagram o la web que quieras. El cajón se saca y se cambia por otro: cada cajón lleva su propia pegatina NFC, que te dejamos programada. Arma tu sistema por piezas y elige los colores; en el pedido nos dices qué quieres que abra cada cajón.",
       "aviso": "¿Es tu primer llavero? Empieza por el pack inicial: el resto de piezas encaja en él.",
       "badge": "Nuevo",
@@ -145,7 +145,7 @@
         {
           "id": "pack",
           "nombre": "Pack inicial",
-          "precio": 12.0,
+          "precio": 10.0,
           "medidas": "Llavero + 1 cajón con NFC programado",
           "modelo": "llavero",
           "detalle": "El llavero montado: carcasa, frontal con el símbolo NFC y un cajón Contacto con su pegatina ya programada. Es lo que necesitas para empezar.",
@@ -167,7 +167,7 @@
         {
           "id": "cajon-contacto",
           "nombre": "Cajón Contacto",
-          "precio": 5.0,
+          "precio": 4.0,
           "medidas": "Con NFC programado",
           "modelo": "cajonContacto",
           "detalle": "Con el icono de una persona. Lo programamos para que abra tu contacto o lo que tú quieras.",
@@ -189,7 +189,7 @@
         {
           "id": "cajon-redes",
           "nombre": "Cajón Redes",
-          "precio": 5.0,
+          "precio": 4.0,
           "medidas": "Con NFC programado",
           "modelo": "cajonRedes",
           "detalle": "Con el icono @. Ideal para que abra tu Instagram, tu TikTok o tu web.",
@@ -211,7 +211,7 @@
         {
           "id": "estacion",
           "nombre": "Estación de sobremesa",
-          "precio": 10.0,
+          "precio": 8.0,
           "medidas": "Guarda 3 cajones y el llavero",
           "modelo": "estacion",
           "detalle": "Para la mesa: guarda tres cajones de recambio y deja el llavero de pie, sujeto con un imán.",
@@ -233,7 +233,7 @@
         {
           "id": "clip",
           "nombre": "Clip de mochila",
-          "precio": 3.0,
+          "precio": 2.5,
           "medidas": "Para correas de hasta 4 cm",
           "modelo": "clip",
           "detalle": "Una pinza que se engancha a la correa de la mochila o del bolso para llevar el llavero a mano.",
@@ -268,8 +268,8 @@
       "nombre": "Recambios del llavero NFC",
       "categoria": "llaveros",
       "catLabel": "Llaveros · NFC · Recambios",
-      "precio": 2.5,
-      "precioTexto": "Desde 2,50 €",
+      "precio": 2.0,
+      "precioTexto": "Desde 2 €",
       "desc": "Piezas sueltas por si algo se rompe o se pierde. Del mismo color que el tuyo o del que quieras.",
       "aviso": "Son piezas sueltas para quien ya tiene el llavero. Si es el primero, mira el pack inicial.",
       "destacado": false,
@@ -284,19 +284,19 @@
         {
           "id": "carcasa",
           "nombre": "Carcasa",
-          "precio": 4.0,
+          "precio": 3.0,
           "medidas": "El cuerpo del llavero"
         },
         {
           "id": "frontal",
           "nombre": "Frontal",
-          "precio": 2.5,
+          "precio": 2.0,
           "medidas": "La tapa con el icono NFC"
         },
         {
           "id": "cajon",
           "nombre": "Cajón con NFC",
-          "precio": 5.0,
+          "precio": 4.0,
           "medidas": "Contacto o Redes, programado"
         }
       ],
