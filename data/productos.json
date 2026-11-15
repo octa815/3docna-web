@@ -20,6 +20,10 @@
     {
       "id": "personalizado",
       "label": "Personalizado"
+    },
+    {
+      "id": "moto",
+      "label": "Moto"
     }
   ],
   "productos": [
@@ -305,6 +309,31 @@
       ],
       "alts": [
         "Estación de sobremesa blanca y dos cajones con la pegatina NFC a la vista"
+      ]
+    },
+    {
+      "id": "estuche-asmax-f1-pro",
+      "nombre": "Estuche para 2 intercom ASMAX F1 Pro",
+      "categoria": "moto",
+      "catLabel": "Moto · Diseño propio",
+      "precio": 20.0,
+      "unidad": "/ estuche",
+      "desc": "Guarda los dos intercomunicadores de la pareja, cada uno en una funda con su forma exacta y forrada de fieltro: no se mueven nada. Cierra con imanes y tiene una puerta abajo para cargarlos por USB-C sin abrir la caja. Eliges los colores de la base y de la tapa en el pedido.",
+      "badge": "Nuevo",
+      "badgeColor": "purple",
+      "destacado": false,
+      "icono": "generico",
+      "imgs": [
+        "img/productos/asmax/asmax-dentro.webp",
+        "img/productos/asmax/asmax-cerrado.webp",
+        "img/productos/asmax/asmax-carga.webp",
+        "img/productos/asmax/asmax-abierto.webp"
+      ],
+      "alts": [
+        "Estuche naranja y rosa abierto, con dos intercomunicadores ASMAX F1 Pro encajados en sus fundas",
+        "Estuche cerrado, con la tapa rosa y la base naranja",
+        "Puerta de carga abierta: dos ventanas para enchufar el USB-C de cada intercom",
+        "Estuche abierto y vacío, con las fundas forradas de fieltro gris"
       ]
     },
     {
