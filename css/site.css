@@ -1100,3 +1100,52 @@ h1, h2, h3 { text-wrap: balance; font-weight: 700; }
   .nfc-stage-note { display: none; }
   .nfc-hint, .nfc-loading { bottom: 10px; }
 }
+
+/* ==========================================================================
+   Página del estuche ASMAX (nov. 2026): reutiliza la del llavero NFC
+   ========================================================================== */
+.ax-controls { position: absolute; left: 12px; right: 12px; top: 12px; z-index: 3; display: flex; flex-wrap: wrap; gap: 6px; }
+.ax-btn {
+  min-height: 40px; padding: 0 14px; border-radius: 999px; font-size: 0.86rem; font-weight: 600;
+  background: rgba(10, 8, 12, 0.6); color: #fff; border: 1px solid rgba(255, 255, 255, 0.18);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  transition: background-color var(--dur-fast) ease, color var(--dur-fast) ease, transform var(--dur-press) var(--ease-out);
+}
+.ax-btn[aria-pressed="true"] { background: #fff; color: #17141a; }
+.ax-btn:active { transform: scale(0.95); }
+.nfc-stage:not(.is-ready) .ax-controls { opacity: 0; pointer-events: none; }
+.ax-feats { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.ax-feats li { display: grid; gap: 2px; padding: 12px 14px; border-radius: var(--radius-sm); background: var(--card); border: 1px solid var(--line); }
+.ax-feats b { font-family: var(--display); font-size: 1.05rem; }
+.ax-feats span { font-size: 0.86rem; color: var(--ink-3); }
+.nfc-buy .var-qty { width: 120px; flex: none; }
+.ax-how { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.ax-how-card {
+  display: grid; align-content: start; gap: 10px; padding: 22px; border-radius: var(--radius); text-align: left;
+  background: var(--card); border: 1px solid var(--line); color: inherit;
+  transition: border-color var(--dur-fast) ease, transform 350ms var(--ease-out);
+}
+.ax-how-card b { font-family: var(--display); font-size: 1.4rem; line-height: 1.1; }
+.ax-how-card > span:last-child { color: var(--ink-2); font-size: 0.94rem; }
+@media (hover: hover) and (pointer: fine) { .ax-how-card:hover { border-color: var(--pink); transform: translateY(-4px); } }
+.ax-how-card:active { transform: scale(0.98); }
+.ax-photos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.ax-photos figure { margin: 0; display: grid; gap: 8px; }
+.ax-photos img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius); background: var(--paper-2); }
+.ax-photos figcaption { font-size: 0.86rem; color: var(--ink-3); }
+@media (max-width: 1040px) {
+  .ax-how, .ax-photos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 700px) {
+  .ax-feats { grid-template-columns: 1fr; }
+  .ax-how { grid-template-columns: 1fr; }
+  .ax-photos {
+    display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+    margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); scroll-padding-inline: var(--gutter);
+  }
+  .ax-photos::-webkit-scrollbar { display: none; }
+  .ax-photos figure { flex: 0 0 80vw; scroll-snap-align: start; }
+  .ax-controls { top: auto; bottom: 10px; justify-content: center; }
+  .ax-btn { min-height: 38px; padding: 0 12px; font-size: 0.8rem; }
+  #axStage .nfc-hint { bottom: auto; top: 10px; }
+}
