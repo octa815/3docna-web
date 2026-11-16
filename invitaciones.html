@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Invitaciones de boda con NFC · 3DOCNA</title>
+<meta name="description" content="Invitaciones de boda impresas en 3D con un NFC dentro: acercas el móvil y se abre vuestra web con el programa, los lugares y la confirmación de asistencia. Pruébalo con vuestros nombres. Proyecto en curso de 3DOCNA, Elda.">
+<meta name="theme-color" content="#111013">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/img/favicon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Invitaciones de boda con NFC · 3DOCNA">
+<meta property="og:description" content="Invitaciones de boda impresas en 3D con un NFC dentro: acercas el móvil y se abre vuestra web con el programa, los lugares y la confirmación de asistencia. Pruébalo con vuestros nombres. Proyecto en curso de 3DOCNA, Elda.">
+<meta property="og:locale" content="es_ES">
+<meta property="og:image" content="/img/brand/mascota-480.webp">
+<script>
+  (function () {
+    var d = document.documentElement, g = function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } };
+    var t = g("3docna_theme");
+    if (!t) t = "dark";
+    d.dataset.theme = t;
+    var fs = g("3docna_fs"); if (fs) d.dataset.fs = fs;
+    var mo = g("3docna_motion"); if (mo) d.dataset.motion = mo;
+    d.classList.add("js");
+  })();
+</script>
+<link rel="preload" href="/fonts/BricolageGrotesque-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/site.css">
+<script type="module" src="/js/app.js"></script>
+<script type="module" src="/js/invitaciones.js"></script>
+</head>
+<body data-page="encargos">
+<a class="skip" href="#main">Saltar al contenido</a>
+<header class="hdr">
+  <div class="hdr-row">
+    <a class="brand glass" href="/" aria-label="3DOCNA, inicio">
+      <img src="/img/brand/mascota-96.webp" width="30" height="42" alt="">
+      <span class="brand-word">3D<span class="oc">OC</span><span class="na">NA</span></span>
+    </a>
+    <nav class="nav glass" id="nav" aria-label="Principal">
+      <a href="/catalogo.html">Catálogo</a>
+      <a href="/encargos.html" aria-current="page">Encargos</a>
+      <a href="/pedido.html">Pedido</a>
+      <a href="/contacto.html">Contacto</a>
+    </nav>
+    <div class="hdr-actions">
+      <button class="icon-btn glass prefs-toggle" type="button" aria-label="Ajustes de visualización" aria-expanded="false" aria-controls="prefs"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg></button>
+      <button class="icon-btn glass theme-toggle" type="button" aria-label="Cambiar a modo oscuro"><svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg><svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg></button>
+      <button class="icon-btn glass cart-toggle" type="button" aria-label="Abrir la cesta" aria-expanded="false" aria-controls="drawer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 10.6a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.2L21 8H6.2"/><circle cx="9.5" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg><span class="cart-count" aria-hidden="true">0</span></button>
+      <a class="btn btn-solid btn-sm hdr-cta" href="/pedido.html"><span>Pedir</span></a>
+      <button class="icon-btn glass menu-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Abrir menú"><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<section class="prefs" id="prefs" aria-label="Ajustes de visualización">
+  <h2>Ajustes</h2>
+  <div class="pref-row"><span>Tema</span><div class="seg" data-pref="theme"><button type="button" data-v="light">Claro</button><button type="button" data-v="dark">Oscuro</button></div></div>
+  <div class="pref-row"><span>Tamaño del texto</span><div class="seg" data-pref="fs"><button type="button" data-v="small">A−</button><button type="button" data-v="normal">A</button><button type="button" data-v="large">A+</button><button type="button" data-v="xlarge">A++</button></div></div>
+  <div class="pref-row"><span>Animaciones</span><div class="seg" data-pref="motion"><button type="button" data-v="on">Sí</button><button type="button" data-v="off">No</button></div></div>
+</section>
+
+<div class="drawer-backdrop" data-close-drawer></div>
+<aside class="drawer" id="drawer" aria-label="Tu cesta" aria-hidden="true">
+  <div class="drawer-head">
+    <h2>Tu cesta</h2>
+    <button class="icon-btn" type="button" data-close-drawer aria-label="Cerrar la cesta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </div>
+  <div class="drawer-items" id="drawerItems"></div>
+  <div class="drawer-foot" id="drawerFoot" hidden>
+    <div class="drawer-total"><span>Total estimado</span><strong id="drawerTotal">0,00 €</strong></div>
+    <a class="btn btn-solid" href="/pedido.html#pedido"><span>Solicitar pedido</span></a>
+    <p class="drawer-note">No pagas nada ahora. Te confirmamos diseño, plazo y precio final en menos de 24 h.</p>
+  </div>
+</aside>
+
+<main id="main">
+<section class="page-top inv-top">
+    <div class="wrap">
+      <p class="tag" data-rise><span class="inv-badge">Proyecto en curso</span> Invitaciones con NFC</p>
+      <h1 class="title" data-split>Una invitación que <span class="hl">se abre en el móvil</span></h1>
+      <p class="lede" data-rise>La tarjeta es de verdad: impresa en 3D, con vuestros nombres incrustados en otro color. Dentro lleva un NFC. Vuestros invitados acercan el móvil y se abre vuestra web: el programa, cómo llegar, la confirmación de asistencia y todo lo demás.</p>
+      <p class="muted inv-nota" data-rise>Estamos terminando la primera tarjeta de prueba. Si os casáis y os gusta la idea, escribidnos y la preparamos con vosotros.</p>
+    </div>
+  </section>
+
+  <!-- ============ PRUÉBALO ============ -->
+  <section class="sec inv" id="prueba" aria-labelledby="prueba-title" style="padding-top:clamp(10px,2vw,30px)">
+    <div class="wrap inv-grid">
+      <form class="inv-form panel" id="invForm" autocomplete="off" aria-labelledby="prueba-title">
+        <h2 id="prueba-title" class="inv-form-title">Pruébalo con vuestros datos</h2>
+        <p class="form-note">Lo que escribas cambia al momento la tarjeta y la web. No se guarda ni se envía nada.</p>
+        <div class="form-row">
+          <label class="field"><span class="lbl">Primer nombre</span><input name="uno" value="Nico" maxlength="14" required></label>
+          <label class="field"><span class="lbl">Segundo nombre</span><input name="dos" value="Eunice" maxlength="14" required></label>
+        </div>
+        <div class="form-row">
+          <label class="field"><span class="lbl">Fecha</span><input name="fecha" type="date" value="2027-06-12" required></label>
+          <label class="field"><span class="lbl">Ciudad</span><input name="ciudad" value="Toledo" maxlength="22"></label>
+        </div>
+        <label class="field"><span class="lbl">Encabezado</span><input name="lema" value="Nos casamos" maxlength="22"></label>
+        <fieldset class="inv-fs">
+          <legend>Ceremonia</legend>
+          <div class="form-row">
+            <label class="field"><span class="lbl">Hora</span><input name="h1" type="time" value="12:30"></label>
+            <label class="field"><span class="lbl">Lugar</span><input name="l1" value="Ermita de Santa María" maxlength="40"></label>
+          </div>
+        </fieldset>
+        <fieldset class="inv-fs">
+          <legend>Celebración</legend>
+          <div class="form-row">
+            <label class="field"><span class="lbl">Hora</span><input name="h2" type="time" value="14:00"></label>
+            <label class="field"><span class="lbl">Lugar</span><input name="l2" value="Finca El Olivar" maxlength="40"></label>
+          </div>
+        </fieldset>
+        <label class="field"><span class="lbl">Una frase para la portada de la web</span><textarea name="frase" rows="2" maxlength="140">Hay días que merecen celebrarse con quienes más queremos. Este es uno de ellos.</textarea></label>
+        <fieldset class="nfc-colors" id="invColors"><legend>Colores de la tarjeta</legend></fieldset>
+        <button class="btn btn-ghost btn-sm" type="reset">Volver al ejemplo</button>
+      </form>
+
+      <div class="inv-previews">
+        <div class="inv-tabs" role="tablist" aria-label="Vista previa">
+          <button type="button" role="tab" aria-selected="true" aria-controls="invCardPane" id="tabCard">Tarjeta 3D</button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="invWebPane" id="tabWeb">Web en el móvil</button>
+        </div>
+        <div class="inv-panes">
+          <div class="inv-pane" id="invCardPane" role="tabpanel" aria-labelledby="tabCard">
+            <div class="nfc-stage inv-stage" id="invStage">
+              <img class="nfc-poster" src="/img/productos/invitaciones/tarjeta-a6.webp" width="1000" height="1200" alt="Tarjeta A6 de Nico y Eunice: marco con arco, ramas de olivo y aro del NFC">
+              <p class="nfc-hint" aria-hidden="true">Arrastra para girar</p>
+              <p class="nfc-loading" aria-hidden="true">Cargando la tarjeta…</p>
+              <div class="ax-controls" role="group" aria-label="Tarjeta">
+                <button type="button" class="ax-btn" id="invNfc" aria-pressed="false">Ver el NFC por dentro</button>
+              </div>
+            </div>
+            <p class="nfc-stage-note">Tarjeta A6 (105 × 148 mm), 2,4 mm de grosor y el texto incrustado en otro color.</p>
+          </div>
+          <div class="inv-pane" id="invWebPane" role="tabpanel" aria-labelledby="tabWeb">
+            <div class="phone" id="invPhone">
+              <iframe id="invFrame" src="/invitaciones/ejemplo/" title="Web de ejemplo de la invitación"></iframe>
+            </div>
+            <p class="nfc-stage-note">Esto es lo que se abre al acercar el móvil. Tócala para abrir el sobre. <a href="/invitaciones/ejemplo/" target="_blank" rel="noopener">Abrir en grande</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CÓMO FUNCIONA ============ -->
+  <section class="sec" id="como" aria-labelledby="como-title">
+    <div class="wrap about">
+      <div>
+        <p class="tag" data-rise>Cómo funciona</p>
+        <h2 id="como-title" class="title" data-split>De la tarjeta <span class="hl">a la web</span></h2>
+      </div>
+      <div class="about-copy">
+        <ol class="steps">
+          <i class="steps-fill" aria-hidden="true"></i>
+          <li><span>01</span><div><h3>Diseñamos la tarjeta con vosotros</h3><p>Nombres, fecha, ciudad y los colores que queráis. Os enseñamos cómo queda antes de imprimir nada.</p></div></li>
+          <li><span>02</span><div><h3>La imprimimos con el NFC dentro</h3><p>La pegatina queda escondida a 1 mm de la cara. Por fuera solo se ve el aro que dice «acerca el móvil».</p></div></li>
+          <li><span>03</span><div><h3>Vuestra web, con todo</h3><p>Cuenta atrás, dónde y cuándo, programa, vestimenta, alojamiento, regalo y la confirmación de asistencia. Si algo cambia, se actualiza la web: la tarjeta sirve igual.</p></div></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACTO ============ -->
+  <section class="sec cta-sec" id="contacto" aria-labelledby="cta-title" data-hide-wa>
+    <div class="wrap">
+      <p class="tag" data-rise>¿Os casáis?</p>
+      <h2 id="cta-title" class="title" data-split>Hablemos de <span class="hl">vuestra invitación</span></h2>
+      <p class="lede" style="margin:18px auto 0" data-rise>Contadnos fecha, cuántos invitados sois y qué os gustaría. Os respondemos en menos de 24 horas.</p>
+      <div class="channels">
+        <a class="channel channel-wa" href="https://wa.me/34694455979?text=Hola!%20Nos%20interesan%20las%20invitaciones%20de%20boda%20con%20NFC" target="_blank" rel="noopener" data-print="0"><span class="channel-k">WhatsApp</span><span class="channel-v">+34 694 455 979</span><span class="channel-n">Lo más rápido.</span></a>
+        <a class="channel" href="/pedido.html?pieza=Invitaciones%20de%20boda%20con%20NFC#pedido" data-print="1"><span class="channel-k">Formulario</span><span class="channel-v">Pedir información</span><span class="channel-n">Te respondemos en 24 h.</span></a>
+        <a class="channel" href="mailto:contacto@3docna.es" data-print="2"><span class="channel-k">Email</span><span class="channel-v">contacto@3docna.es</span><span class="channel-n">Para mandarnos ideas o fotos.</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="ftr" data-hide-wa>
+  <div class="wrap">
+    <p class="ftr-mark" aria-hidden="true"><span>3D<span class="oc">OC</span><span class="na">NA</span></span></p>
+    <div class="ftr-row">
+      <p>Impresión 3D en Elda · Octavio y Natalia</p>
+      <nav class="ftr-links" aria-label="Secundaria">
+        <a href="/catalogo.html">Catálogo</a>
+        <a href="/encargos.html">Encargos</a>
+        <a href="/pedido.html">Pedido</a>
+        <a href="/contacto.html">Contacto</a>
+      </nav>
+      <nav class="ftr-links" aria-label="Legal">
+        <a href="/aviso-legal.html">Aviso legal</a>
+        <a href="/condiciones.html">Condiciones de venta</a>
+        <a href="/privacidad.html">Privacidad</a>
+        <a href="/cookies.html">Cookies</a>
+      </nav>
+      <p class="muted">© <span data-year>2026</span> 3DOCNA</p>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/34694455979?text=Hola!%20Me%20interesa%20hacer%20un%20pedido%20de%20impresión%203D" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.2-.2-.4-.3Z"/></svg><span>¿Hablamos?</span></a>
+</body>
+</html>

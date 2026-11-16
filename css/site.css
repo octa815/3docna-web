@@ -1149,3 +1149,62 @@ h1, h2, h3 { text-wrap: balance; font-weight: 700; }
   .ax-btn { min-height: 38px; padding: 0 12px; font-size: 0.8rem; }
   #axStage .nfc-hint { bottom: auto; top: 10px; }
 }
+
+/* ==========================================================================
+   Invitaciones con NFC (nov. 2026): formulario a la izquierda, tarjeta 3D y móvil a la derecha.
+   En móvil: la vista previa arriba (con pestañas) y el formulario debajo.
+   ========================================================================== */
+.inv-badge { display: inline-block; padding: 3px 10px; margin-right: 6px; border-radius: 999px; background: var(--fil-strong); color: #fff; letter-spacing: 0.06em; }
+.inv-top .title { max-width: 18ch; }
+.inv-nota { margin-top: 14px; max-width: 40em; }
+.inv-grid { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(20px, 3vw, 40px); align-items: start; }
+.inv-form { display: grid; gap: 14px; }
+.inv-form-title { font-family: var(--display); font-size: 1.5rem; }
+.inv-fs { border: 0; padding: 0; margin: 0; min-width: 0; }
+.inv-fs legend { padding: 0; margin-bottom: 6px; font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
+.inv-form .form-row { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); }
+.inv-form .form-row:first-of-type { grid-template-columns: 1fr 1fr; }
+.inv-form .btn { justify-self: start; }
+.inv-previews { position: sticky; top: calc(var(--hdr-h) + 16px); display: grid; gap: 12px; }
+.inv-tabs { display: none; }
+.inv-panes { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 16px; align-items: start; }
+.inv-stage { aspect-ratio: 3 / 4; max-height: calc(100svh - var(--hdr-h) - 120px); }
+.inv-stage .nfc-poster { object-fit: contain; background: #f6f6f6; }
+.phone {
+  --k: 0.66;
+  position: relative; width: 100%; aspect-ratio: 390 / 820; overflow: hidden;
+  border-radius: 34px; border: 8px solid #0b0a0d; background: #0b0a0d;
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--line-strong);
+}
+.phone::before { content: ""; position: absolute; top: 6px; left: 50%; z-index: 2; width: 34%; height: 18px; translate: -50% 0; border-radius: 999px; background: #0b0a0d; }
+.phone iframe { position: absolute; top: 0; left: 0; width: 390px; max-width: none; height: calc(100% / var(--k)); border: 0; transform: scale(var(--k)); transform-origin: 0 0; background: #F7F2EA; }
+.inv-pane .nfc-stage-note a { color: var(--pink); }
+@media (max-width: 1040px) {
+  .inv-grid { grid-template-columns: minmax(0, 1fr); }
+  .inv-previews { position: relative; top: 0; order: -1; }
+}
+@media (max-width: 1040px) {
+  .inv-tabs { display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: var(--paper-2); width: fit-content; justify-self: center; }
+  .inv-tabs button { min-height: 40px; padding: 0 16px; border-radius: 999px; font-weight: 600; font-size: 0.9rem; color: var(--ink-2); }
+  .inv-tabs button[aria-selected="true"] { background: var(--ink); color: var(--paper); }
+  .inv-panes { grid-template-columns: minmax(0, 1fr); }
+  .inv-panes[data-vista="card"] #invWebPane, .inv-panes[data-vista="web"] #invCardPane { display: none; }
+  .inv-stage { aspect-ratio: auto; height: 52svh; max-height: none; }
+  .phone { width: min(78vw, 300px); justify-self: center; height: 52svh; aspect-ratio: auto; }
+  #invWebPane { display: grid; justify-items: center; }
+}
+@media (max-width: 700px) {
+  .inv-previews { position: sticky; top: 0; z-index: 5; margin-inline: calc(var(--gutter) * -1); padding: 8px var(--gutter) 10px; background: color-mix(in srgb, var(--paper) 92%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .inv-stage { height: 40svh; min-height: 260px; }
+  .phone { height: 40svh; min-height: 260px; width: auto; aspect-ratio: 390 / 820; border-width: 6px; border-radius: 26px; }
+  .inv-pane .nfc-stage-note { display: none; }
+  .inv-form .form-row, .inv-form .form-row:first-of-type { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 700px) {
+  /* La cabecera fija tapa lo de arriba: las pestañas van debajo de la vista previa */
+  .inv-tabs { order: 2; }
+}
+.inv-teaser { text-decoration: none; color: #f3eff4; }
+.inv-teaser-img { aspect-ratio: auto; background: #f6f6f6; }
+.inv-teaser-img img { object-fit: contain; max-height: 420px; }
+@media (hover: hover) and (pointer: fine) { .inv-teaser:hover .btn-fil { filter: brightness(1.08); } }

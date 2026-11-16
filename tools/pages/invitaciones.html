@@ -1,0 +1,103 @@
+<!-- {"title": "Invitaciones de boda con NFC", "desc": "Invitaciones de boda impresas en 3D con un NFC dentro: acercas el móvil y se abre vuestra web con el programa, los lugares y la confirmación de asistencia. Pruébalo con vuestros nombres. Proyecto en curso de 3DOCNA, Elda.", "nav": "encargos", "scripts": ["js/invitaciones.js"]} -->
+  <section class="page-top inv-top">
+    <div class="wrap">
+      <p class="tag" data-rise><span class="inv-badge">Proyecto en curso</span> Invitaciones con NFC</p>
+      <h1 class="title" data-split>Una invitación que <span class="hl">se abre en el móvil</span></h1>
+      <p class="lede" data-rise>La tarjeta es de verdad: impresa en 3D, con vuestros nombres incrustados en otro color. Dentro lleva un NFC. Vuestros invitados acercan el móvil y se abre vuestra web: el programa, cómo llegar, la confirmación de asistencia y todo lo demás.</p>
+      <p class="muted inv-nota" data-rise>Estamos terminando la primera tarjeta de prueba. Si os casáis y os gusta la idea, escribidnos y la preparamos con vosotros.</p>
+    </div>
+  </section>
+
+  <!-- ============ PRUÉBALO ============ -->
+  <section class="sec inv" id="prueba" aria-labelledby="prueba-title" style="padding-top:clamp(10px,2vw,30px)">
+    <div class="wrap inv-grid">
+      <form class="inv-form panel" id="invForm" autocomplete="off" aria-labelledby="prueba-title">
+        <h2 id="prueba-title" class="inv-form-title">Pruébalo con vuestros datos</h2>
+        <p class="form-note">Lo que escribas cambia al momento la tarjeta y la web. No se guarda ni se envía nada.</p>
+        <div class="form-row">
+          <label class="field"><span class="lbl">Primer nombre</span><input name="uno" value="Nico" maxlength="14" required></label>
+          <label class="field"><span class="lbl">Segundo nombre</span><input name="dos" value="Eunice" maxlength="14" required></label>
+        </div>
+        <div class="form-row">
+          <label class="field"><span class="lbl">Fecha</span><input name="fecha" type="date" value="2027-06-12" required></label>
+          <label class="field"><span class="lbl">Ciudad</span><input name="ciudad" value="Toledo" maxlength="22"></label>
+        </div>
+        <label class="field"><span class="lbl">Encabezado</span><input name="lema" value="Nos casamos" maxlength="22"></label>
+        <fieldset class="inv-fs">
+          <legend>Ceremonia</legend>
+          <div class="form-row">
+            <label class="field"><span class="lbl">Hora</span><input name="h1" type="time" value="12:30"></label>
+            <label class="field"><span class="lbl">Lugar</span><input name="l1" value="Ermita de Santa María" maxlength="40"></label>
+          </div>
+        </fieldset>
+        <fieldset class="inv-fs">
+          <legend>Celebración</legend>
+          <div class="form-row">
+            <label class="field"><span class="lbl">Hora</span><input name="h2" type="time" value="14:00"></label>
+            <label class="field"><span class="lbl">Lugar</span><input name="l2" value="Finca El Olivar" maxlength="40"></label>
+          </div>
+        </fieldset>
+        <label class="field"><span class="lbl">Una frase para la portada de la web</span><textarea name="frase" rows="2" maxlength="140">Hay días que merecen celebrarse con quienes más queremos. Este es uno de ellos.</textarea></label>
+        <fieldset class="nfc-colors" id="invColors"><legend>Colores de la tarjeta</legend></fieldset>
+        <button class="btn btn-ghost btn-sm" type="reset">Volver al ejemplo</button>
+      </form>
+
+      <div class="inv-previews">
+        <div class="inv-tabs" role="tablist" aria-label="Vista previa">
+          <button type="button" role="tab" aria-selected="true" aria-controls="invCardPane" id="tabCard">Tarjeta 3D</button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="invWebPane" id="tabWeb">Web en el móvil</button>
+        </div>
+        <div class="inv-panes">
+          <div class="inv-pane" id="invCardPane" role="tabpanel" aria-labelledby="tabCard">
+            <div class="nfc-stage inv-stage" id="invStage">
+              <img class="nfc-poster" src="/img/productos/invitaciones/tarjeta-a6.webp" width="1000" height="1200" alt="Tarjeta A6 de Nico y Eunice: marco con arco, ramas de olivo y aro del NFC">
+              <p class="nfc-hint" aria-hidden="true">Arrastra para girar</p>
+              <p class="nfc-loading" aria-hidden="true">Cargando la tarjeta…</p>
+              <div class="ax-controls" role="group" aria-label="Tarjeta">
+                <button type="button" class="ax-btn" id="invNfc" aria-pressed="false">Ver el NFC por dentro</button>
+              </div>
+            </div>
+            <p class="nfc-stage-note">Tarjeta A6 (105 × 148 mm), 2,4 mm de grosor y el texto incrustado en otro color.</p>
+          </div>
+          <div class="inv-pane" id="invWebPane" role="tabpanel" aria-labelledby="tabWeb">
+            <div class="phone" id="invPhone">
+              <iframe id="invFrame" src="/invitaciones/ejemplo/" title="Web de ejemplo de la invitación"></iframe>
+            </div>
+            <p class="nfc-stage-note">Esto es lo que se abre al acercar el móvil. Tócala para abrir el sobre. <a href="/invitaciones/ejemplo/" target="_blank" rel="noopener">Abrir en grande</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CÓMO FUNCIONA ============ -->
+  <section class="sec" id="como" aria-labelledby="como-title">
+    <div class="wrap about">
+      <div>
+        <p class="tag" data-rise>Cómo funciona</p>
+        <h2 id="como-title" class="title" data-split>De la tarjeta <span class="hl">a la web</span></h2>
+      </div>
+      <div class="about-copy">
+        <ol class="steps">
+          <i class="steps-fill" aria-hidden="true"></i>
+          <li><span>01</span><div><h3>Diseñamos la tarjeta con vosotros</h3><p>Nombres, fecha, ciudad y los colores que queráis. Os enseñamos cómo queda antes de imprimir nada.</p></div></li>
+          <li><span>02</span><div><h3>La imprimimos con el NFC dentro</h3><p>La pegatina queda escondida a 1 mm de la cara. Por fuera solo se ve el aro que dice «acerca el móvil».</p></div></li>
+          <li><span>03</span><div><h3>Vuestra web, con todo</h3><p>Cuenta atrás, dónde y cuándo, programa, vestimenta, alojamiento, regalo y la confirmación de asistencia. Si algo cambia, se actualiza la web: la tarjeta sirve igual.</p></div></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACTO ============ -->
+  <section class="sec cta-sec" id="contacto" aria-labelledby="cta-title" data-hide-wa>
+    <div class="wrap">
+      <p class="tag" data-rise>¿Os casáis?</p>
+      <h2 id="cta-title" class="title" data-split>Hablemos de <span class="hl">vuestra invitación</span></h2>
+      <p class="lede" style="margin:18px auto 0" data-rise>Contadnos fecha, cuántos invitados sois y qué os gustaría. Os respondemos en menos de 24 horas.</p>
+      <div class="channels">
+        <a class="channel channel-wa" href="https://wa.me/34694455979?text=Hola!%20Nos%20interesan%20las%20invitaciones%20de%20boda%20con%20NFC" target="_blank" rel="noopener" data-print="0"><span class="channel-k">WhatsApp</span><span class="channel-v">+34 694 455 979</span><span class="channel-n">Lo más rápido.</span></a>
+        <a class="channel" href="/pedido.html?pieza=Invitaciones%20de%20boda%20con%20NFC#pedido" data-print="1"><span class="channel-k">Formulario</span><span class="channel-v">Pedir información</span><span class="channel-n">Te respondemos en 24 h.</span></a>
+        <a class="channel" href="mailto:contacto@3docna.es" data-print="2"><span class="channel-k">Email</span><span class="channel-v">contacto@3docna.es</span><span class="channel-n">Para mandarnos ideas o fotos.</span></a>
+      </div>
+    </div>
+  </section>

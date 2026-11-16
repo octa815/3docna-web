@@ -1,0 +1,19 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//3DOCNA//Invitaciones//ES
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+UID:nico-eunice@3docna
+DTSTAMP:20261116T180631Z
+DTSTART:20270612T103000Z
+DTEND:20270613T000000Z
+SUMMARY:Boda de Nico y Eunice
+LOCATION:Ermita de Santa María\, Camino de la Ermita\, s/n · Toledo
+DESCRIPTION:Hay días que merecen celebrarse con quienes más queremos. Este es uno de ellos.
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Mañana es la boda
+END:VALARM
+END:VEVENT
+END:VCALENDAR
