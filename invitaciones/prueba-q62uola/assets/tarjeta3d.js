@@ -35,7 +35,16 @@ async function arrancar() {
   };
 
   const renderer = new THREE.WebGLRenderer({ canvas: lienzo, antialias: true, alpha: true, powerPreference: "low-power" });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  /* Rendimiento en móviles distintos:
+     - gama: se estima al empezar (núcleos y memoria); en gama baja, menos resolución, texturas y partículas;
+     - resolución dinámica: si los fotogramas tardan, baja la resolución del lienzo (y la sube si va sobrado);
+     - en pantallas de 120 Hz dibuja uno de cada dos fotogramas (60 fps): no gasta el doble de batería;
+     - no dibuja nada si el escenario no se ve o la pestaña está en segundo plano. */
+  const nucleos = navigator.hardwareConcurrency || 4, memoria = navigator.deviceMemory || 4;
+  const gamaBaja = nucleos <= 4 || memoria <= 3 || /[?&]gama=baja/.test(location.search);
+  const DPR_MAX = Math.min(devicePixelRatio, gamaBaja ? 1.5 : 2);
+  let dpr = DPR_MAX;
+  renderer.setPixelRatio(dpr);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -111,7 +120,7 @@ async function arrancar() {
   const W = ALTO + 0.34, H = ANCHO + 0.28;        // ~1,84 x 1,34 (proporción de un sobre 5x7 / C5)
   const V = H * 0.36, F = H * 0.6;                 // pico del bolsillo y largo de la solapa
   const Z = { atras: -0.006, frente: 0.042, solapa: 0.048 };
-  const PX = 560;                                  // píxeles de textura por unidad
+  const PX = gamaBaja ? 400 : 560;                 // píxeles de textura por unidad
 
   // --- dibujo barroco en canvas: volutas, hojas de acanto y perlas
   function voluta(g, x, y, r, ang, sentido = 1, vueltas = 1.6) {
@@ -513,7 +522,7 @@ async function arrancar() {
     gr.addColorStop(0, "rgba(255,255,255,1)"); gr.addColorStop(.2, "rgba(255,255,255,.75)"); gr.addColorStop(.45, "rgba(255,255,255,.12)"); gr.addColorStop(1, "rgba(255,255,255,0)");
     g.fillStyle = gr; g.fillRect(0, 0, 64, 64);
   });
-  const N = innerWidth < 600 ? 900 : 1400;
+  const N = gamaBaja ? 500 : innerWidth < 600 ? 900 : 1400;
   const pos = new Float32Array(N * 3), vel = new Float32Array(N * 3), col = new Float32Array(N * 3);
   const vida = new Float32Array(N), dura = new Float32Array(N), tamP = new Float32Array(N), tam0 = new Float32Array(N), alfa = new Float32Array(N);
   const tipo = new Uint8Array(N);   // 0 chispa, 1 cohete (deja estela y estalla), 2 estela
@@ -604,7 +613,7 @@ async function arrancar() {
     for (let i = 0; i < pp.count; i++) pp.setZ(i, -(pp.getX(i) ** 2) * 5);
     geoPetalo.computeVertexNormals();
   }
-  const NP = innerWidth < 600 ? 70 : 110;
+  const NP = gamaBaja ? 45 : innerWidth < 600 ? 70 : 110;
   const matPetalo = new THREE.MeshStandardMaterial({ side: THREE.DoubleSide, roughness: .55, envMapIntensity: .5 });
   const petalos = new THREE.InstancedMesh(geoPetalo, matPetalo, NP);
   petalos.frustumCulled = false;
@@ -725,9 +734,23 @@ async function arrancar() {
   document.addEventListener("visibilitychange", seguir);
   const baseCam = () => camara.position.z;
 
-  function cuadro() {
+  let ultimoCuadro = 0, sumaMs = 0, cuadros = 0;
+  function ajustarResolucion(ms) {   // cada ~1,5 s: si va lento, menos píxeles; si va sobrado, vuelve a subir
+    sumaMs += ms; cuadros++;
+    if (sumaMs < 1500) return;
+    const media = sumaMs / cuadros;
+    sumaMs = 0; cuadros = 0;
+    let nuevo = dpr;
+    if (media > 24 && dpr > 1) nuevo = Math.max(1, dpr - .25);          // por debajo de ~40 fps
+    else if (media < 17.5 && dpr < DPR_MAX) nuevo = Math.min(DPR_MAX, dpr + .25);
+    if (nuevo !== dpr) { dpr = nuevo; renderer.setPixelRatio(dpr); encuadre(); }
+  }
+  function cuadro(ahora) {
     corriendo = false;
-    if (!visible || document.hidden) return;
+    if (!visible || document.hidden) { ultimoCuadro = 0; return; }
+    if (ultimoCuadro && ahora - ultimoCuadro < 10.5) { seguir(); return; }   // en pantallas de 120 Hz, uno de cada dos
+    if (ultimoCuadro) ajustarResolucion(ahora - ultimoCuadro);
+    ultimoCuadro = ahora;
     const t = reloj.getElapsedTime();
     const dt = Math.min(0.05, t - tPrevio); tPrevio = t;
     const flota = quieto ? 0 : est.flota;
@@ -888,7 +911,7 @@ async function arrancar() {
         .to(est, { vibra: 0, inflar: 0, lacreLuz: 0, duration: .6, ease: "power2.out" }, "+=.35");
     },
   };
-  if (/[?&]depurar/.test(location.search)) window.__sobre = { est, GESTOS: () => GESTOS };   // solo para pruebas
+  if (/[?&]depurar/.test(location.search)) window.__sobre = { est, GESTOS: () => GESTOS, calidad: () => ({ gamaBaja, dpr, DPR_MAX, N, NP, PX }) };   // solo para pruebas
   const PESOS = { salto: 3, solapa: 3, empuje: 2.5, retorcerse: 2, temblor: 1.5 };
   function gesto() {
     const g = window.gsap;
