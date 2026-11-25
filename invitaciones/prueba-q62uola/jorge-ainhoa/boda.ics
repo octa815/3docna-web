@@ -1,0 +1,19 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//3DOCNA//Invitaciones//ES
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+UID:jorge-ainhoa@3docna
+DTSTAMP:20261125T134512Z
+DTSTART:20270612T103000Z
+DTEND:20270613T000000Z
+SUMMARY:Boda de Jorge y Ainhoa
+LOCATION:Ermita de la Virgen de la Salud\, Camino de la Ermita\, s/n · Elda (Alicante)
+DESCRIPTION:Hay días que merecen celebrarse con quienes más queremos. Este es uno de ellos.
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Mañana es la boda
+END:VALARM
+END:VEVENT
+END:VCALENDAR

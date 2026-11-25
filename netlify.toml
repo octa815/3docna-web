@@ -45,3 +45,9 @@
   to = "/catalogo.html"
   status = 301
   force = true
+
+# Pruebas privadas de invitaciones: sin enlaces desde la web y fuera de los buscadores
+[[headers]]
+  for = "/invitaciones/prueba-*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
