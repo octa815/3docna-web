@@ -8,16 +8,19 @@
   --marfil: #F4EFE6;         /* PLA de la tarjeta (lo sobreescribe evento.json) */
   --papel: #FBF8F2;
   --tinta: #24302A;
-  --tinta-2: #55625A;
+  --tinta-2: #424C45;        /* texto secundario: contraste 7:1 sobre el marfil */
   --oro: #C9A25E;            /* PLA silk del texto (lo sobreescribe evento.json) */
-  --oro-osc: #8C6A2E;        /* dorado legible sobre marfil */
+  --oro-osc: #74541C;        /* dorado legible sobre marfil (contraste 5,8:1) */
   --salvia: #8E9F80;
   --linea: color-mix(in srgb, var(--tinta) 16%, transparent);
 
-  --display: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
-  --texto: "Jost", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  /* Letra pensada para leerse bien: Fraunces (serifa con trazos firmes, sin rayas finísimas) para títulos
+     y nombres, y Atkinson Hyperlegible Next (diseñada para baja visión) para el texto. */
+  --display: "Fraunces", Georgia, "Times New Roman", serif;
+  --texto: "Atkinson Hyperlegible Next", "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
 
-  --t-0: .875rem;  --t-1: 1.0625rem;  --t-2: 1.3125rem;  --t-3: 1.75rem;  --t-4: 2.5rem;  --t-5: clamp(2.75rem, 11vw, 6.5rem);
+  /* tamaños generosos: el texto normal a 19 px y nada por debajo de 16 px */
+  --t-0: 1rem;  --t-1: 1.1875rem;  --t-2: 1.4375rem;  --t-3: 1.875rem;  --t-4: 2.625rem;  --t-5: clamp(3rem, 12vw, 6.5rem);
   --ancho: 34rem;
   --mueve: cubic-bezier(.2, .7, .2, 1);
 }
@@ -28,7 +31,7 @@ body {
   margin: 0;
   background: var(--marfil);
   color: var(--tinta);
-  font: 300 var(--t-1)/1.6 var(--texto);
+  font: 400 var(--t-1)/1.65 var(--texto);
   -webkit-font-smoothing: antialiased;
 }
 html.bloqueado, html.bloqueado body { overflow: hidden; }
@@ -82,9 +85,10 @@ a { color: inherit; }
   transition: opacity .8s ease;
 }
 .tp-lema, .tp-fecha { font: 500 .55rem/1 var(--texto); letter-spacing: .2em; }
-.tp-nombres { font: italic 400 1.5rem/1.05 var(--display); display: grid; }
+.tp-nombres { font: italic 500 1.5rem/1.05 var(--display); display: grid; }
 .tp-nombres i { font-size: .8em; }
-.modelo-listo .tarjeta-plana { opacity: 0; }
+.tarjeta-plana { display: none; }
+.sin-3d.revelado .tarjeta-plana { display: grid; }
 
 /* Titular */
 .titular {
@@ -94,15 +98,15 @@ a { color: inherit; }
   text-align: center;
   text-shadow: 0 1px 2px rgba(0, 0, 0, .55), 0 2px 24px rgba(0, 0, 0, .45);   /* se lee aunque pase un pétalo por detrás */
 }
-.lema { font: 400 var(--t-0)/1 var(--texto); letter-spacing: .32em; text-transform: uppercase; color: var(--oro); margin-bottom: .9rem; }
+.lema { font: 400 var(--t-0)/1 var(--texto); letter-spacing: .2em; text-transform: uppercase; font-weight: 600; color: var(--oro); margin-bottom: .9rem; }
 .escenario h1 {
-  font: italic 400 var(--t-5)/.92 var(--display);
+  font: italic 500 var(--t-5)/.92 var(--display);
   font-variation-settings: "opsz" 96;
   letter-spacing: -.01em;
 }
 .escenario h1 span { display: inline-block; }
 .escenario h1 .amp { font-style: normal; font-size: .55em; color: var(--oro); margin: 0 .08em; transform: translateY(-.25em); }
-.cuando { margin-top: 1rem; font: 300 var(--t-1)/1.5 var(--texto); color: color-mix(in srgb, var(--marfil) 78%, transparent); }
+.cuando { margin-top: 1rem; font: 400 var(--t-2)/1.45 var(--texto); color: color-mix(in srgb, var(--marfil) 92%, transparent); }
 
 /* Botón de abrir: un aro que «escucha», como el del NFC de la tarjeta */
 .abrir {
@@ -111,7 +115,7 @@ a { color: inherit; }
   display: none;
   flex-direction: column; align-items: center; gap: .9rem;
   background: none; border: 0; padding: 1rem 2rem; color: var(--marfil); cursor: pointer;
-  font: 400 var(--t-0)/1 var(--texto); letter-spacing: .14em;
+  font: 600 var(--t-1)/1.2 var(--texto); letter-spacing: .03em;
 }
 .abrir-aro {
   position: relative; width: 4.25rem; height: 4.25rem; border-radius: 50%;
@@ -127,26 +131,56 @@ a { color: inherit; }
 .abrir-aro::after { animation-delay: 1.4s; }
 @keyframes onda { 0% { transform: scale(1); opacity: .7; } 100% { transform: scale(2.1); opacity: 0; } }
 .abrir-txt { display: grid; gap: .45rem; justify-items: center; }
-.abrir-txt small { font-size: .75rem; letter-spacing: .08em; color: color-mix(in srgb, var(--marfil) 60%, transparent); }
+.abrir-txt small { font-size: var(--t-0); font-weight: 400; color: color-mix(in srgb, var(--marfil) 82%, transparent); }
 .abrir:hover .abrir-aro { background: color-mix(in srgb, var(--oro) 14%, transparent); }
 
+/* Invitación a seguir bajando: una pastilla bien visible que da un saltito y se va al empezar a bajar */
 .bajar {
-  position: absolute; left: 50%; bottom: calc(1.4rem + env(safe-area-inset-bottom)); transform: translateX(-50%);
-  font: 400 var(--t-0)/1 var(--texto); letter-spacing: .08em; text-decoration: none;
-  color: color-mix(in srgb, var(--marfil) 70%, transparent);
-  padding: .8rem 1rem 1.6rem;
+  position: absolute; left: 50%; bottom: calc(1.1rem + env(safe-area-inset-bottom)); z-index: 2;
+  display: flex; align-items: center; gap: .55rem;
+  padding: .85rem 1.15rem .85rem 1.4rem; min-height: 3.4rem; border-radius: 999px;
+  font: 600 var(--t-0)/1.2 var(--texto); text-decoration: none; white-space: nowrap;
+  color: #1d1a12; background: var(--oro);
+  box-shadow: 0 10px 30px -8px rgba(0, 0, 0, .55), 0 0 0 6px color-mix(in srgb, var(--oro) 22%, transparent);
+  transform: translateX(-50%);
+  animation: llama 2.4s var(--mueve) infinite;
+  transition: opacity .4s ease, visibility .4s;
 }
-.bajar::after {
-  content: ""; position: absolute; left: 50%; bottom: .2rem; width: 1px; height: 1rem; background: var(--oro);
-  transform-origin: top; animation: gota 2.2s var(--mueve) infinite;
-}
-@keyframes gota { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(1) translateY(1rem); opacity: 0; } }
+.bajar-flechas { width: 1.35rem; height: 1.35rem; animation: flechas 1.2s ease-in-out infinite; }
+@keyframes llama { 0%, 60%, 100% { transform: translateX(-50%) translateY(0); } 70% { transform: translateX(-50%) translateY(-7px); } 80% { transform: translateX(-50%) translateY(0); } 88% { transform: translateX(-50%) translateY(-3px); } }
+@keyframes flechas { 0%, 100% { transform: translateY(-2px); opacity: .75; } 50% { transform: translateY(3px); opacity: 1; } }
+.ha-bajado .bajar { opacity: 0; visibility: hidden; }
 
 /* Antes de abrir (solo con JS): titular y flecha esperan; se ve el aro */
 .js:not(.revelado) .titular, .js:not(.revelado) .bajar { opacity: 0; visibility: hidden; }
 .js:not(.abierto) .abrir { display: flex; }
 .js:not(.abierto) .escenario { cursor: pointer; }
 .js:not(.abierto) .lienzo { cursor: pointer; }
+
+/* Llamada a tocar: si el invitado no hace nada en unos segundos, aparece en el centro, con calma */
+.llamada {
+  position: absolute; left: 50%; top: 62%; z-index: 3; margin: 0;
+  display: grid; justify-items: center; gap: .35rem; text-align: center; pointer-events: none;
+  transform: translate(-50%, 0); opacity: 0; transition: opacity .9s ease, transform .9s var(--mueve);
+}
+.llamada.visible { opacity: 1; transform: translate(-50%, -.4rem); }
+.llamada-txt { font: italic 500 var(--t-3)/1.1 var(--display); color: var(--marfil); text-shadow: 0 2px 18px rgba(0, 0, 0, .6); }
+.llamada small { font: 400 var(--t-0)/1.3 var(--texto); color: color-mix(in srgb, var(--marfil) 85%, transparent); text-shadow: 0 1px 10px rgba(0, 0, 0, .6); }
+.llamada-dedo {   /* un toque: punto que pulsa con ondas */
+  position: relative; width: 1.1rem; height: 1.1rem; margin-bottom: .6rem; border-radius: 50%;
+  background: var(--oro); box-shadow: 0 0 18px color-mix(in srgb, var(--oro) 70%, transparent);
+  animation: toque 1.8s ease-in-out infinite;
+}
+.llamada-dedo::before, .llamada-dedo::after {
+  content: ""; position: absolute; inset: -2px; border-radius: 50%; border: 1.5px solid var(--oro);
+  animation: onda 1.8s var(--mueve) infinite;
+}
+.llamada-dedo::after { animation-delay: .6s; }
+@keyframes toque { 0%, 100% { transform: scale(1); } 15% { transform: scale(.75); } 30% { transform: scale(1); } }
+.llamada-txt, .llamada small { white-space: nowrap; }
+.abierto .llamada { display: none; }
+.abrir-aro, .abrir-txt { transition: opacity .6s ease; }
+.llamando .abrir-aro, .llamando .abrir-txt { opacity: 0 !important; }   /* !important: GSAP pone la opacidad en línea */   /* mientras habla la llamada del centro, el botón de abajo se aparta */
 
 /* destello dorado del golpe final */
 .destello {
@@ -162,35 +196,35 @@ main::before {   /* el canto de la tarjeta: una línea dorada fina donde acaba e
 }
 .frase {
   max-width: var(--ancho); margin: 0 auto; padding: 5rem 1.5rem 1rem;
-  font: italic 400 var(--t-3)/1.3 var(--display); text-align: center; text-wrap: balance;
+  font: italic 500 var(--t-3)/1.3 var(--display); text-align: center; text-wrap: balance;
 }
 
 .bloque { max-width: var(--ancho); margin: 0 auto; padding: 4.5rem 1.5rem 0; }
 .bloque-cab { margin-bottom: 1.75rem; }
-.bloque h2 { font: italic 400 var(--t-4)/1.05 var(--display); font-variation-settings: "opsz" 72; }
+.bloque h2 { font: 600 var(--t-4)/1.1 var(--display); font-variation-settings: "opsz" 72; }
 .entradilla { margin-top: .6rem; color: var(--tinta-2); }
 .bloque p + p { margin-top: .9rem; }
-.bloque h3 { font: 500 var(--t-1)/1.35 var(--texto); }
+.bloque h3 { font: 600 var(--t-1)/1.35 var(--texto); }
 
 .bloque-historia { padding-top: 2rem; }
 .historia { color: var(--tinta-2); text-align: center; text-wrap: pretty; }
 
 /* Cuándo: la cuenta atrás es una frase */
-.fecha-larga { font: 400 var(--t-2)/1.3 var(--display); }
+.fecha-larga { font: 500 var(--t-2)/1.3 var(--display); }
 .cuenta { margin-top: .8rem; font-size: var(--t-2); line-height: 1.5; color: var(--tinta-2); }
 .cuenta b { font: 500 1.15em/1 var(--display); color: var(--tinta); font-variant-numeric: lining-nums tabular-nums; display: inline-block; }
 .cuenta b.cambia { animation: cifra .5s var(--mueve); }
 @keyframes cifra { from { transform: translateY(-.35em); opacity: 0; } }
-.cuenta-fin { font: italic 400 var(--t-3)/1.2 var(--display); color: var(--oro-osc); }
+.cuenta-fin { font: italic 500 var(--t-3)/1.2 var(--display); color: var(--oro-osc); }
 
 /* Botones */
 .botones { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.75rem; }
 .boton {
   display: inline-flex; align-items: center; gap: .55rem;
-  padding: .85rem 1.3rem; min-height: 3rem;
+  padding: .9rem 1.4rem; min-height: 3.25rem;
   border: 1px solid var(--tinta); border-radius: 999px;
   background: var(--tinta); color: var(--marfil);
-  font: 400 var(--t-0)/1 var(--texto); letter-spacing: .04em; text-decoration: none; cursor: pointer;
+  font: 600 var(--t-0)/1.2 var(--texto); letter-spacing: .01em; text-decoration: none; cursor: pointer;
   transition: background .25s, color .25s, border-color .25s;
 }
 .boton:hover { background: var(--noche-2); }
@@ -204,11 +238,11 @@ main::before {   /* el canto de la tarjeta: una línea dorada fina donde acaba e
 /* Dónde: la hora en grande, como en un programa de mano */
 .eventos { display: grid; gap: 2.25rem; }
 .evento { display: grid; grid-template-columns: 5.6rem 1fr; gap: 1rem; align-items: start; }
-.evento-hora { font: 400 2.2rem/1 var(--display); font-variant-numeric: lining-nums; color: var(--oro-osc); padding-top: .1rem; }
+.evento-hora { font: 500 2.2rem/1 var(--display); font-variant-numeric: lining-nums; color: var(--oro-osc); padding-top: .1rem; }
 .evento h3 { display: flex; align-items: center; gap: .45rem; }
 .evento h3 .icono { color: var(--oro-osc); }
-.evento-lugar { font: 400 var(--t-2)/1.25 var(--display); margin-top: .2rem; }
-.evento-dir, .evento-nota { color: var(--tinta-2); font-size: .95rem; }
+.evento-lugar { font: 500 var(--t-2)/1.25 var(--display); margin-top: .2rem; }
+.evento-dir, .evento-nota { color: var(--tinta-2); font-size: 1.0625rem; }
 .bloque .evento-dir { margin-top: .2rem; }
 
 /* Programa: un hilo de filamento dorado que se va «imprimiendo» al bajar */
@@ -216,9 +250,9 @@ main::before {   /* el canto de la tarjeta: una línea dorada fina donde acaba e
 .programa-hilo { position: absolute; left: 4.35rem; top: .5rem; bottom: .5rem; width: 2px; background: var(--linea); border-radius: 2px; }
 .programa-hilo::after { content: ""; position: absolute; inset: 0; background: var(--oro); transform-origin: top; transform: scaleY(var(--p, 1)); border-radius: 2px; }
 .programa li { display: grid; grid-template-columns: 3.6rem 1.5rem 1fr; gap: .6rem; align-items: start; }
-.prog-hora { font: 400 var(--t-1)/1.5 var(--display); font-variant-numeric: lining-nums tabular-nums; text-align: right; }
+.prog-hora { font: 500 var(--t-1)/1.5 var(--display); font-variant-numeric: lining-nums tabular-nums; text-align: right; }
 .prog-punto { width: .7rem; height: .7rem; margin: .45rem auto 0; border-radius: 50%; background: var(--marfil); border: 2px solid var(--oro); position: relative; z-index: 1; }
-.programa p { color: var(--tinta-2); font-size: .95rem; }
+.programa p { color: var(--tinta-2); font-size: 1.0625rem; }
 
 /* Galería */
 .galeria { display: grid; grid-template-columns: repeat(2, 1fr); gap: .5rem; }
@@ -228,7 +262,7 @@ main::before {   /* el canto de la tarjeta: una línea dorada fina donde acaba e
 .galeria-video { width: 100%; margin-top: .5rem; border-radius: .25rem; background: #000; }
 
 /* Vestimenta: muestras como bobinas de filamento vistas de frente */
-.vestimenta-tit { font: italic 400 var(--t-3)/1.2 var(--display); }
+.vestimenta-tit { font: italic 500 var(--t-3)/1.2 var(--display); }
 .paleta-tit { color: var(--tinta-2); }
 .paleta { list-style: none; padding: 0; margin: 1rem 0 0; display: flex; flex-wrap: wrap; gap: 1.25rem; }
 .paleta li { display: grid; justify-items: center; gap: .45rem; font-size: var(--t-0); color: var(--tinta-2); }
@@ -243,7 +277,7 @@ main::before {   /* el canto de la tarjeta: una línea dorada fina donde acaba e
 .info { padding-top: 1.25rem; border-top: 1px solid var(--linea); }
 .info h3 { display: flex; align-items: center; gap: .5rem; margin-bottom: .3rem; }
 .info h3 .icono { color: var(--oro-osc); }
-.info p { color: var(--tinta-2); font-size: .95rem; }
+.info p { color: var(--tinta-2); font-size: 1.0625rem; }
 
 /* Confirmación: el formulario va en un papel aparte, como una tarjeta de respuesta */
 .bloque-rsvp { max-width: 38rem; }
@@ -261,14 +295,14 @@ main::before {   /* el canto de la tarjeta: una línea dorada fina donde acaba e
 }
 .campo textarea { resize: vertical; }
 .campo input:focus, .campo textarea:focus { outline: none; border-bottom-color: var(--oro); box-shadow: 0 1px 0 var(--oro); }
-.campo ::placeholder { color: color-mix(in srgb, var(--tinta) 38%, transparent); }
+.campo ::placeholder { color: color-mix(in srgb, var(--tinta) 60%, transparent); }
 .opciones { border: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
 .opciones legend { width: 100%; margin-bottom: .5rem; padding: 0; }
 .opciones label { position: relative; }
 .opciones input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
 .opciones span {
   display: inline-block; padding: .65rem 1.1rem; border-radius: 999px; border: 1px solid var(--linea);
-  font-size: .95rem; transition: background .2s, border-color .2s, color .2s;
+  font-size: 1.0625rem; transition: background .2s, border-color .2s, color .2s;
 }
 .opciones input:checked + span { background: var(--tinta); border-color: var(--tinta); color: var(--marfil); }
 .opciones input:focus-visible + span { outline: 2px solid var(--oro); outline-offset: 2px; }
@@ -277,12 +311,12 @@ main::before {   /* el canto de la tarjeta: una línea dorada fina donde acaba e
 .rsvp .boton { justify-self: start; }
 .rsvp-estado { min-height: 1.5em; font-size: var(--t-0); color: var(--tinta-2); }
 .rsvp-gracias { text-align: center; }
-.gracias-tit { font: italic 400 var(--t-4)/1.1 var(--display); color: var(--oro-osc); }
+.gracias-tit { font: italic 500 var(--t-4)/1.1 var(--display); color: var(--oro-osc); }
 .rsvp-wa p { margin-bottom: 1.25rem; color: var(--tinta-2); }
 
 /* Regalo */
 .iban { margin-top: 1.25rem; }
-.iban-num { font: 400 var(--t-2)/1.3 var(--display); font-variant-numeric: lining-nums; letter-spacing: .03em; word-break: break-word; }
+.iban-num { font: 500 var(--t-2)/1.3 var(--display); font-variant-numeric: lining-nums; letter-spacing: .03em; word-break: break-word; }
 .iban-tit { color: var(--tinta-2); font-size: var(--t-0); margin-bottom: .9rem; }
 .bloque .iban p + p { margin-top: .2rem; }
 
@@ -293,20 +327,20 @@ main::before {   /* el canto de la tarjeta: una línea dorada fina donde acaba e
   list-style: none; cursor: pointer; padding: 1rem 2rem 1rem 0; position: relative; font-weight: 400;
 }
 .faq summary::-webkit-details-marker { display: none; }
-.faq summary::after { content: "+"; position: absolute; right: .2rem; top: .75rem; font: 300 1.5rem/1 var(--texto); color: var(--oro-osc); transition: transform .3s var(--mueve); }
+.faq summary::after { content: "+"; position: absolute; right: .2rem; top: .75rem; font: 400 1.5rem/1 var(--texto); color: var(--oro-osc); transition: transform .3s var(--mueve); }
 .faq details[open] summary::after { transform: rotate(45deg); }
-.faq details p { padding: 0 0 1.1rem; color: var(--tinta-2); font-size: .95rem; }
+.faq details p { padding: 0 0 1.1rem; color: var(--tinta-2); font-size: 1.0625rem; }
 
 /* Pie: vuelve la noche, cerrando como empezó */
 .pie {
   margin-top: 6rem; padding: 4rem 1.5rem calc(3rem + env(safe-area-inset-bottom));
   background: var(--noche); color: var(--marfil); text-align: center;
 }
-.pie-nombres { font: italic 400 var(--t-4)/1 var(--display); }
+.pie-nombres { font: italic 500 var(--t-4)/1 var(--display); }
 .pie-nombres .amp { font-style: normal; color: var(--oro); font-size: .7em; }
 .hashtag { margin-top: 1rem; color: color-mix(in srgb, var(--marfil) 75%, transparent); }
 .hashtag strong { color: var(--oro); font-weight: 400; }
-.firma { margin-top: 2.5rem; font-size: var(--t-0); color: color-mix(in srgb, var(--marfil) 55%, transparent); }
+.firma { margin-top: 2.5rem; font-size: var(--t-0); color: color-mix(in srgb, var(--marfil) 80%, transparent); }
 .firma a { color: color-mix(in srgb, var(--marfil) 80%, transparent); }
 
 /* Botón de música: cuatro barras que se mueven con el sonido (quietas en pausa) */
@@ -345,3 +379,28 @@ main::before {   /* el canto de la tarjeta: una línea dorada fina donde acaba e
 
 /* tras el primer toque la música ya suena: fuera el «con música» */
 .despierto .abrir-txt small { display: none; }
+
+/* ================================================================ PANTALLA DE CARGA
+   Un sobre que respira mientras se descarga todo (3D, sonidos, letra); no deja ver nada de la invitación. */
+.carga { display: none; }
+.js .carga {
+  position: fixed; inset: 0; z-index: 100;
+  display: grid; place-content: center; justify-items: center; gap: 1.6rem;
+  background: radial-gradient(60% 42% at 50% 40%, color-mix(in srgb, var(--oro) 16%, transparent), transparent 70%), var(--noche);
+  color: var(--marfil); text-align: center;
+  transition: opacity .9s ease, visibility .9s;
+}
+.js .carga.fuera { opacity: 0; visibility: hidden; }
+.cargando, .cargando body { overflow: hidden; }
+.sobre-svg { width: min(68vw, 300px); height: auto; overflow: visible; filter: drop-shadow(0 18px 30px rgba(0, 0, 0, .45)); }
+.carga .sobre-svg { animation: respira 2.6s ease-in-out infinite; transform-origin: 50% 60%; }
+.carga .sobre-svg .s-solapa { animation: empuja 2.6s ease-in-out infinite; transform-origin: 50% 0; }
+@keyframes respira { 0%, 100% { transform: scale(1) rotate(-1deg); } 50% { transform: scale(1.03) rotate(1deg); } }
+@keyframes empuja { 0%, 70%, 100% { transform: scaleY(1); } 80% { transform: scaleY(.93); } 88% { transform: scaleY(1.02); } }
+.carga-txt { font: 600 var(--t-1)/1.3 var(--texto); }
+.carga-barra { width: min(56vw, 220px); height: 3px; border-radius: 3px; background: color-mix(in srgb, var(--marfil) 18%, transparent); overflow: hidden; }
+.carga-barra i { display: block; height: 100%; width: 100%; background: var(--oro); transform-origin: left; transform: scaleX(var(--p, .05)); transition: transform .5s ease; }
+
+/* sin 3D: el mismo sobre dibujado hace de sobre hasta que se abre */
+.sobre-plano { display: none; }
+.sin-3d:not(.revelado) .sobre-plano { display: grid; position: absolute; left: 50%; top: 38%; transform: translate(-50%, -50%); }

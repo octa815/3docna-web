@@ -5,6 +5,8 @@
    - GSAP es opcional: si no carga, todo funciona igual sin animación. */
 (() => {
   const raiz = document.documentElement;
+  // la invitación siempre empieza arriba, en el sobre (sin que el navegador recuerde un scroll anterior)
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
   const quieto = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const conGsap = () => !quieto && window.gsap;
   const $ = (s, c = document) => c.querySelector(s);
@@ -59,6 +61,35 @@
     else if (quiereMusica) audio.play().catch(() => {});
   });
 
+  /* ---------------------------------------------------------------- PANTALLA DE CARGA
+     Se queda hasta que está todo: la letra, la página, el sobre 3D y los sonidos (o 20 s como mucho).
+     Así el invitado no ve nada a medio cargar ni ningún adelanto de la invitación. */
+  const carga = $("#carga");
+  function pantallaDeCarga(hay3dCarga) {
+    if (!carga) { raiz.classList.remove("cargando"); raiz.classList.add("cargado"); return; }
+    const barra = carga.querySelector(".carga-barra");
+    const tareas = [
+      document.fonts ? document.fonts.ready : Promise.resolve(),
+      new Promise((ok) => (document.readyState === "complete" ? ok() : addEventListener("load", ok, { once: true }))),
+      hay3dCarga ? new Promise((ok) => { addEventListener("invitacion:lista", ok, { once: true }); addEventListener("invitacion:sin3d", ok, { once: true }); }) : Promise.resolve(),
+      (window.SFX && window.SFX.listos) || Promise.resolve(),
+    ];
+    let hechas = 0;
+    tareas.forEach((t) => t.then(() => barra.style.setProperty("--p", (.1 + .9 * ++hechas / tareas.length).toFixed(2))));
+    const minimo = new Promise((ok) => setTimeout(ok, 900));   // que no sea un parpadeo
+    Promise.race([Promise.all([...tareas, minimo]), new Promise((ok) => setTimeout(ok, 20000))]).then(() => {
+      barra.style.setProperty("--p", 1);
+      setTimeout(() => {
+        scrollTo(0, 0);
+        carga.classList.add("fuera");
+        raiz.classList.remove("cargando");
+        raiz.classList.add("cargado");
+        dispatchEvent(new CustomEvent("invitacion:cargada"));
+        setTimeout(() => carga.remove(), 1000);
+      }, 250);
+    });
+  }
+
   /* ---------------------------------------------------------------- APERTURA */
   // Se abre tocando en cualquier punto del escenario (el sobre, el botón o el fondo).
   // Si el 3D aún está cargando, el toque se guarda y el sobre se abre en cuanto está listo.
@@ -83,6 +114,22 @@
   }
   addEventListener("invitacion:revelada", mostrarTitular);
 
+  // Incitar a bajar: la pastilla «Desliza para ver los detalles» y, si en unos segundos no ha bajado,
+  // la página se asoma sola un poco (enseña el principio del texto) y vuelve. Solo una vez.
+  addEventListener("scroll", () => raiz.classList.toggle("ha-bajado", scrollY > 60), { passive: true });
+  addEventListener("invitacion:revelada", () => {
+    if (quieto) return;
+    let tocado = false;
+    const marcar = () => (tocado = true);
+    addEventListener("touchstart", marcar, { once: true, passive: true });
+    addEventListener("wheel", marcar, { once: true, passive: true });
+    setTimeout(() => {
+      if (tocado || scrollY > 10) return;
+      scrollTo({ top: Math.round(innerHeight * .22), behavior: "smooth" });
+      setTimeout(() => { if (!tocado && scrollY < innerHeight * .3) scrollTo({ top: 0, behavior: "smooth" }); }, 1100);
+    }, 4500);
+  });
+
   // destello dorado de pantalla en el golpe final
   const destello = $(".destello");
   addEventListener("invitacion:destello", () => {
@@ -93,6 +140,7 @@
     if (raiz.classList.contains("abierto")) return;
     if (!raiz.classList.contains("despierto")) preparar();
     else if (volumen) volumen.fundir(.08, .8);    // la música se aparta mientras se abre el sobre
+    scrollTo(0, 0);
     raiz.classList.remove("bloqueado");
     raiz.classList.add("abierto");
     if (conGsap()) window.gsap.to(abrir, { opacity: 0, scale: .9, duration: .4, ease: "power2.in", onComplete: () => (abrir.hidden = true) });
@@ -130,8 +178,36 @@
     if (window.__abrirPendiente) { window.__abrirPendiente = false; mostrarTitular(); }
   }
   addEventListener("invitacion:lista", marcarListo);
+
+  // Llamada a tocar: si en unos segundos no ha tocado, aparece en el centro «Toca el sobre»;
+  // tras el primer toque, si vuelve a quedarse quieto, «Tócalo otra vez». Se esconde al tocar.
+  const llamada = $(".llamada");
+  let reloj = null;
+  function programarLlamada(segundos) {
+    if (!llamada) return;
+    clearTimeout(reloj);
+    llamada.classList.remove("visible");
+    raiz.classList.remove("llamando");
+    if (raiz.classList.contains("abierto")) return;
+    reloj = setTimeout(() => {
+      if (raiz.classList.contains("abierto")) return;
+      const despierto = raiz.classList.contains("despierto");
+      llamada.querySelector(".llamada-txt").textContent = despierto ? "Tócalo otra vez" : "Toca el sobre";
+      llamada.querySelector("small").textContent = despierto ? "y descubre lo que guarda" : "tu invitación te espera";
+      llamada.classList.add("visible");
+      raiz.classList.add("llamando");
+    }, segundos * 1000);
+  }
+  addEventListener("invitacion:cargada", () => programarLlamada(4));
+  addEventListener("invitacion:despertar", () => programarLlamada(5));
+  addEventListener("invitacion:abrir", () => { clearTimeout(reloj); raiz.classList.remove("llamando"); llamada && llamada.classList.remove("visible"); });
+  // el botón «Toca el sobre» aparece cuando se quita la pantalla de carga
+  addEventListener("invitacion:cargada", () => {
+    if (abrir && conGsap() && !raiz.classList.contains("abierto")) window.gsap.fromTo(abrir, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 1.2, delay: .6, ease: "power2.out" });
+  });
   addEventListener("invitacion:sin3d", sin3d);
-  if (hay3d) setTimeout(() => { if (!listo) sin3d(); }, 9000);   // red muy lenta: se sigue sin 3D
+  pantallaDeCarga(hay3d);
+  if (hay3d) setTimeout(() => { if (!listo) sin3d(); }, 20000);   // red muy lenta: se sigue sin 3D
 
   if (abrir) {
     raiz.classList.add("bloqueado");

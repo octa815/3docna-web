@@ -31,7 +31,7 @@ async function arrancar() {
   const color = (v, defecto) => css.getPropertyValue(v).trim() || defecto;
   const C = {
     marfil: color("--marfil", "#F4EFE6"), oro: color("--oro", "#C9A25E"),
-    sobre: color("--sobre", "#EADFC8"), forro: color("--forro", "#24332A"), lacre: color("--lacre", "#7E2B34"),
+    sobre: color("--sobre", "#F7F4EE"), forro: color("--forro", "#24332A"), lacre: color("--lacre", "#7E2B34"),
   };
 
   const renderer = new THREE.WebGLRenderer({ canvas: lienzo, antialias: true, alpha: true, powerPreference: "low-power" });
@@ -385,6 +385,30 @@ async function arrancar() {
   const fondoDentro = malla(atras, vivo(matForro.clone(), 0, -1, 1), Z.atras + 0.001);
   sobre.add(fondoFuera, fondoDentro);
 
+  // cantos del sobre: el papel une la parte de atrás con el bolsillo por los lados y por abajo,
+  // así, aunque se gire mucho, nunca se ve hueco (el borde de arriba lo cierra el pliegue de la solapa)
+  {
+    const pos = [], uv = [], seg = 16;
+    const lado = (x0, y0, x1, y1) => {
+      for (let i = 0; i < seg; i++) {
+        const a = i / seg, b = (i + 1) / seg;
+        const p = (k, z) => [x0 + (x1 - x0) * k, y0 + (y1 - y0) * k, z];
+        const q = [p(a, Z.atras), p(b, Z.atras), p(b, Z.frente), p(a, Z.frente)];
+        pos.push(...q[0], ...q[1], ...q[2], ...q[0], ...q[2], ...q[3]);
+        uv.push(a, 0, b, 0, b, 1, a, 0, b, 1, a, 1);
+      }
+    };
+    lado(-W / 2, H / 2, -W / 2, -H / 2);
+    lado(-W / 2, -H / 2, W / 2, -H / 2);
+    lado(W / 2, -H / 2, W / 2, H / 2);
+    const geoCanto = new THREE.BufferGeometry();
+    geoCanto.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
+    geoCanto.setAttribute("uv", new THREE.Float32BufferAttribute(uv, 2));
+    geoCanto.computeVertexNormals();
+    const matCanto = vivo(new THREE.MeshStandardMaterial({ color: C.sobre, roughness: .9, envMapIntensity: .35, side: THREE.DoubleSide }), 0, 0, 1);
+    sobre.add(malla(geoCanto, matCanto, 0));
+  }
+
   const forma = new THREE.Shape();
   forma.moveTo(-W / 2, -H / 2); forma.lineTo(W / 2, -H / 2); forma.lineTo(W / 2, H / 2);
   forma.lineTo(0, H / 2 - V); forma.lineTo(-W / 2, H / 2); forma.closePath();
@@ -465,7 +489,7 @@ async function arrancar() {
   sobre.add(solapa);
 
   // lacre con las iniciales: dos mitades que se separan al romperse
-  await document.fonts.load('italic 400 80px "Bodoni Moda"').catch(() => {});
+  await document.fonts.load('italic 500 80px "Fraunces"').catch(() => {});
   const iniciales = (escenario.dataset.iniciales || "").replace("&", " & ").trim();
   const texLacre = lienzo2d(256, 256, (g, w, h) => {
     const r = w / 2;
@@ -474,7 +498,7 @@ async function arrancar() {
     g.fillStyle = C.lacre; g.fillRect(0, 0, w, h);
     g.fillStyle = gr; g.fillRect(0, 0, w, h);
     g.strokeStyle = "rgba(0,0,0,.28)"; g.lineWidth = 5; g.beginPath(); g.arc(r, r, r * .78, 0, 7); g.stroke();
-    g.font = 'italic 400 76px "Bodoni Moda", Georgia, serif';
+    g.font = 'italic 500 76px "Fraunces", Georgia, serif';
     g.textAlign = "center"; g.textBaseline = "middle";
     g.fillStyle = "rgba(0,0,0,.35)"; g.fillText(iniciales, r + 2, r + 4);
     g.fillStyle = "rgba(255,225,215,.55)"; g.fillText(iniciales, r, r + 2);
@@ -848,7 +872,12 @@ async function arrancar() {
   renderer.render(escena, camara);
   raiz.classList.add("modelo-listo");
   seguir();
-  if (window.gsap && !quieto && !abiertoYa) window.gsap.from(est, { sube: 1.2, rx: -0.6, escala: 0.8, duration: 2.2, ease: "power3.out" });
+  // el sobre entra cuando se quita la pantalla de carga (no detrás de ella)
+  function entrada() {
+    if (window.gsap && !quieto && !abiertoYa) window.gsap.fromTo(est, { sube: 1.2, rx: -0.6, escala: 0.8 }, { sube: 0, rx: -0.18, escala: 0.92, duration: 2.2, ease: "power3.out" });
+  }
+  if (!abiertoYa && window.gsap && !quieto) Object.assign(est, { sube: 1.2, rx: -0.6, escala: 0.8 });
+  if (raiz.classList.contains("cargado")) entrada(); else addEventListener("invitacion:cargada", entrada, { once: true });
 
   /* ------------------------------------------------ el sobre vivo
      Mientras espera, algo dentro quiere salir. Cada poco hace un gesto, elegido al azar y sin repetir el anterior:
@@ -931,7 +960,8 @@ async function arrancar() {
     if (gestoActual) gestoActual.kill();
     if (window.gsap) window.gsap.to(est, { rayos: 0, saltoY: 0, aplasta: 0, giroExtra: 0, ladeo: 0, levanta: 0, vibra: 0, fuga: 0, dobla: 0, tuerce: 0, bultoA: 0, duration: .35, ease: "power2.out" });
   }
-  if (!abiertoYa && window.gsap && !quieto) siguiente = window.gsap.delayedCall(2.4, gesto);
+  const primerGesto = () => { if (!abiertoYa && window.gsap && !quieto && !siguiente) siguiente = window.gsap.delayedCall(2.4, gesto); };
+  if (raiz.classList.contains("cargado")) primerGesto(); else addEventListener("invitacion:cargada", primerGesto, { once: true });
   // al despertarlo, reacciona enseguida con un gesto (y ya con sonido)
   function alDespertar() {
     if (raiz.classList.contains("abierto")) return;

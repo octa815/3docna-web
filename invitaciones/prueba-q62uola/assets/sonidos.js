@@ -13,15 +13,15 @@
   let ctx = null, salida = null, sala = null;
 
   // descarga y decodifica ya (sin esperar al toque), con un contexto sin salida que no necesita gesto
+  let listos = Promise.resolve();
   if (AC && OAC) {
     const deco = new OAC(1, 1, 44100);
-    NOMBRES.forEach((n) => {
+    listos = Promise.all(NOMBRES.map((n) =>
       fetch(new URL(n + ".mp3", base))
         .then((r) => (r.ok ? r.arrayBuffer() : Promise.reject(r.status)))
         .then((a) => new Promise((ok, mal) => deco.decodeAudioData(a, ok, mal)))
         .then((b) => (buf[n] = b))
-        .catch(() => {});
-    });
+        .catch(() => {})));
   }
 
   function desbloquear() {
@@ -64,6 +64,7 @@
 
   window.SFX = {
     desbloquear,
+    listos,   // promesa: todos los sonidos descargados (la pantalla de carga la espera)
     duracion: (n) => (buf[n] ? buf[n].duration : 0),
     // la música de fondo por Web Audio: volumen controlable también en iPhone
     conectarMusica(audio) {
