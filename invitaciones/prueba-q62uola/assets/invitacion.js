@@ -114,6 +114,32 @@
   }
   addEventListener("invitacion:revelada", mostrarTitular);
 
+  // Desplazamiento propio, lento y con aceleración suave (el «smooth» del navegador es demasiado brusco).
+  // Se corta en cuanto el invitado toca o mueve la página.
+  function deslizar(hasta, ms, cortar = () => false) {
+    return new Promise((ok) => {
+      const desde = scrollY, t0 = performance.now();
+      raiz.style.scrollBehavior = "auto";
+      const paso = (t) => {
+        if (cortar()) { raiz.style.scrollBehavior = ""; return ok(); }
+        const k = Math.min(1, (t - t0) / ms), e = .5 - .5 * Math.cos(Math.PI * k);   // seno: entra y sale suave
+        scrollTo(0, desde + (hasta - desde) * e);
+        if (k < 1) requestAnimationFrame(paso); else { raiz.style.scrollBehavior = ""; ok(); }
+      };
+      requestAnimationFrame(paso);
+    });
+  }
+  // el botón «Desliza para ver más» baja solo lo justo para que empiece el texto, despacio
+  const bajar = $(".bajar");
+  if (bajar) bajar.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (quieto) { scrollTo(0, escenario.offsetHeight); return; }
+    let tocado = false;
+    addEventListener("touchstart", () => (tocado = true), { once: true, passive: true });
+    addEventListener("wheel", () => (tocado = true), { once: true, passive: true });
+    deslizar(Math.round(escenario.offsetHeight - innerHeight * .4), 1700, () => tocado);
+  });
+
   // Incitar a bajar: la pastilla «Desliza para ver los detalles» y, si en unos segundos no ha bajado,
   // la página se asoma sola un poco (enseña el principio del texto) y vuelve. Solo una vez.
   addEventListener("scroll", () => raiz.classList.toggle("ha-bajado", scrollY > 60), { passive: true });
@@ -123,10 +149,12 @@
     const marcar = () => (tocado = true);
     addEventListener("touchstart", marcar, { once: true, passive: true });
     addEventListener("wheel", marcar, { once: true, passive: true });
-    setTimeout(() => {
+    addEventListener("keydown", marcar, { once: true });
+    setTimeout(async () => {
       if (tocado || scrollY > 10) return;
-      scrollTo({ top: Math.round(innerHeight * .22), behavior: "smooth" });
-      setTimeout(() => { if (!tocado && scrollY < innerHeight * .3) scrollTo({ top: 0, behavior: "smooth" }); }, 1100);
+      await deslizar(Math.round(innerHeight * .16), 1600, () => tocado);           // se asoma despacio
+      if (!tocado) await new Promise((ok) => setTimeout(ok, 700));                // deja ver el principio del texto
+      if (!tocado) await deslizar(0, 1800, () => tocado);                          // y vuelve con calma
     }, 4500);
   });
 
@@ -284,48 +312,142 @@
     }
   }
 
-  /* ---------------------------------------------------------------- CONFIRMACIÓN */
+  /* ---------------------------------------------------------------- CONFIRMACIÓN
+     La respuesta se envía a Netlify Forms y además se guarda en este móvil (localStorage). Al volver a entrar,
+     en lugar del formulario se ve «Tu respuesta», con botones para cambiarla o cancelar la asistencia hasta la
+     fecha límite (rsvp.limiteFecha en evento.json). Cada cambio llega a Netlify como una respuesta más, con el
+     mismo «respuesta_id» y el «tipo» (nueva, cambio o cancelación): la buena es la última de cada id. */
   const form = $(".rsvp");
   if (form) {
     const estado = $(".rsvp-estado", form);
     const gracias = $(".rsvp-gracias");
+    const resumen = $(".rsvp-resumen");
+    const cerrado = $(".rsvp-cerrado");
+    const CLAVE = "rsvp:" + form.getAttribute("name");
+    const limite = form.dataset.limite ? new Date(form.dataset.limite + "T23:59:59") : null;
+    const plazoAbierto = () => !limite || Date.now() <= limite.getTime();
+    const ETIQUETAS = { nombre: "Nombre", asistencia: "¿Vendrás?", acompanantes: "Acompañantes", alergias: "Alergias o menú especial",
+      autobus: "Autobús", cancion: "Canción", mensaje: "Mensaje para los novios" };
+    const leer = () => { try { return JSON.parse(localStorage.getItem(CLAVE)); } catch { return null; } };
+    const guardar = (r) => { try { localStorage.setItem(CLAVE, JSON.stringify(r)); } catch { /* modo privado: no se recuerda */ } };
+    const nuevoId = () => (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2));
+
     const sincronizar = () => {
       const no = form.querySelector('input[name="asistencia"]:checked')?.value === "No";
       form.classList.toggle("no-asiste", no);
     };
     form.addEventListener("change", sincronizar);
-    sincronizar();
+
+    function rellenar(campos) {   // vuelve a poner en el formulario lo que ya contestó
+      for (const [k, v] of Object.entries(campos)) {
+        const el = form.elements[k];
+        if (!el) continue;
+        if (el instanceof RadioNodeList || (el.length && el[0] && el[0].type === "radio")) {
+          [...el].forEach((r) => (r.checked = r.value === v));
+        } else el.value = v;
+      }
+      sincronizar();
+    }
+
+    function verResumen(r, recien) {
+      const c = r.campos, va = c.asistencia === "Sí", nombre = (c.nombre || "").trim().split(" ")[0];
+      $(".resumen-tit", resumen).textContent = recien
+        ? (va ? `¡Qué ilusión, ${nombre}!` : `Te echaremos de menos, ${nombre}`)
+        : `Hola de nuevo, ${nombre}`;
+      $(".resumen-sub", resumen).textContent = va ? "Esta es tu confirmación:" : "Nos dijiste que no podrás venir.";
+      const dl = $(".resumen-datos", resumen);
+      dl.textContent = "";
+      for (const [k, etiqueta] of Object.entries(ETIQUETAS)) {
+        const v = (c[k] || "").trim();
+        if (!v || (!va && ["acompanantes", "alergias", "autobus", "cancion"].includes(k))) continue;
+        const fila = document.createElement("div");
+        const dt = document.createElement("dt"), dd = document.createElement("dd");
+        dt.textContent = etiqueta; dd.textContent = v;
+        fila.append(dt, dd); dl.append(fila);
+      }
+      const abierto = plazoAbierto();
+      $(".resumen-acciones", resumen).hidden = !abierto;
+      const cancelar = $('[data-accion="cancelar"]', resumen);
+      cancelar.hidden = !va;   // si ya dijo que no, solo «Cambiar mi respuesta»
+      $(".resumen-plazo", resumen).textContent = abierto
+        ? (limite ? `Puedes cambiar tu respuesta hasta el ${form.dataset.limiteTexto}.` : "")
+        : `El plazo para hacer cambios terminó el ${form.dataset.limiteTexto}. Si necesitas algo, escríbenos.`;
+      form.hidden = true; gracias.hidden = true; cerrado.hidden = true;
+      resumen.hidden = false;
+      if (recien) {
+        resumen.focus();
+        if (conGsap()) window.gsap.from(resumen, { opacity: 0, y: 16, scale: .98, duration: .8, ease: "power3.out" });
+      }
+    }
+
+    async function enviar(campos, tipo) {
+      const previa = leer();
+      const id = (previa && previa.id) || nuevoId();
+      const datos = new FormData(form);
+      for (const k of Object.keys(ETIQUETAS)) datos.set(k, campos[k] || "");
+      datos.set("respuesta_id", id);
+      datos.set("tipo", tipo);
+      const local = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) || location.protocol === "file:" || form.dataset.demo || /\.test$/.test(location.hostname);
+      if (!local) {
+        const r = await fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: new URLSearchParams(datos).toString() });
+        if (!r.ok) throw new Error(r.status);
+      }
+      const guardada = { id, campos, tipo, fecha: new Date().toISOString() };
+      guardar(guardada);
+      return guardada;
+    }
 
     form.addEventListener("submit", async (ev) => {
       ev.preventDefault();
+      if (!plazoAbierto()) return;
       const boton = form.querySelector('button[type="submit"]');
       boton.disabled = true;
       estado.textContent = "Enviando…";
-      const local = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) || location.protocol === "file:" || form.dataset.demo;
+      const campos = {};
+      for (const k of Object.keys(ETIQUETAS)) campos[k] = (form.elements[k] && form.elements[k].value) || "";
       try {
-        if (!local) {
-          const r = await fetch("/", {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams(new FormData(form)).toString(),
-          });
-          if (!r.ok) throw new Error(r.status);
-        }
-        form.hidden = true;
-        gracias.hidden = false;
-        gracias.focus();
-        const nombre = form.nombre.value.trim().split(" ")[0];
-        const no = form.asistencia.value === "No";
-        gracias.querySelector("p:last-child").textContent = no
-          ? `Te echaremos de menos, ${nombre}. Gracias por avisarnos.`
-          : `¡Qué ilusión, ${nombre}! Hemos recibido tu confirmación.`;
-        if (!no) window.dispatchEvent(new CustomEvent("invitacion:confirmada"));
-        if (conGsap()) window.gsap.from(gracias, { opacity: 0, y: 16, scale: .98, duration: .8, ease: "power3.out" });
+        const r = await enviar(campos, leer() ? "cambio" : "nueva");
+        estado.textContent = "";
+        boton.disabled = false;
+        verResumen(r, true);
+        if (campos.asistencia === "Sí") window.dispatchEvent(new CustomEvent("invitacion:confirmada"));
       } catch {
         estado.textContent = "No se ha podido enviar. Revisa tu conexión y vuelve a intentarlo.";
         boton.disabled = false;
       }
     });
+
+    resumen.addEventListener("click", async (ev) => {
+      const b = ev.target.closest("[data-accion]");
+      if (!b || !plazoAbierto()) return;
+      const r = leer();
+      if (b.dataset.accion === "editar") {
+        rellenar(r ? r.campos : {});
+        resumen.hidden = true; form.hidden = false;
+        form.querySelector('button[type="submit"]').textContent = "Guardar los cambios";
+        form.elements.nombre.focus();
+      } else if (b.dataset.accion === "cancelar") {
+        if (!confirm("¿Seguro que ya no podrás venir? Avisaremos a los novios.")) return;
+        b.disabled = true;
+        try {
+          const nueva = await enviar({ ...r.campos, asistencia: "No" }, "cancelación");
+          verResumen(nueva, true);
+        } catch {
+          $(".resumen-plazo", resumen).textContent = "No se ha podido enviar. Revisa tu conexión y vuelve a intentarlo.";
+        }
+        b.disabled = false;
+      }
+    });
+
+    // al entrar: ¿ya contestó?, ¿se acabó el plazo?
+    const previa = leer();
+    if (previa) verResumen(previa, false);
+    else if (!plazoAbierto()) {
+      form.hidden = true;
+      cerrado.hidden = false;
+      cerrado.textContent = `El plazo para confirmar terminó el ${form.dataset.limiteTexto}. Si aún quieres venir, escríbenos.`;
+    }
+    sincronizar();
   }
 
   /* ---------------------------------------------------------------- NÚMERO DE CUENTA */

@@ -228,6 +228,7 @@ async function arrancar() {
   });
 
   // solapa festoneada: bordes con ondas y punta en ojiva; filete dorado que sigue el festón y medallón en la punta
+  const HOMBRO = Math.PI * (Z.solapa - Z.atras) / 2 + 0.03;   // largo del pliegue + un margen
   function contornoSolapa(escala = 1, ondas = 9) {
     const pts = [];
     const lado = (x0, y0, x1, y1, sentido) => {
@@ -240,11 +241,16 @@ async function arrancar() {
       }
     };
     const pX = 0, pY = -F;
+    // «hombros»: la solapa baja recta por los lados lo justo para que su pliegue cubra el canto de arriba
+    // de punta a punta (sin ellos, en las esquinas de arriba quedaban huecos y el sobre parecía roto)
+    const hom = HOMBRO;
     pts.push(["m", -W / 2, 0]);
-    lado(-W / 2, 0, pX - .1, pY + .07, -1);
+    pts.push(["q", -W / 2, -hom / 2, -W / 2, -hom]);
+    lado(-W / 2, -hom, pX - .1, pY + .07, -1);
     pts.push(["q", pX - .03, pY + .01, pX, pY]);
     pts.push(["q", pX + .03, pY + .01, pX + .1, pY + .07]);
-    lado(pX + .1, pY + .07, W / 2, 0, -1);
+    lado(pX + .1, pY + .07, W / 2, -hom, -1);
+    pts.push(["q", W / 2, -hom / 2, W / 2, 0]);
     return pts.map(([t, ...c]) => [t, ...c.map((v, i) => (i % 2 ? (v + F * .45) * escala - F * .45 : v * escala))]);
   }
   const trazar = (forma, pts) => pts.forEach(([t, a, b, c, d]) => (t === "m" ? forma.moveTo(a, b) : forma.quadraticCurveTo(a, b, c, d)));

@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Atkinson+Hyperlegible+Next:wght@400;600&display=swap">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js" crossorigin>
-<link rel="stylesheet" href="../assets/invitacion.css?v=1795617009">
+<link rel="stylesheet" href="../assets/invitacion.css?v=1795617648">
 <script>document.documentElement.classList.add("js", "cargando")</script>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
 </head>
@@ -89,8 +89,11 @@
 <p>El cóctel es sobre césped: mejor tacón ancho. El blanco, para la novia.</p>
 <p class="paleta-tit">Una paleta que nos encantaría ver:</p>
 <ul class="paleta"><li><span class="muestra" style="--c:#9CAB8E"></span>Salvia</li><li><span class="muestra" style="--c:#C98B6B"></span>Terracota</li><li><span class="muestra" style="--c:#8FA4B8"></span>Azul empolvado</li><li><span class="muestra" style="--c:#E3CFA8"></span>Champán</li></ul></section><section id="info" class="bloque "><header class="bloque-cab"><h2>Para que no os falte nada</h2></header><div class="infos"><article class="info"><h3><svg class="icono" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="15" rx="3"/><path d="M4 11h16M8 21v-3M16 21v-3"/><circle cx="8" cy="14.5" r=".8"/><circle cx="16" cy="14.5" r=".8"/></svg>Transporte</h3><p>Habrá autobús desde la ermita hasta la finca, y de vuelta al centro de Elda a las 21:00 y a las 02:00. Indicadlo al confirmar.</p></article><article class="info"><h3><svg class="icono" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18V7M3 13h18v5M21 13a3 3 0 0 0-3-3h-7v3"/><circle cx="7" cy="10.5" r="1.8"/></svg>Hotel Valle de Elda</h3><p>En el centro, a 10 minutos de la finca. Tarifa especial diciendo «Boda Jorge y Ainhoa».</p></article><article class="info"><h3><svg class="icono" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18V7M3 13h18v5M21 13a3 3 0 0 0-3-3h-7v3"/><circle cx="7" cy="10.5" r="1.8"/></svg>Casa rural Sierra de la Torreta</h3><p>Para grupos y familias, con piscina. A 15 minutos.</p></article></div></section><section id="rsvp" class="bloque bloque-rsvp"><header class="bloque-cab"><h2>¿Nos acompañas?</h2><p class="entradilla">Confírmanoslo antes del 1 de mayo de 2027.</p></header>
-<form class="rsvp" name="rsvp-jorge-ainhoa" method="POST" data-demo="true">
+<form class="rsvp" name="rsvp-jorge-ainhoa" method="POST" data-demo="true"
+      data-limite="2027-05-01" data-limite-texto="1 de mayo de 2027">
   <input type="hidden" name="form-name" value="rsvp-jorge-ainhoa">
+  <input type="hidden" name="respuesta_id" value="">
+  <input type="hidden" name="tipo" value="nueva">
   <p class="oculto"><label>No rellenar <input name="web"></label></p>
   <label class="campo"><span>Nombre y apellidos</span><input name="nombre" required autocomplete="name"></label>
   <fieldset class="opciones">
@@ -115,7 +118,18 @@
 <div class="rsvp-gracias" hidden tabindex="-1">
   <p class="gracias-tit">¡Gracias!</p>
   <p>Hemos recibido tu respuesta.</p>
-</div></section><section id="regalo" class="bloque "><header class="bloque-cab"><h2>Regalo</h2></header>
+</div>
+<div class="rsvp-resumen" hidden tabindex="-1" aria-live="polite">
+  <p class="resumen-tit"></p>
+  <p class="resumen-sub"></p>
+  <dl class="resumen-datos"></dl>
+  <div class="resumen-acciones">
+    <button class="boton" type="button" data-accion="editar">Cambiar mi respuesta</button>
+    <button class="boton boton-claro" type="button" data-accion="cancelar">Ya no podré ir</button>
+  </div>
+  <p class="resumen-plazo"></p>
+</div>
+<p class="rsvp-cerrado" hidden></p></section><section id="regalo" class="bloque "><header class="bloque-cab"><h2>Regalo</h2></header>
 <p>Lo más importante es que estéis. Si aun así queréis tener un detalle con nosotros:</p>
 <button class="boton boton-claro" type="button" data-mostrar="iban"><svg class="icono" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="9" width="17" height="11" rx="1.5"/><path d="M2.5 9h19M12 9v11M12 9c-2-4-6-4-6-1.5S12 9 12 9Zm0 0c2-4 6-4 6-1.5S12 9 12 9Z"/></svg>Ver número de cuenta</button>
 <div id="iban" class="iban" hidden>
@@ -133,8 +147,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
-<script src="../assets/sonidos.js?v=1795617009" defer></script>
-<script src="../assets/invitacion.js?v=1795617009" defer></script>
-<script type="module" src="../assets/tarjeta3d.js?v=1795617009"></script>
+<script src="../assets/sonidos.js?v=1795617648" defer></script>
+<script src="../assets/invitacion.js?v=1795617648" defer></script>
+<script type="module" src="../assets/tarjeta3d.js?v=1795617648"></script>
 </body>
 </html>
