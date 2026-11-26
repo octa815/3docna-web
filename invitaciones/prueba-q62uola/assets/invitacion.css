@@ -326,6 +326,11 @@ main::before {   /* el canto de la tarjeta: una línea dorada fina donde acaba e
 .resumen-datos dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
 .resumen-acciones { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
 .resumen-plazo { margin-top: 1.1rem; font-size: var(--t-0); color: var(--tinta-2); }
+/* para quién es la invitación (con el enlace personal de la tarjeta) */
+.rsvp-para { font: italic 500 var(--t-2)/1.3 var(--display); color: var(--oro-osc); }
+/* aviso de datos: casilla grande y fácil de marcar */
+.consentimiento { display: grid; grid-template-columns: 1.6rem 1fr; gap: .7rem; align-items: start; font-size: var(--t-0); color: var(--tinta-2); line-height: 1.45; }
+.consentimiento input { width: 1.4rem; height: 1.4rem; margin: .1rem 0 0; accent-color: var(--tinta); }
 .rsvp-cerrado { padding: 1.5rem 1.4rem; border-radius: .5rem; background: var(--papel); color: var(--tinta-2); }
 .gracias-tit { font: italic 500 var(--t-4)/1.1 var(--display); color: var(--oro-osc); }
 .rsvp-wa p { margin-bottom: 1.25rem; color: var(--tinta-2); }

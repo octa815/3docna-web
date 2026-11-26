@@ -461,9 +461,15 @@ async function arrancar() {
           curvaSolapa(max(0., -position.y), Pc, ac);
           vec2 nc = vec2(-sin(ac), cos(ac));
           Pc -= uOrient * nc * .0008;                                   // grosor del papel: cara de fuera y forro
-          float vc = Pc.y + desplaza(vec2(position.x, Pc.x)) * step(2.5, ac);   // el abombado solo con la solapa cerrada
+          // la solapa se deforma igual que el resto del papel (abombado, curvatura, torsión, empujones):
+          // así el pliegue de arriba se dobla con el sobre y no se separa de él
+          vec2 pD = vec2(position.x, Pc.x);
+          float dS = desplaza(pD);
+          float gx = (desplaza(pD + vec2(.01, 0.)) - dS) / .01, gu = (desplaza(pD + vec2(0., .01)) - dS) / .01;
+          float vc = Pc.y + dS;
           vec2 ng = -uOrient * nc;
-          objectNormal = vec3(0., ng.x, uOrient * ng.y);`)
+          vec3 nG = normalize(vec3(0., ng.x, ng.y) + vec3(-gx, -gu, 0.) * sign(ng.y + 1e-4));
+          objectNormal = vec3(nG.x, nG.y, uOrient * nG.z);`)
         .replace("#include <begin_vertex>", `#include <begin_vertex>
           transformed = vec3(position.x, Pc.x, uOrient * vc);`);
     };
@@ -837,7 +843,7 @@ async function arrancar() {
     const roto = est.lacreAbre > 0;
     const cL = curvaJS(F - 0.085, roto ? Math.PI : betaS, roto ? 0 : kapS, roto ? 0 : tipS);
     lacre.position.y = cL.u + Math.sin(cL.a) * 0.022 + est.lacreY;
-    lacre.position.z = cL.v - Math.cos(cL.a) * 0.022 + (cL.a > 2.5 ? desplazaJS(0, cL.u) : 0) * (1 - est.lacreAbre);
+    lacre.position.z = cL.v - Math.cos(cL.a) * 0.022 + desplazaJS(0, cL.u) * (1 - est.lacreAbre);
     lacre.rotation.x = cL.a - Math.PI;
     mitades[0].position.set(-est.lacreAbre * 0.55, -est.lacreAbre * 0.1, est.lacreAbre * 0.25);
     mitades[0].rotation.set(est.lacreAbre * 0.8, -est.lacreAbre * 1.2, est.lacreAbre * 2.2);

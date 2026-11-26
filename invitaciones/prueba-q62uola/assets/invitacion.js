@@ -316,18 +316,43 @@
      La respuesta se envía a Netlify Forms y además se guarda en este móvil (localStorage). Al volver a entrar,
      en lugar del formulario se ve «Tu respuesta», con botones para cambiarla o cancelar la asistencia hasta la
      fecha límite (rsvp.limiteFecha en evento.json). Cada cambio llega a Netlify como una respuesta más, con el
-     mismo «respuesta_id» y el «tipo» (nueva, cambio o cancelación): la buena es la última de cada id. */
+     mismo «respuesta_id» y el «tipo» (nueva, cambio o cancelación): la buena es la última de cada id.
+     Con base de datos (evento.json "api") y el enlace personal de la tarjeta (?i=CLAVE), la respuesta se guarda y se
+     lee en el servidor: se ve y se cambia desde cualquier móvil, y el formulario sabe para quién es y cuántas plazas tiene.
+     Si el servidor no responde, sigue funcionando como sin base de datos. */
   const form = $(".rsvp");
   if (form) {
     const estado = $(".rsvp-estado", form);
     const gracias = $(".rsvp-gracias");
     const resumen = $(".rsvp-resumen");
     const cerrado = $(".rsvp-cerrado");
-    const CLAVE = "rsvp:" + form.getAttribute("name");
+    const claveInv = (new URLSearchParams(location.search).get("i") || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+    const API = form.dataset.apiUrl, API_CLAVE = form.dataset.apiClave || "";
+    let servidor = !!(API && claveInv), abiertoServidor = null;
+    const CLAVE = "rsvp:" + form.getAttribute("name") + (claveInv ? ":" + claveInv : "");
     const limite = form.dataset.limite ? new Date(form.dataset.limite + "T23:59:59") : null;
-    const plazoAbierto = () => !limite || Date.now() <= limite.getTime();
-    const ETIQUETAS = { nombre: "Nombre", asistencia: "¿Vendrás?", acompanantes: "Acompañantes", alergias: "Alergias o menú especial",
+    const plazoAbierto = () => (abiertoServidor !== null ? abiertoServidor : !limite || Date.now() <= limite.getTime());
+    const ETIQUETAS = { nombre: "Nombre", asistencia: "¿Vendrás?", personas: "Personas", acompanantes: "Acompañantes", alergias: "Alergias o menú especial",
       autobus: "Autobús", cancion: "Canción", mensaje: "Mensaje para los novios" };
+    // las mismas tres funciones que basedatos/esquema.sql (Supabase) o basedatos/servidor_local.py
+    async function rpc(fn, args) {
+      const r = await fetch(`${API}/rest/v1/rpc/${fn}`, {
+        method: "POST",
+        // clave publicable nueva de Supabase (sb_publishable_…): solo «apikey»; la antigua «anon» (un JWT) también en Authorization
+        headers: { "Content-Type": "application/json", apikey: API_CLAVE, ...(API_CLAVE.startsWith("eyJ") ? { Authorization: "Bearer " + API_CLAVE } : {}) },
+        body: JSON.stringify(args),
+      });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok) throw Object.assign(new Error(j.message || r.status), { codigo: j.message });
+      return j;
+    }
+    const deServidor = (r) => ({
+      nombre: r.nombre || "", asistencia: r.asistencia || "", personas: r.personas == null ? "" : String(r.personas),
+      acompanantes: r.acompanantes || "", alergias: r.alergias || "", autobus: r.autobus || "", cancion: r.cancion || "", mensaje: r.mensaje || "",
+    });
+    const MENSAJES = { plazo_cerrado: "El plazo para confirmar ya terminó.", demasiadas_personas: "Sois más personas de las que tiene esta invitación.",
+      falta_consentimiento: "Marca la casilla de los datos para poder enviarlo.", demasiados_envios: "Has enviado muchas veces seguidas. Espera un minuto y vuelve a intentarlo.",
+      datos_invalidos: "Revisa los datos: falta el nombre o hay algo que no es válido.", invitacion_desconocida: "No encontramos esta invitación. Revisa el enlace." };
     const leer = () => { try { return JSON.parse(localStorage.getItem(CLAVE)); } catch { return null; } };
     const guardar = (r) => { try { localStorage.setItem(CLAVE, JSON.stringify(r)); } catch { /* modo privado: no se recuerda */ } };
     const nuevoId = () => (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2));
@@ -359,7 +384,7 @@
       dl.textContent = "";
       for (const [k, etiqueta] of Object.entries(ETIQUETAS)) {
         const v = (c[k] || "").trim();
-        if (!v || (!va && ["acompanantes", "alergias", "autobus", "cancion"].includes(k))) continue;
+        if (!v || (!va && ["personas", "acompanantes", "alergias", "autobus", "cancion"].includes(k))) continue;
         const fila = document.createElement("div");
         const dt = document.createElement("dt"), dd = document.createElement("dd");
         dt.textContent = etiqueta; dd.textContent = v;
@@ -381,6 +406,13 @@
     }
 
     async function enviar(campos, tipo) {
+      if (servidor) {
+        const res = await rpc("responder", { p_clave: claveInv, p_datos: { ...campos, consentimiento: true, tipo } });
+        abiertoServidor = res.abierto;
+        const g = { id: claveInv, campos: deServidor(res.respuesta), tipo: res.respuesta.tipo, fecha: res.respuesta.fecha };
+        guardar(g);   // copia en el móvil por si luego no hay conexión
+        return g;
+      }
       const previa = leer();
       const id = (previa && previa.id) || nuevoId();
       const datos = new FormData(form);
@@ -405,14 +437,15 @@
       estado.textContent = "Enviando…";
       const campos = {};
       for (const k of Object.keys(ETIQUETAS)) campos[k] = (form.elements[k] && form.elements[k].value) || "";
+      if (!servidor) campos.personas = "";
       try {
         const r = await enviar(campos, leer() ? "cambio" : "nueva");
         estado.textContent = "";
         boton.disabled = false;
         verResumen(r, true);
         if (campos.asistencia === "Sí") window.dispatchEvent(new CustomEvent("invitacion:confirmada"));
-      } catch {
-        estado.textContent = "No se ha podido enviar. Revisa tu conexión y vuelve a intentarlo.";
+      } catch (err) {
+        estado.textContent = MENSAJES[err.codigo] || "No se ha podido enviar. Revisa tu conexión y vuelve a intentarlo.";
         boton.disabled = false;
       }
     });
@@ -440,14 +473,37 @@
     });
 
     // al entrar: ¿ya contestó?, ¿se acabó el plazo?
-    const previa = leer();
-    if (previa) verResumen(previa, false);
-    else if (!plazoAbierto()) {
-      form.hidden = true;
-      cerrado.hidden = false;
-      cerrado.textContent = `El plazo para confirmar terminó el ${form.dataset.limiteTexto}. Si aún quieres venir, escríbenos.`;
+    function iniciar() {
+      const previa = leer();
+      if (previa) verResumen(previa, false);
+      else if (!plazoAbierto()) {
+        form.hidden = true;
+        cerrado.hidden = false;
+        cerrado.textContent = `El plazo para confirmar terminó el ${form.dataset.limiteTexto}. Si aún quieres venir, escríbenos.`;
+      }
+      sincronizar();
     }
-    sincronizar();
+    if (servidor) {
+      // con el enlace personal: para quién es, cuántas plazas tiene y qué contestó (desde cualquier móvil)
+      rpc("obtener_invitacion", { p_clave: claveInv }).then((res) => {
+        abiertoServidor = res.abierto;
+        const para = $(".rsvp-para", form);
+        para.textContent = `Invitación para ${res.invitacion} · ${res.plazas} ${res.plazas === 1 ? "plaza" : "plazas"}`;
+        para.hidden = false;
+        const sel = form.elements.personas;
+        sel.textContent = "";
+        for (let n = 1; n <= res.plazas; n++) sel.add(new Option(n === 1 ? "1 persona" : `${n} personas`, String(n)));
+        sel.value = String(res.plazas);
+        $(".campo-personas", form).hidden = false;
+        if (res.respuesta) guardar({ id: claveInv, campos: deServidor(res.respuesta), tipo: res.respuesta.tipo, fecha: res.respuesta.fecha });
+        else try { localStorage.removeItem(CLAVE); } catch { /* */ }
+        iniciar();
+      }).catch((err) => {
+        if (err.codigo === "invitacion_desconocida") { estado.textContent = MENSAJES.invitacion_desconocida; }
+        servidor = false;   // sin conexión con la base de datos: como siempre
+        iniciar();
+      });
+    } else iniciar();
   }
 
   /* ---------------------------------------------------------------- NÚMERO DE CUENTA */

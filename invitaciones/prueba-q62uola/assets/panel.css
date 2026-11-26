@@ -1,0 +1,25 @@
+/* Panel de los novios: sobre la misma base que la invitación (letra, colores, botones) */
+.panel { background: var(--marfil); }
+.panel-main { max-width: 72rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+.panel-eyebrow { color: var(--oro-osc); font-weight: 600; }
+.panel-cab h1 { font: 600 var(--t-4)/1.1 var(--display); margin-top: .3rem; }
+.panel-fecha { color: var(--tinta-2); margin-top: .4rem; }
+.panel-entrar { max-width: 24rem; margin-top: 2rem; display: grid; gap: 1rem; }
+.panel-error { color: #8a2323; min-height: 1.5em; }
+.panel-cifras { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: .75rem; margin: 2rem 0 1.5rem; }
+.panel-cifras div { background: var(--papel); border-radius: .5rem; padding: 1rem 1.1rem; box-shadow: 0 1px 0 var(--linea); display: grid; gap: .2rem; }
+.panel-cifras b { font: 600 2rem/1 var(--display); color: var(--tinta); }
+.panel-cifras span { color: var(--tinta-2); font-size: var(--t-0); }
+.panel-filtros { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem; }
+.panel-filtros .activo { background: var(--tinta); color: var(--marfil); }
+.panel-tabla-caja { overflow-x: auto; background: var(--papel); border-radius: .5rem; box-shadow: 0 1px 0 var(--linea); }
+.panel-tabla { width: 100%; border-collapse: collapse; font-size: var(--t-0); }
+.panel-tabla th, .panel-tabla td { text-align: left; padding: .75rem .9rem; border-bottom: 1px solid var(--linea); vertical-align: top; }
+.panel-tabla th { font-weight: 600; color: var(--tinta-2); white-space: nowrap; position: sticky; top: 0; background: var(--papel); }
+.panel-tabla td:first-child { font-weight: 600; min-width: 11rem; }
+.estado { white-space: nowrap; font-weight: 600; }
+.estado-si { color: #2f6b3a; }
+.estado-no { color: #8a2323; }
+.estado-pendiente { color: var(--oro-osc); }
+.panel .botones { margin-top: 1.25rem; }
+
